@@ -1,4 +1,4 @@
-import { featuredQuestionResponse } from "@/types/type";
+import { featuredQuestionResponse, questionsByCompanyResponse } from "@/types/type";
 import axios from "axios";
 
 
@@ -12,10 +12,10 @@ export const getFeaturedQuestions = async()=>{
 }
 
 
-export const getQuestions = async ({ pageParam = 1 }: { pageParam?: number }): Promise<featuredQuestionResponse> => {
+export const getQuestions = async ({ pageParam = 1,search }: { pageParam?: number,search:string }): Promise<featuredQuestionResponse> => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/paginated-questions/get?limit=30&page=${pageParam}`
+      `http://localhost:8080/api/v1/question/paginated-questions/get?page=${pageParam}&limit=30&search=${encodeURIComponent(search)}`
     );
     return res.data;
   } catch (error) {
@@ -33,5 +33,14 @@ export const getQuestionsByTopic = async(id:string)=>{
     
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const getQuestionsByCompany = async(id: string)=>{
+  try {
+    const res = await axios.get<questionsByCompanyResponse>(`http://localhost:8080/api/v1/question/company/${id}`);
+    return res.data
+  } catch (error) {
+    console.log(error)
   }
 }

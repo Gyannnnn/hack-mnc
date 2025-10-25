@@ -7,7 +7,13 @@ export interface company {
   _count: {
     questions: number
   }
-  logoSmall: string
+  logoSmall: string,
+  questions: featuredQuestions[]
+}
+
+export interface companyDetails {
+  name: string,
+
 }
 
 
@@ -36,7 +42,7 @@ export interface topicResponse {
 
 }
 
-interface featuredQuestions {
+export interface featuredQuestions {
   name: string
   frequency: number
   acceptanceRate: number
@@ -52,7 +58,8 @@ interface featuredQuestions {
   }>
   companies: Array<{
     company: {
-      logoSmall: string
+      logoSmall: string,
+      name: string
     }
   }>
 }
@@ -65,3 +72,24 @@ export interface featuredQuestionResponse {
     hasMore: boolean
   }
 }
+
+export interface companyDetailResponse {
+  success: boolean,
+  message: string,
+  data: company
+}
+
+export interface questionsByCompanyResponse {
+  success: boolean,
+  message: string
+  data: featuredQuestions[]
+}
+
+
+export interface queryQuestionResponse {
+  total: number;
+  page: number;
+  pageSize: number;
+  data: featuredQuestions[];
+}
+

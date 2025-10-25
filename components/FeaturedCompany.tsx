@@ -1,4 +1,4 @@
-import { getAllCompanies } from "@/app/actions/company/company";
+import {  getAllFeaturedCompany } from "@/app/actions/company/company";
 import React from "react";
 import { Card } from "./ui/card";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import Link from "next/link";
 export default async function FeaturedCompany() {
   let companyData;
   try {
-    const res = await getAllCompanies();
+    const res = await getAllFeaturedCompany();
     companyData = res?.data.splice(0, 5);
     return (
       <div className="flex flex-col items-end max-sm:px-4 justify-center pt-16 gap-2 ">
