@@ -1,10 +1,11 @@
 "use client"
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
-import QuestionCard from './ui/questionCard';
+
+import { getQuestionsByTopic } from '@/app/actions/questions/questions';
+import QuestionCard from '@/components/ui/questionCard';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getQuestionsByCompany } from '@/app/actions/questions/questions';
+import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 const levelColor = (level: string): string => {
   if (level === "EASY") return "text-green-500";
@@ -105,7 +106,7 @@ const NoResultsState = ({
       <p className="text-muted-foreground">
         {hasFilters
           ? "Try adjusting your filters"
-          : "No questions available for this company"}
+          : "No questions available for this topic"}
       </p>
       {hasFilters && (
         <button
@@ -132,7 +133,8 @@ const NoMoreResultsState = () => (
   </div>
 );
 
-export default function CompanyDetails({ id }: { id: string }) {
+// Client component that receives the ID as a prop
+export default function TopicQuestionsPage({ id }: { id: string }) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
@@ -146,17 +148,16 @@ export default function CompanyDetails({ id }: { id: string }) {
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["company-questions", id], // Include company ID in query key
-    queryFn: ({ pageParam = 1 }) => getQuestionsByCompany({ 
+    queryKey: ["topic-questions", id], // Include topic ID in query key
+    queryFn: ({ pageParam = 1 }) => getQuestionsByTopic({ 
       id,
       pageParam
     }),
     getNextPageParam: (lastPage, allPages) => {
-      // Fix: Check if lastPage exists and has data with hasMore
       return lastPage?.data?.hasMore ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
-    enabled: !!id, // Only enable when id is available
+    enabled: !!id,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -165,7 +166,6 @@ export default function CompanyDetails({ id }: { id: string }) {
     if (!data?.pages) return [];
     
     return data.pages.flatMap((page) => {
-      // Safely access fetchQuestions with fallback
       return page?.data?.fetchQuestions || [];
     });
   }, [data]);
@@ -260,7 +260,7 @@ export default function CompanyDetails({ id }: { id: string }) {
           index={index} 
         />
       );
-    }).filter(Boolean), // Remove any null entries
+    }).filter(Boolean),
     [filteredAndSortedQuestions]
   );
 

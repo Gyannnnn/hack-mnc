@@ -11,8 +11,7 @@ export default function page() {
       <FeaturedCompany/>
       <Topics/>
       <h1>Questions Topic wise company wise</h1>
-      <Questions/>
-  
+      <Questions/>  
     </div>
   )
 }

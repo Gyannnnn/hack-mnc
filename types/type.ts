@@ -26,7 +26,7 @@ export interface companyResponse {
 }
 
 
-interface topic {
+export interface topic {
   id: string
   name: string
   _count: {
@@ -93,3 +93,29 @@ export interface queryQuestionResponse {
   data: featuredQuestions[];
 }
 
+export interface topicDetailResponse {
+  success: boolean,
+  message: string,
+  data: topic
+}
+
+export interface signInResponse {
+  success: boolean,
+  message: string,
+  data: {
+    user: {
+      id: string
+      name: string
+      email: string
+      password: string
+      role: string,
+      streak: number,
+      emailVerified: string,
+      image: string
+      createdAt: Date
+      updatedAt: Date
+      deletedAt: Date
+    },
+    token: string
+  }
+}

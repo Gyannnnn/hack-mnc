@@ -30,12 +30,12 @@ export default function QuestionCard({
         {index + 1}. {data.name}
       </h1>
 
-      <div className="flex items-center gap-1">
-        {data.companies?.slice(0, 5).map((company, companyIndex) => (
+      <div className="flex items-center gap-2">
+        {data.companies?.slice(0, 7).map((company, companyIndex) => (
          
           <Tooltip>
             <TooltipTrigger>
-              <img src={company.company.logoSmall} className="h-4"></img>
+              <img src={company.company.logoSmall} className="h-6  rounded-2xl"></img>
             </TooltipTrigger>
             <TooltipContent>
               {company.company.name}
@@ -44,11 +44,11 @@ export default function QuestionCard({
         ))}
 
 
-        {data.companies && data.companies.length > 5 && (
+        {data.companies && data.companies.length > 7 && (
           
           <Tooltip>
             <TooltipTrigger>
-              <Badge>{data.companies.length - 5}+</Badge>
+              <Badge>{data.companies.length - 7}+</Badge>
             </TooltipTrigger>
             <TooltipContent className="flex justify-center items-center gap-1">
               {data.companies.slice(5).map((data, index) => (
@@ -58,7 +58,7 @@ export default function QuestionCard({
                   key={index}
                   alt={`${data.company.name} logo`}
                   src={data.company.logoSmall}
-                  className="h-5 "
+                  className="h-6  "
                 ></img>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -71,7 +71,7 @@ export default function QuestionCard({
         )}
       </div>
 
-      <div className="flex">
+      <div className="flex gap-1">
         {data.topics?.slice(0,4).map((topic, topicIndex) => (
           <Badge
             className={`${index % 2 === 0 ? "bg-card" : "bg-muted"}`}
@@ -139,7 +139,7 @@ export default function QuestionCard({
           <TooltipTrigger>
             <p>{data.frequency?.toFixed(2)} %</p>
           </TooltipTrigger>
-          <TooltipContent>Data Frequncy</TooltipContent>
+          <TooltipContent>Frequncy</TooltipContent>
         </Tooltip>
       </div>
     </Card>

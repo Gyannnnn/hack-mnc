@@ -17,12 +17,12 @@ export default function Navbar() {
   const path = usePathname();
   return (
     <div className="h-16 fixed top-0 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-10">
-      <div className="flex gap-10 items-center">
+      <div className="flex gap-5 items-center">
         <Link
           href="/"
           className="sm:text-2xl text-xl font-bold text-[var(--color-foreground)] hover:text-[var(--color-primary)] transition-all duration-300 font-mono tracking-tight"
         >
-          &lt;Hack MNC/&gt;
+          &lt; HackMNC /&gt;
         </Link>
         <div className="flex items-center gap-3 max-sm:hidden ">
           {navBarData.map((data, index) => {

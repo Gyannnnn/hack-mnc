@@ -1,31 +1,29 @@
-import { getCompanyById } from '@/app/actions/company/company';
-import CompanyDetails from '@/components/CompanyDetails';
-
+import { getTopicDetails } from '@/app/actions/topics/topics';
+import TopicQuestionsPage from '@/components/TopicQuestionsDetails';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-
+import { Progress } from '@/components/ui/progress';
 import Image from 'next/image';
 import React from 'react'
-import { Progress } from "@/components/ui/progress"
 
-export default async function page({params}:{
-    params:Promise<{id: string}>
+export default async function TopicPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
 }) {
-
-    const id = await (await params).id;
-    try {
-        const res = await getCompanyById(id);
-        const companyData = res?.data
-        return (
-            <div className='cnt'>
-                <div className='flex max-sm:flex-col gap-2'>
+  const id = (await params).id;
+  const res = await getTopicDetails({id});
+  const topicData = res?.data
+  return (
+    <div className='cnt'>
+      <div className='flex max-sm:flex-col gap-2'>
                     <Card className='w-1/3 h-40 flex flex-row items-center justify-around relative'>
-                    <Image height={200} width={200} src={companyData?.logo as string} alt={`${companyData?.name} logo`}></Image>
+                    
                     <Card className='h-30 w-30 flex items-center justify-center text-white font-bold text-2xl rounded-full border border-primary'>
-                        <h1>41/{companyData?._count.questions}</h1>
+                        <h1>41/{topicData?._count.questions}</h1>
                     </Card>
                     <Badge className='absolute top-2 left-2'>
-                        {companyData?.name}
+                        {topicData?.name}
                     </Badge>
                     </Card>
                     <Card className='w-2/3 h-40 px-4'>
@@ -40,16 +38,7 @@ export default async function page({params}:{
                     </div>
                     </Card>
                 </div>
-                <div>
-                    <CompanyDetails id={id}/>
-
-                </div>
-            </div>
-        )
-    } catch (error) {
-        <div className='cnt'>
-            <h1>Something went wrong</h1>
-
-        </div>
-    }  
+      <TopicQuestionsPage id={id} />
+    </div>
+  );
 }

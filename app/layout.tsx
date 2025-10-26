@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -8,6 +7,7 @@ import { ReactLenis } from "@/utils/lenis";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,16 +35,18 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
         >
-          <Providers>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-              <Navbar />
-              <main className="pt-20 min-h-screen flex items-center justify-center w-full sm:px-16">
-                {children}
-                <Toaster />
-              </main>
-              <Footer />
-            </ThemeProvider>
-          </Providers>
+          <SessionProvider>
+            <Providers>
+              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                <Navbar />
+                <main className="pt-20 min-h-screen flex items-center justify-center w-full sm:px-16">
+                  {children}
+                  <Toaster />
+                </main>
+                <Footer />
+              </ThemeProvider>
+            </Providers>
+          </SessionProvider>
         </body>
       </ReactLenis>
     </html>

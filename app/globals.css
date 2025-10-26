@@ -119,6 +119,8 @@
 
 
 
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -127,6 +129,6 @@
     @apply bg-background text-foreground;
   }
   .cnt{
-    @apply min-h-screen w-full flex flex-col gap-5 px-4
+    @apply min-h-screen w-full flex flex-col gap-5 px-4 pt-10
   }
 }
