@@ -12,68 +12,96 @@ export const getFeaturedQuestions = async()=>{
 }
 
 // Enhanced getQuestions with better error handling and caching
-let questionCache: Map<string, any> = new Map();
+// let questionCache: Map<string, any> = new Map();
 
+// 
 export const getQuestions = async ({ 
   pageParam = 1, 
-  search = "" 
+  search = "",
+  userId
 }: { 
   pageParam?: number; 
   search: string;
+  userId: string
 }): Promise<featuredQuestionResponse> => {
-  const cacheKey = `questions-${pageParam}-${search}`;
-  
-  // Check cache first
-  if (questionCache.has(cacheKey)) {
-    return questionCache.get(cacheKey);
-  }
+
+  console.log('=== FRONTEND DEBUG ===');
+  console.log('Sending request with:');
+  console.log('pageParam:', pageParam);
+  console.log('search:', search);
+  console.log('userId:', userId);
+  console.log('=====================');
 
   try {
-    const res = await axios.get<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/paginated-questions/get?page=${pageParam}&limit=20&search=${encodeURIComponent(search)}`,
+    // Add cache busting for "noid" and valid users
+    const cacheBuster = (userId && userId !== "loading") ? `&_t=${Date.now()}` : '';
+
+    const res = await axios.post<featuredQuestionResponse>(
+      `http://localhost:8080/api/v1/question/paginated-questions/get?page=${pageParam}&limit=20&search=${encodeURIComponent(search)}${cacheBuster}`,
       { 
-        timeout: 8000, // 8 second timeout
+        userId: userId
+      },
+      {
+        timeout: 8000,
         headers: {
-          'Cache-Control': 'max-age=300' // 5 minutes
+          'Content-Type': 'application/json',
+          // Don't cache for "noid" or valid users
+          'Cache-Control': (userId && userId !== "loading") ? 'no-cache' : 'max-age=300'
         }
       }
     );
-    
-    // Cache successful responses
-    questionCache.set(cacheKey, res.data);
-    
-    // Limit cache size
-    if (questionCache.size > 50) {
-      const firstKey = questionCache.keys().next().value;
-      questionCache.delete(firstKey as string);
-    }
+
+    console.log('=== RESPONSE DEBUG ===');
+    console.log('Response message:', res.data.message); // This will show if it's cached or fresh
+    const solvedQuestions = res.data.data.fetchQuestions.filter((q: any) => q.isSolved);
+    console.log(`Found ${solvedQuestions.length} solved questions`);
+    console.log('=====================');
     
     return res.data;
-  } catch (error) {
-    console.error('API Error:', error);
+  } catch (error: any) {
+    console.error('API Error details:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
     throw error;
   }
 };
 
-export const prefetchFirstPage = () => {
-    getQuestions({ pageParam: 1, search: "" })
-        .then(() => console.log('First page pre-fetched'))
-        .catch(err => console.log('Pre-fetch failed:', err));
-};
+// export const prefetchFirstPage = () => {
+//     getQuestions({ pageParam: 1, search: "",userId:string })
+//         .then(() => console.log('First page pre-fetched'))
+//         .catch(err => console.log('Pre-fetch failed:', err));
+// };
 
-export const getQuestionsByTopic = async ({ id, pageParam = 1 }: { id: string, pageParam: number }) => {
+export const getQuestionsByTopic = async ({ 
+  id, 
+  pageParam = 1, 
+  userId 
+}: { 
+  id: string; 
+  pageParam: number; 
+  userId: string; 
+}) => {
   try {
-    const res = await axios.get<featuredQuestionResponse>(`http://localhost:8080/api/v1/question/get/topic/${id}?page=${pageParam}&limit=20`);
+    const res = await axios.get<featuredQuestionResponse>(
+      `http://localhost:8080/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
+    );
     console.log('API Response:', res.data);
     return res.data;
   } catch (error) {
     console.log('API Error:', error);
-    throw error; // Important: throw error so React Query can handle it
+    throw error;
   }
 }
-export const getQuestionsByCompany = async({id,pageParam}:{id: string, pageParam: number})=>{
+
+export const getQuestionsByCompany = async({id,pageParam,userId}:{id: string, pageParam: number,userId: string})=>{
   try {
-    const res = await axios.get<featuredQuestionResponse>(`http://localhost:8080/api/v1/question/company/${id}?page=${pageParam}&limit=20`);
+    const res = await axios.post<featuredQuestionResponse>(`http://localhost:8080/api/v1/question/company/${id}?page=${pageParam}&limit=20`,
+      {
+        userId
+      }
+    );
     return res.data
   } catch (error) {
     console.log(error)

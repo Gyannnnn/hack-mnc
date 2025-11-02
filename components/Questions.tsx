@@ -5,16 +5,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderCircle, LoaderCircleIcon } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import QuestionCard from "./ui/questionCard";
+import { useSession } from "next-auth/react";
 
 
-// Memoize the color function since it doesn't change
 const levelColor = (level: string): string => {
   if (level === "EASY") return "text-green-500";
   if (level === "MEDIUM") return "text-yellow-500";
   return "text-red-500";
 };
 
-// Extract filter components for better performance
+
 const FilterControls = React.memo(({
   sortOption,
   setSortOption,
@@ -135,12 +135,18 @@ const NoMoreResultsState = () => (
   </div>
 );
 
-export default function Q2() {
+export default function Q2({userId}:{userId:string}) {
   // --- SORT & FILTER STATES ---
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
+ 
+//   const { data: session } = useSession();
 
+// const userId = session?.user.id ? session.user.id : "noid";
+console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+console.log(userId);
+if(userId === "noid"){ return <div><h1>pelo</h1></div>}
   const {
     data,
     hasNextPage,
@@ -153,7 +159,8 @@ export default function Q2() {
     queryKey: ["questions"], 
     queryFn: ({ pageParam = 1 }) => getQuestions({ 
       pageParam, 
-      search: "" 
+      search: "", 
+      userId
     }),
     getNextPageParam: (lastPage, allPages) =>
       lastPage.data.hasMore ? allPages.length + 1 : undefined,
@@ -248,11 +255,17 @@ export default function Q2() {
       <QuestionCard 
         key={`${question.name}-${index}`} 
         data={question} 
-        index={index} 
+        index={index}
+        type="topic"
+        companyId="" 
+     
       />
     )),
     [filteredAndSortedQuestions]
   );
+
+
+
 
   // --- RENDER LOGIC ---
   if (isLoading) {

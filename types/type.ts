@@ -1,3 +1,5 @@
+import { boolean } from "zod"
+
 export interface company {
   id: string
   name: string,
@@ -47,7 +49,8 @@ export interface featuredQuestions {
   frequency: number
   acceptanceRate: number
   difficulty: string
-  leetCodeLink: string
+  leetCodeLink: string,
+  id: string,
   topics: Array<{
     id: string
     questionId: string
@@ -62,6 +65,7 @@ export interface featuredQuestions {
       name: string
     }
   }>
+  isSolved: boolean
 }
 
 export interface featuredQuestionResponse {
@@ -93,11 +97,26 @@ export interface queryQuestionResponse {
   data: featuredQuestions[];
 }
 
+export interface topicStats {
+  topic: {
+    name: string
+  },
+  totalNumberOfQuestions: number,
+  easy: number,
+  medium: number,
+  hard: number,
+  easySolved: number,
+  mediumSolved: number,
+  hardSolved: number
+}
+
 export interface topicDetailResponse {
   success: boolean,
   message: string,
-  data: topic
+  data: topicStats
 }
+
+
 
 export interface signInResponse {
   success: boolean,
@@ -118,4 +137,33 @@ export interface signInResponse {
     },
     token: string
   }
+}
+
+
+export interface companyCardDetails{
+
+    success: boolean,
+    message: string
+    data: {
+        company: {
+            id: string
+            name: string
+            type:string
+            ctc: number,
+            logo:string
+            logoSmall: string
+        },
+        totalNumberOfQuestions: number,
+        easy: number,
+        medium: number,
+        hard: number,
+        userProgressData: {
+            totalQuestionsSolved: number,
+            percentageCompleted: number,
+            easySolved: number,
+            mediumSolved: number,
+            hardSolved: number
+        }
+    }
+
 }

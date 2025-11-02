@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import ContinueWithGoogle from "./ContinueWithGoogle";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import axios from "axios";
+import Loading from "@/app/loading";
 
 export function SignupForm({
   className,
@@ -30,10 +31,7 @@ export function SignupForm({
     const toastId = toast.loading("Redirecting to Google...");
 
     try {
-      // ✅ Redirect-based flow is required for OAuth
       await signIn("google", { callbackUrl: "/profile" });
-
-      // This line WON’T execute since signIn will redirect the page
     } catch (error) {
       console.error("Google sign in error:", error);
       toast.error("Google sign in failed");
@@ -43,11 +41,46 @@ export function SignupForm({
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    const id = toast.loading("Signing up");
+
+    console.log(name, email, password);
+    setIsLoading(true);
+    try {
+      await axios.post("http://localhost:8080/api/v1/auth/signup", {
+        email,
+        name,
+        password,
+      });
+      toast.remove(id);
+      setIsLoading(false);
+      toast.success("Account created successfully");
+      router.push("/login");
+    } catch (error) {
+      setIsLoading(false);
+      toast.remove(id);
+      toast.error("Failed to sign up");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -60,25 +93,42 @@ export function SignupForm({
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  name="email"
+                  placeholder="vinod@example.com"
                   required
                 />
-                <FieldDescription>
-                  We&apos;ll use this to contact you. We will not share your
-                  email with anyone else.
-                </FieldDescription>
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input
+                  id="name"
+                  type="name"
+                  name="name"
+                  placeholder="Vinod"
+                  required
+                />
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
                       Confirm Password
                     </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
+                    <Input
+                      id="confirm-password"
+                      name="confirmPassword"
+                      type="password"
+                      required
+                    />
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -86,7 +136,9 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="submit">
+                  {isLoading ? "Creating Account" : "Signup"}
+                </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
@@ -99,7 +151,7 @@ export function SignupForm({
                   disabled={isLoading}
                   variant="outline"
                 >
-                  <FaGoogle /> Sign in with Google
+                  <FaGoogle /> Sign up with Google
                 </Button>
               </Field>
               <FieldDescription className="text-center">
@@ -115,7 +167,7 @@ export function SignupForm({
             />
           </div>
         </CardContent>
-        <Toaster/>
+        <Toaster />
       </Card>
       <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}

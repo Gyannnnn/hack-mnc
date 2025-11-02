@@ -132,7 +132,7 @@ const NoMoreResultsState = () => (
   </div>
 );
 
-export default function CompanyDetails({ id }: { id: string }) {
+export default function CompanyDetails({ id,userId,companyId }: { id: string, userId: string, companyId:string }) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
@@ -149,7 +149,8 @@ export default function CompanyDetails({ id }: { id: string }) {
     queryKey: ["company-questions", id], // Include company ID in query key
     queryFn: ({ pageParam = 1 }) => getQuestionsByCompany({ 
       id,
-      pageParam
+      pageParam,
+      userId
     }),
     getNextPageParam: (lastPage, allPages) => {
       // Fix: Check if lastPage exists and has data with hasMore
@@ -252,12 +253,15 @@ export default function CompanyDetails({ id }: { id: string }) {
   const questionCards = useMemo(() => 
     filteredAndSortedQuestions.map((question, index) => {        
       if (!question) return null;
-      
+     
       return (
         <QuestionCard 
           key={`${question?.name}-${index}`} 
           data={question} 
           index={index} 
+          companyId={id}
+          type='company'
+          
         />
       );
     }).filter(Boolean), // Remove any null entries

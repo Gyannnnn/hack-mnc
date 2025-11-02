@@ -134,7 +134,7 @@ const NoMoreResultsState = () => (
 );
 
 // Client component that receives the ID as a prop
-export default function TopicQuestionsPage({ id }: { id: string }) {
+export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: string,userId:string,type: string,companyId:string }) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
@@ -151,7 +151,8 @@ export default function TopicQuestionsPage({ id }: { id: string }) {
     queryKey: ["topic-questions", id], // Include topic ID in query key
     queryFn: ({ pageParam = 1 }) => getQuestionsByTopic({ 
       id,
-      pageParam
+      pageParam,
+      userId
     }),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.data?.hasMore ? allPages.length + 1 : undefined;
@@ -258,6 +259,9 @@ export default function TopicQuestionsPage({ id }: { id: string }) {
           key={`${question?.name}-${index}`} 
           data={question} 
           index={index} 
+         type={type}
+         companyId={companyId}
+
         />
       );
     }).filter(Boolean),

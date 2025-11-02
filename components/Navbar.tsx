@@ -22,7 +22,7 @@ export default function Navbar() {
           href="/"
           className="sm:text-2xl text-xl font-bold text-[var(--color-foreground)] hover:text-[var(--color-primary)] transition-all duration-300 font-mono tracking-tight"
         >
-          &lt; HackMNC /&gt;
+          &lt;HackMNC/&gt;
         </Link>
         <div className="flex items-center gap-3 max-sm:hidden ">
           {navBarData.map((data, index) => {

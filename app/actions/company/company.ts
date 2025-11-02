@@ -1,8 +1,8 @@
-import { companyDetailResponse, companyResponse } from '@/types/type';
+import { companyCardDetails, companyDetailResponse, companyResponse } from '@/types/type';
 import axios from 'axios';
 
 
-export const getAllFeaturedCompany = async()=>{
+export const getAllFeaturedCompany = async () => {
     try {
         const res = await axios.get<companyResponse>("http://localhost:8080/api/v1/company/featured/get/");
         return res.data;
@@ -12,10 +12,10 @@ export const getAllFeaturedCompany = async()=>{
     }
 }
 
-export const getAllCompanies = async()=>{
+export const getAllCompanies = async () => {
     try {
-            const res = await axios.get<companyResponse>("http://localhost:8080/api/v1/company/all");
-            return res.data;
+        const res = await axios.get<companyResponse>("http://localhost:8080/api/v1/company/all");
+        return res.data;
     } catch (error) {
         console.log(error)
     }
@@ -23,11 +23,24 @@ export const getAllCompanies = async()=>{
 
 
 
-export const getCompanyById = async(id:string)=>{
+export const getCompanyById = async (id: string) => {
     try {
         const res = await axios.get<companyDetailResponse>(`http://localhost:8080/api/v1/company/get/${id}`);
         return res.data;
     } catch (error) {
         console.log(error);
+    }
+}
+
+
+export const getCompanyDetails = async ({ companyId, userId }: { companyId: string, userId: string }) => {
+    try {
+        const res = await axios.post<companyCardDetails>("http://localhost:8080/api/v1/company/details", {
+            id: companyId,
+            userId: userId
+        })
+        return res.data;
+    } catch (error) {
+        console.log(error)
     }
 }

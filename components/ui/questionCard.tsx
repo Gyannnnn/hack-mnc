@@ -1,24 +1,44 @@
+"use client";
 import { featuredQuestions } from "@/types/type";
 import React from "react";
 import { Badge } from "./badge";
 import { Card } from "./card";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
+import { ImCheckboxUnchecked } from "react-icons/im";
+import { useUserProgressStore } from "@/app/store/store";
+import ProgressTrackButton from "./ProgressTrackButton";
+
 
 
 export default function QuestionCard({
   data,
   index,
+  companyId,
+  type
 }: {
   data: featuredQuestions;
   index: number;
+  companyId: string,
+  type:string
+
 }) {
+  const  increaseEasySolved= useUserProgressStore((state)=>state.increaseEasySolved)
+  const  increaseMediumSolved= useUserProgressStore((state)=>state.increaseMediumSolved)
+  const increaseHardSolved= useUserProgressStore((state)=>state.increaseHardSolved)
   const levelColor = (level: string): string => {
     if (level === "EASY") return "text-green-500";
     else if (level === "MEDIUM") return "text-yellow-500";
     else return "text-red-500";
   };
-  console.log(data);
+
+  const chooseProgress = (difficulty:string)=>{
+    if(difficulty === "EASY") return increaseEasySolved
+    else if(difficulty === "MEDIUM") return increaseMediumSolved
+    else if(difficulty=== "HARD") return increaseHardSolved
+  }
+  console.log(data)
+  
   return (
     <Card
       key={`${data.name}-${index}`}
@@ -26,6 +46,9 @@ export default function QuestionCard({
         index % 2 === 0 ? "bg-muted" : "bg-background"
       }`}
     >
+      <div>
+        <ProgressTrackButton  questionId={data.id} isSolved={data.isSolved} difficulty={data.difficulty}/>
+      </div>
       <h1>
         {index + 1}. {data.name}
       </h1>

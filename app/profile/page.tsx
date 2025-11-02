@@ -11,6 +11,7 @@ export default async function page() {
     <div className='cnt'>
       <h1>{email}</h1>
       <h1>{session?.accessToken}</h1>
+      <h1>{session.user.id}</h1>
     </div>
   )
 }
