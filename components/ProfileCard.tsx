@@ -12,11 +12,8 @@ export default async function ProfileCard() {
   const user = session?.user;
   const userId = user?.id;
 
-  const stats = {
-    easy: { solved: 234, total: 1234, percentage: 19 },
-    medium: { solved: 156, total: 856, percentage: 18 },
-    hard: { solved: 89, total: 423, percentage: 21 },
-  };
+  // Deprecated dummy stats were previously used to drive progress bars.
+  // Real percentages are now calculated from server data below.
 
   const getInitials = (name: string) => {
     return name
@@ -30,12 +27,23 @@ export default async function ProfileCard() {
   const res = await getUserOverallProgress({ userId });
   const statsData = res?.data
 
+  const calcPct = (solved?: number, total?: number) => {
+    const s = Number(solved || 0);
+    const t = Number(total || 0);
+    if (!t) return 0;
+    return (s / t) * 100;
+  };
+
+  const easyPct = calcPct(statsData?.difficultyStats.EASY.solved, statsData?.difficultyStats.EASY.total);
+  const mediumPct = calcPct(statsData?.difficultyStats.MEDIUM.solved, statsData?.difficultyStats.MEDIUM.total);
+  const hardPct = calcPct(statsData?.difficultyStats.HARD.solved, statsData?.difficultyStats.HARD.total);
+
   return (
-    <Card className="w-full  p-6 shadow-lg">
-      <CardContent className="p-0">
-        <div className="flex flex-col lg:flex-row gap-8 items-center justify-around">
+    <Card className="w-full bg-card border border-border">
+      <CardContent className="p-6">
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
           {/* Profile Section */}
-          <div className="flex flex-col  items-center gap-6 w-full lg:w-2/6 ">
+          <div className="flex flex-col items-center gap-6 w-full lg:w-2/6">
             <div className="relative h-32 w-32">
               <Avatar className="h-32 w-32 border-4 border-primary relative">
                 {user?.image ? (
@@ -80,64 +88,64 @@ export default async function ProfileCard() {
             </div>
           </div>
           <div className="relative">
-            <div className="h-50 w-50 rounded-full border-8 border-primary/20 flex items-center justify-center">
+            <div className="h-40 w-40 rounded-full border-8 border-primary/20 flex items-center justify-center bg-card/50">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
                   {statsData?.userSolved}/
                   {statsData?.totalQuestions}
                 </div>
-                <div className="text-sm text-muted-foreground">{(Number(statsData?.userSolved)/Number(statsData?.totalQuestions)*100).toFixed(3)}% Solved</div>
+                <div className="text-sm text-muted-foreground">{calcPct(statsData?.userSolved, statsData?.totalQuestions).toFixed(1)}% Solved</div>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-10 w-full lg:w-4/5">
+          <div className="flex items-center gap-10 w-full lg:w-3/5">
             <div className="space-y-4 flex-1 min-w-[280px]">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-2xl text-green-600 flex items-center gap-2">
+                  <span className="font-medium text-lg md:text-xl text-green-600 flex items-center gap-2">
                     <div className="h-2 w-2 rounded-full bg-green-600" />
                     Easy
                   </span>
-                  <span className="text-xl text-muted-foreground">
+                  <span className="text-base md:text-lg text-muted-foreground">
                     {statsData?.difficultyStats.EASY.solved}/{statsData?.difficultyStats.EASY.total}
                   </span>
                 </div>
-                <Progress  value={stats.easy.percentage} className="h-2" />
+                <Progress value={easyPct} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                  {(Number(statsData?.difficultyStats.EASY.solved)/Number(statsData?.difficultyStats.EASY.total)*100).toFixed(2)}%
+                  {easyPct.toFixed(1)}%
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-2xl text-yellow-600 flex items-center gap-2">
+                  <span className="font-medium text-lg md:text-xl text-yellow-600 flex items-center gap-2">
                     <div className="h-2 w-2 rounded-full bg-yellow-600" />
                     Medium
                   </span>
-                  <span className="text-xl text-muted-foreground">
+                  <span className="text-base md:text-lg text-muted-foreground">
                     {statsData?.difficultyStats.MEDIUM.solved}/{statsData?.difficultyStats.MEDIUM.total}
                   </span>
                 </div>
-                <Progress value={stats.medium.percentage} className="h-2" />
+                <Progress value={mediumPct} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                 {(Number(statsData?.difficultyStats.MEDIUM.solved)/Number(statsData?.difficultyStats.MEDIUM.total)*100).toFixed(2)}%
+                 {mediumPct.toFixed(1)}%
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-2xl text-red-600 flex items-center gap-2">
+                  <span className="font-medium text-lg md:text-xl text-red-600 flex items-center gap-2">
                     <div className="h-2 w-2 rounded-full bg-red-600" />
                     Hard
                   </span>
-                  <span className="text-xl text-muted-foreground">
+                  <span className="text-base md:text-lg text-muted-foreground">
                     {statsData?.difficultyStats.HARD.solved}/{statsData?.difficultyStats.HARD.total}
                   </span>
                 </div>
-                <Progress value={stats.hard.percentage} className="h-2" />
+                <Progress value={hardPct} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                 {(Number(statsData?.difficultyStats.HARD.solved)/Number(statsData?.difficultyStats.HARD.total)*100).toFixed(2)}%
+                 {hardPct.toFixed(1)}%
                 </div>
               </div>
             </div>

@@ -6,7 +6,7 @@ import React from 'react'
 
 
 export const navBarData = [
-  { Name: "Home", link: "/" },
+  { Name: "Problems", link: "/problems" },
   { Name: "Companies", link: "/companies" },
   { Name: "Topics", link: "/topic" },
   { Name: "Blogs", link: "/blogs" },

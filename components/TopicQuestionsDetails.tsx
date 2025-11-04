@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { LoaderCircle, LoaderCircleIcon } from "lucide-react";
+import { LoaderCircleIcon } from "lucide-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import QuestionCardLoader from "./QuestionCardLoader";
 

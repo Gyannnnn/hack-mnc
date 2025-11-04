@@ -17,28 +17,30 @@ export default async function CompanyWiseProgressCard({
   try {
     if (!userId) {
       return (
-        <div className="border-primary/30 bg-primary/5">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-start sm:items-center gap-3">
-              <div className="rounded-full bg-primary/10 p-2">
-                <LogIn className="h-5 w-5 text-primary" />
+        <Card className="bg-card border border-border rounded-lg">
+          <CardContent className="p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex items-start sm:items-center gap-3">
+                <div className="rounded-full bg-primary/10 p-2">
+                  <LogIn className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="font-semibold text-foreground">You&apos;re not signed in</div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Please sign in to view your progress and personalized stats.
+                  </p>
+                </div>
               </div>
-              <div>
-                <div className="font-semibold">Sign in required</div>
-                <h1>
-                  Please sign in to view your progress and personalized stats.
-                </h1>
-              </div>
-            </div>
 
-            <Link href="/login">
-              <Button variant="default" size="sm" className="gap-2">
-                <LogIn className="h-4 w-4" />
-                Sign In
-              </Button>
-            </Link>
-          </div>
-        </div>
+              <Link href="/login">
+                <Button variant="default" size="sm" className="gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Sign in
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       );
     }
 
@@ -58,41 +60,33 @@ export default async function CompanyWiseProgressCard({
     }
 
     return (
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {progressData.progresses.map((data, index) => (
-          <Card
-            key={index}
-            className="min-w-[280px] flex-1 hover:shadow-md transition-all relative"
-          >
+          <Card key={index} className="bg-card border border-border rounded-lg hover:border-primary/40 transition-colors">
             <CardContent className="p-4">
               <div className="flex items-center gap-4">
-                <div className="flex-shrink-0">
+             
                   <Image
                     src={data.company.logo}
-                    height={100}
-                    width={100}
+                    height={64}
+                    width={64}
                     alt={`${data.company.name} logo`}
                   />
-                </div>
-
+              
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">{data.company.name}</h3>
-                    <Badge variant="default" className="absolute top-2 right-2">
+                    <h3 className="font-semibold text-foreground">{data.company.name}</h3>
+                    <Badge variant="secondary" className="ml-2">
                       {data.percentageCompleted.toFixed(1)}%
                     </Badge>
                   </div>
-
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center">
                       <span className="text-sm font-bold text-primary">
                         {data.totalQuestionsSolved}
                       </span>
                     </div>
-                    <Progress
-                      value={data.percentageCompleted}
-                      className="h-2 flex-1"
-                    />
+                    <Progress value={data.percentageCompleted} className="h-2 flex-1" />
                   </div>
                 </div>
               </div>
