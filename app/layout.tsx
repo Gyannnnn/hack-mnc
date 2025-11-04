@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,8 +42,9 @@ export default function RootLayout({
                 <Navbar />
                 <main className="pt-20 min-h-screen flex items-center justify-center w-full sm:px-10">
                   {children}
-                  <Toaster />
+               
                 </main>
+                <Toaster position="top-center" />
                 <Footer />
               </ThemeProvider>
             </Providers>

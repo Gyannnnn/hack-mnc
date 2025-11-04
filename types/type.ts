@@ -1,4 +1,4 @@
-import { boolean } from "zod"
+
 
 export interface company {
   id: string
@@ -140,30 +140,74 @@ export interface signInResponse {
 }
 
 
-export interface companyCardDetails{
+export interface companyCardDetails {
 
-    success: boolean,
-    message: string
-    data: {
-        company: {
-            id: string
-            name: string
-            type:string
-            ctc: number,
-            logo:string
-            logoSmall: string
-        },
-        totalNumberOfQuestions: number,
-        easy: number,
-        medium: number,
-        hard: number,
-        userProgressData: {
-            totalQuestionsSolved: number,
-            percentageCompleted: number,
-            easySolved: number,
-            mediumSolved: number,
-            hardSolved: number
-        }
+  success: boolean,
+  message: string
+  data: {
+    company: {
+      id: string
+      name: string
+      type: string
+      ctc: number,
+      logo: string
+      logoSmall: string
+    },
+    totalNumberOfQuestions: number,
+    easy: number,
+    medium: number,
+    hard: number,
+    userProgressData: {
+      totalQuestionsSolved: number,
+      percentageCompleted: number,
+      easySolved: number,
+      mediumSolved: number,
+      hardSolved: number
     }
+  }
 
+}
+
+
+export interface userProgressResponse {
+
+  success: boolean
+  message: string
+  data: {
+    progresses: [
+      {
+        totalQuestionsSolved: number,
+        percentageCompleted: number,
+        company: {
+          logo: string
+          logoSmall: string
+          name: string
+        }
+      }
+    ]
+  }
+}
+
+export interface userOverallProgressResponse {
+  success: boolean,
+  message: string
+  data: {
+    totalQuestions: number,
+    userSolved: number,
+    overallProgress: number,
+    difficultyStats: {
+      EASY: {
+        total: number,
+        solved: number
+      },
+      MEDIUM: {
+        total: number,
+        solved: number
+      },
+      HARD: {
+        total: number,
+        solved: number
+      }
+    }
+  }
 }

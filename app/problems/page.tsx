@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 export default function page() {
   return (
     <div className='cnt'>      
-      <Questions/>
+      <Questions userId=''/>
     </div>
   )
 }

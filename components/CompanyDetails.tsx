@@ -5,12 +5,9 @@ import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
 import QuestionCard from './ui/questionCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getQuestionsByCompany } from '@/app/actions/questions/questions';
+import QuestionCardLoader from './QuestionCardLoader';
 
-const levelColor = (level: string): string => {
-  if (level === "EASY") return "text-green-500";
-  if (level === "MEDIUM") return "text-yellow-500";
-  return "text-red-500";
-};
+
 
 const FilterControls = React.memo(({
   sortOption,
@@ -79,12 +76,12 @@ const FilterControls = React.memo(({
 
 FilterControls.displayName = 'FilterControls';
 
-const LoadingState = () => (
-  <div className="flex justify-center items-center py-8 gap-2">
-    <LoaderCircle className="animate-spin h-8 w-8" />
-    <span className="ml-2">Loading questions...</span>
-  </div>
-);
+// const LoadingState = () => (
+//   <div className="flex justify-center items-center py-8 gap-2">
+//     <LoaderCircle className="animate-spin h-8 w-8" />
+//     <span className="ml-2">Loading questions...</span>
+//   </div>
+// );
 
 const ErrorState = ({ error }: { error: Error }) => (
   <div className="flex justify-center items-center py-8 text-red-500">
@@ -132,7 +129,7 @@ const NoMoreResultsState = () => (
   </div>
 );
 
-export default function CompanyDetails({ id,userId,companyId }: { id: string, userId: string, companyId:string }) {
+export default function CompanyDetails({ id,userId }: { id: string, userId: string, companyId:string }) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
@@ -265,12 +262,12 @@ export default function CompanyDetails({ id,userId,companyId }: { id: string, us
         />
       );
     }).filter(Boolean), // Remove any null entries
-    [filteredAndSortedQuestions]
+    [filteredAndSortedQuestions,id]
   );
 
   // --- RENDER LOGIC ---
   if (isLoading) {
-    return <LoadingState />;
+    return <QuestionCardLoader />;
   }
 
   if (isError) {

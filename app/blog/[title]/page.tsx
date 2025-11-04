@@ -2,7 +2,7 @@ import { getAllArticles, getArticlePage, getArticlePageData } from '@/utils/noti
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
-const databaseId = process.env.NOTION_DATABASE_ID!
+
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: {
@@ -45,6 +45,7 @@ export async function generateMetadata({ params }: {
       },
     }
   } catch (error) {
+    console.log(error)
     return {
       title: 'Error',
       description: 'An error occurred while loading the article.',

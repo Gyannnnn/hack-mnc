@@ -1,91 +1,97 @@
-"use client"
+"use client";
 
-import { getQuestionsByTopic } from '@/app/actions/questions/questions';
-import QuestionCard from '@/components/ui/questionCard';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { getQuestionsByTopic } from "@/app/actions/questions/questions";
+import QuestionCard from "@/components/ui/questionCard";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { LoaderCircle, LoaderCircleIcon } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import QuestionCardLoader from "./QuestionCardLoader";
 
-const levelColor = (level: string): string => {
-  if (level === "EASY") return "text-green-500";
-  if (level === "MEDIUM") return "text-yellow-500";
-  return "text-red-500";
-};
 
-const FilterControls = React.memo(({
-  sortOption,
-  setSortOption,
-  difficultyFilter,
-  setDifficultyFilter,
-  topicFilter,
-  setTopicFilter
-}: {
-  sortOption: string;
-  setSortOption: (value: string) => void;
-  difficultyFilter: string;
-  setDifficultyFilter: (value: string) => void;
-  topicFilter: string;
-  setTopicFilter: (value: string) => void;
-}) => (
-  <div className="flex flex-wrap gap-3 mb-4 justify-between items-center">
-    {/* Sort */}
-    <div className="flex gap-2 items-center">
-      <p className="font-semibold">Sort by:</p>
-      <Select value={sortOption} onValueChange={setSortOption}>
-        <SelectTrigger className="w-44">
-          <SelectValue placeholder="Sort option" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="default">Default</SelectItem>
-          <SelectItem value="acceptance-high">Acceptance ↑</SelectItem>
-          <SelectItem value="acceptance-low">Acceptance ↓</SelectItem>
-          <SelectItem value="frequency">Frequency</SelectItem>
-          <SelectItem value="title">Title (A–Z)</SelectItem>
-        </SelectContent>
-      </Select>
+const FilterControls = React.memo(
+  ({
+    sortOption,
+    setSortOption,
+    difficultyFilter,
+    setDifficultyFilter,
+    topicFilter,
+    setTopicFilter,
+  }: {
+    sortOption: string;
+    setSortOption: (value: string) => void;
+    difficultyFilter: string;
+    setDifficultyFilter: (value: string) => void;
+    topicFilter: string;
+    setTopicFilter: (value: string) => void;
+  }) => (
+    <div className="flex flex-wrap gap-3 mb-4 justify-between items-center">
+      {/* Sort */}
+      <div className="flex gap-2 items-center">
+        <p className="font-semibold">Sort by:</p>
+        <Select value={sortOption} onValueChange={setSortOption}>
+          <SelectTrigger className="w-44">
+            <SelectValue placeholder="Sort option" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="default">Default</SelectItem>
+            <SelectItem value="acceptance-high">Acceptance ↑</SelectItem>
+            <SelectItem value="acceptance-low">Acceptance ↓</SelectItem>
+            <SelectItem value="frequency">Frequency</SelectItem>
+            <SelectItem value="title">Title (A–Z)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Filter Difficulty */}
+      <div className="flex gap-2 items-center">
+        <p className="font-semibold">Difficulty:</p>
+        <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+          <SelectTrigger className="w-36">
+            <SelectValue placeholder="All" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="EASY">Easy</SelectItem>
+            <SelectItem value="MEDIUM">Medium</SelectItem>
+            <SelectItem value="HARD">Hard</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Filter Topic */}
+      <div className="flex gap-2 items-center">
+        <p className="font-semibold">Topic:</p>
+        <input
+          type="text"
+          placeholder="Search topic..."
+          className="border rounded-md px-2 py-1 w-48"
+          value={topicFilter === "all" ? "" : topicFilter}
+          onChange={(e) =>
+            setTopicFilter(
+              e.target.value.trim() === "" ? "all" : e.target.value
+            )
+          }
+        />
+      </div>
     </div>
-
-    {/* Filter Difficulty */}
-    <div className="flex gap-2 items-center">
-      <p className="font-semibold">Difficulty:</p>
-      <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
-        <SelectTrigger className="w-36">
-          <SelectValue placeholder="All" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All</SelectItem>
-          <SelectItem value="EASY">Easy</SelectItem>
-          <SelectItem value="MEDIUM">Medium</SelectItem>
-          <SelectItem value="HARD">Hard</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-
-    {/* Filter Topic */}
-    <div className="flex gap-2 items-center">
-      <p className="font-semibold">Topic:</p>
-      <input
-        type="text"
-        placeholder="Search topic..."
-        className="border rounded-md px-2 py-1 w-48"
-        value={topicFilter === "all" ? "" : topicFilter}
-        onChange={(e) =>
-          setTopicFilter(e.target.value.trim() === "" ? "all" : e.target.value)
-        }
-      />
-    </div>
-  </div>
-));
-
-FilterControls.displayName = 'FilterControls';
-
-const LoadingState = () => (
-  <div className="flex justify-center items-center py-8 gap-2">
-    <LoaderCircle className="animate-spin h-8 w-8" />
-    <span className="ml-2">Loading questions...</span>
-  </div>
+  )
 );
+
+FilterControls.displayName = "FilterControls";
+
+// const LoadingState = () => (
+//   <div className="flex justify-center items-center py-8 gap-2">
+//     <LoaderCircle className="animate-spin h-8 w-8" />
+//     <span className="ml-2">Loading questions...</span>
+//   </div>
+// );
 
 const ErrorState = ({ error }: { error: Error }) => (
   <div className="flex justify-center items-center py-8 text-red-500">
@@ -93,12 +99,12 @@ const ErrorState = ({ error }: { error: Error }) => (
   </div>
 );
 
-const NoResultsState = ({ 
-  hasFilters, 
-  onClearFilters 
-}: { 
-  hasFilters: boolean; 
-  onClearFilters: () => void; 
+const NoResultsState = ({
+  hasFilters,
+  onClearFilters,
+}: {
+  hasFilters: boolean;
+  onClearFilters: () => void;
 }) => (
   <div className="flex justify-center items-center py-8">
     <div className="text-center">
@@ -134,7 +140,17 @@ const NoMoreResultsState = () => (
 );
 
 // Client component that receives the ID as a prop
-export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: string,userId:string,type: string,companyId:string }) {
+export default function TopicQuestionsPage({
+  id,
+  userId,
+  type,
+  companyId,
+}: {
+  id: string;
+  userId: string;
+  type: string;
+  companyId: string;
+}) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [topicFilter, setTopicFilter] = useState("all");
@@ -149,11 +165,12 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
     error,
   } = useInfiniteQuery({
     queryKey: ["topic-questions", id], // Include topic ID in query key
-    queryFn: ({ pageParam = 1 }) => getQuestionsByTopic({ 
-      id,
-      pageParam,
-      userId
-    }),
+    queryFn: ({ pageParam = 1 }) =>
+      getQuestionsByTopic({
+        id,
+        pageParam,
+        userId,
+      }),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.data?.hasMore ? allPages.length + 1 : undefined;
     },
@@ -165,7 +182,7 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
   // Flatten all questions with useMemo and safe access
   const allQuestions = useMemo(() => {
     if (!data?.pages) return [];
-    
+
     return data.pages.flatMap((page) => {
       return page?.data?.fetchQuestions || [];
     });
@@ -176,7 +193,7 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
     const bottom =
       window.innerHeight + window.scrollY >=
       document.documentElement.scrollHeight - 500;
-    
+
     if (bottom && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
@@ -185,7 +202,7 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
   // Optimized scroll event listener
   useEffect(() => {
     let ticking = false;
-    
+
     const throttledScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -220,13 +237,17 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
 
     // Apply sorting with safe access
     if (sortOption === "acceptance-high") {
-      result.sort((a, b) => (b?.acceptanceRate || 0) - (a?.acceptanceRate || 0));
+      result.sort(
+        (a, b) => (b?.acceptanceRate || 0) - (a?.acceptanceRate || 0)
+      );
     } else if (sortOption === "acceptance-low") {
-      result.sort((a, b) => (a?.acceptanceRate || 0) - (b?.acceptanceRate || 0));
+      result.sort(
+        (a, b) => (a?.acceptanceRate || 0) - (b?.acceptanceRate || 0)
+      );
     } else if (sortOption === "frequency") {
       result.sort((a, b) => (b?.frequency || 0) - (a?.frequency || 0));
     } else if (sortOption === "title") {
-      result.sort((a, b) => (a?.name || '').localeCompare(b?.name || ''));
+      result.sort((a, b) => (a?.name || "").localeCompare(b?.name || ""));
     }
     // Default sorting (by frequency)
     else {
@@ -244,33 +265,38 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
   }, []);
 
   // Check if any filters are active
-  const hasActiveFilters = useMemo(() => 
-    sortOption !== "default" || difficultyFilter !== "all" || topicFilter !== "all",
+  const hasActiveFilters = useMemo(
+    () =>
+      sortOption !== "default" ||
+      difficultyFilter !== "all" ||
+      topicFilter !== "all",
     [sortOption, difficultyFilter, topicFilter]
   );
 
   // Memoize question cards to prevent unnecessary re-renders with safe access
-  const questionCards = useMemo(() => 
-    filteredAndSortedQuestions.map((question, index) => {        
-      if (!question) return null;
-      
-      return (
-        <QuestionCard 
-          key={`${question?.name}-${index}`} 
-          data={question} 
-          index={index} 
-         type={type}
-         companyId={companyId}
+  const questionCards = useMemo(
+    () =>
+      filteredAndSortedQuestions
+        .map((question, index) => {
+          if (!question) return null;
 
-        />
-      );
-    }).filter(Boolean),
-    [filteredAndSortedQuestions]
+          return (
+            <QuestionCard
+              key={`${question?.name}-${index}`}
+              data={question}
+              index={index}
+              type={type}
+              companyId={companyId}
+            />
+          );
+        })
+        .filter(Boolean),
+    [filteredAndSortedQuestions,companyId]
   );
 
   // --- RENDER LOGIC ---
   if (isLoading) {
-    return <LoadingState />;
+    return <QuestionCardLoader />;
   }
 
   if (isError) {
@@ -291,19 +317,19 @@ export default function TopicQuestionsPage({ id,userId,type,companyId }: { id: s
 
       {/* Questions List */}
       {filteredAndSortedQuestions.length === 0 ? (
-        <NoResultsState 
-          hasFilters={hasActiveFilters} 
-          onClearFilters={handleClearFilters} 
+        <NoResultsState
+          hasFilters={hasActiveFilters}
+          onClearFilters={handleClearFilters}
         />
       ) : (
-        <>
-          {questionCards}
-        </>
+        <>{questionCards}</>
       )}
 
       {/* Loading and pagination states */}
       {isFetchingNextPage && <LoadingMoreState />}
-      {!hasNextPage && filteredAndSortedQuestions.length > 0 && <NoMoreResultsState />}
+      {!hasNextPage && filteredAndSortedQuestions.length > 0 && (
+        <NoMoreResultsState />
+      )}
     </div>
   );
 }

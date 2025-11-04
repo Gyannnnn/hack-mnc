@@ -5,6 +5,7 @@ import Topics from "@/components/Topics";
 import Questions from "@/components/Questions";
 import { auth } from "@/auth";
 
+
 export default async function page() {
   const session = await auth();
   return (

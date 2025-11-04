@@ -11,13 +11,12 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import axios from "axios";
-import Loading from "@/app/loading";
 
 export function SignupForm({
   className,
@@ -70,6 +69,7 @@ export function SignupForm({
       toast.success("Account created successfully");
       router.push("/login");
     } catch (error) {
+      console.log(error)
       setIsLoading(false);
       toast.remove(id);
       toast.error("Failed to sign up");

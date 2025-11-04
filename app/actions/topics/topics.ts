@@ -1,6 +1,5 @@
 import { topicDetailResponse, topicResponse } from "@/types/type";
 import axios from "axios"
-import { number } from "zod";
 
 export const getTopics = async()=>{
     try {

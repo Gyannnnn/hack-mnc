@@ -9,13 +9,17 @@ export default async function TopicPage({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const session  = await auth()
-  
+  const session = await auth();
 
   return (
-    <div className="cnt">  
-        <TopicDetailsCard userId={session?.user.id as string} id={id} />
-        <TopicQuestionsPage type="topic" companyId="" userId={session?.user.id as string}  id={id} />
+    <div className="cnt">
+      <TopicDetailsCard userId={session?.user.id as string} id={id} />
+      <TopicQuestionsPage
+        type="topic"
+        companyId=""
+        userId={session?.user.id as string}
+        id={id}
+      />
     </div>
   );
 }

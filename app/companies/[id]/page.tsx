@@ -17,14 +17,21 @@ export default async function page({
           companyId={id}
           userId={session?.user.id as string}
         />
-        <div>    
-          <CompanyDetails companyId={id} userId={session?.user.id as string} id={id} />
+        <div>
+          <CompanyDetails
+            companyId={id}
+            userId={session?.user.id as string}
+            id={id}
+          />
         </div>
       </div>
     );
   } catch (error) {
-    <div className="cnt">
-      <h1>Something went wrong</h1>
-    </div>;
+    console.log(error)
+    return (
+      <div className="cnt">
+        <h1>Something went wrong</h1>
+      </div>
+    );
   }
 }

@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function CompanyCard({data,type}:{data: company,type:string}) {
   return (
     <Link href={`/companies/${data.id}`} target="_blank" className={`${type === "large"?"sm:w-1/5":"sm:w-1/6 w-full "} h-44  relative`}>
-    <Card className={`flex h-full relative items-center justify-center mt-2`}>
+    <Card className={`flex h-full relative items-center justify-center mt-2 bg-muted`}>
       <Image
         src={data.logo.trim()}
         height={150}

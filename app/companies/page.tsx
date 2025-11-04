@@ -5,13 +5,13 @@ import CompanyCard from "@/components/ui/companyCard";
 import { Input } from "@/components/ui/input";
 import { debounce } from "lodash";
 import Loading from "../loading";
+import { company } from "@/types/type";
 
 export default function Companies() {
   const [query, setQuery] = useState("");
-  const [companyData, setCompanyData] = useState<any[]>([]);
-  const [filteredCompanies, setFilteredCompanies] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<company[]>([]);
+  const [filteredCompanies, setFilteredCompanies] = useState<company[]>([]);
   const [loading, setLoading] = useState(true);
-
 
   const debouncedSearch = useMemo(
     () =>
@@ -30,7 +30,6 @@ export default function Companies() {
       }, 500),
     []
   );
-
 
   useEffect(() => {
     return () => {
@@ -63,7 +62,7 @@ export default function Companies() {
     debouncedSearch(value, companyData);
   };
 
-  if (loading) return <Loading/>;
+  if (loading) return <Loading />;
 
   return (
     <div className="cnt">

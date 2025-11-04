@@ -5,7 +5,7 @@ import { getTopicDetails } from "@/app/actions/topics/topics";
 import { Card } from "./ui/card";
 import { Progress } from "./ui/progress";
 import { Badge } from "./ui/badge";
-import { topicDetailResponse, topicStats } from "@/types/type";
+import {  topicStats } from "@/types/type";
 import { useUserProgressStore } from "@/app/store/store";
 
 export default function TopicDetailsCard({ id, userId }: { id: string; userId: string }) {

@@ -127,6 +127,9 @@
   .cnt{
     @apply min-h-screen w-full flex flex-col gap-5 px-2 pt-10 
   }
+  .center{
+    @apply flex items-center justify-center
+  }
 }
 
 

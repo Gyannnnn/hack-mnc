@@ -1,20 +1,18 @@
-// components/QuestionControls.tsx
 "use client";
 import React from "react";
-import { useState } from "react";
 
 const difficulties = ["EASY", "MEDIUM", "HARD"] as const;
 
 type Props = {
   difficulty?: string;
   onDifficultyChange: (d?: string) => void;
-  topics: string[]; // topic names
+  topics: string[];
   topic?: string;
   onTopicChange: (t?: string) => void;
   sort?: string;
   onSortChange: (s: string) => void;
-  order?: "asc"|"desc";
-  onOrderChange: (o: "asc"|"desc") => void;
+  order?: "asc" | "desc";
+  onOrderChange: (o: "asc" | "desc") => void;
 };
 
 export default function QuestionControls({
@@ -31,11 +29,13 @@ export default function QuestionControls({
   return (
     <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
       <div className="flex gap-2 items-center flex-wrap">
-        {difficulties.map(d => (
+        {difficulties.map((d) => (
           <button
             key={d}
             onClick={() => onDifficultyChange(d === difficulty ? undefined : d)}
-            className={`px-3 py-1 rounded-full border ${d === difficulty ? "bg-slate-700 text-white" : ""}`}
+            className={`px-3 py-1 rounded-full border ${
+              d === difficulty ? "bg-slate-700 text-white" : ""
+            }`}
           >
             {d}
           </button>
@@ -47,18 +47,30 @@ export default function QuestionControls({
           className="ml-2 rounded-md border p-1"
         >
           <option value="">All topics</option>
-          {topics.map(t => <option key={t} value={t}>{t}</option>)}
+          {topics.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
         </select>
       </div>
 
       <div className="flex gap-2 items-center">
-        <select value={sort} onChange={(e)=> onSortChange(e.target.value)} className="rounded-md border p-1">
+        <select
+          value={sort}
+          onChange={(e) => onSortChange(e.target.value)}
+          className="rounded-md border p-1"
+        >
           <option value="frequency">Most frequent</option>
           <option value="acceptanceRate">Acceptance Rate</option>
           <option value="name">Name</option>
         </select>
 
-        <select value={order} onChange={(e)=> onOrderChange(e.target.value as "asc"|"desc")} className="rounded-md border p-1">
+        <select
+          value={order}
+          onChange={(e) => onOrderChange(e.target.value as "asc" | "desc")}
+          className="rounded-md border p-1"
+        >
           <option value="desc">Desc</option>
           <option value="asc">Asc</option>
         </select>

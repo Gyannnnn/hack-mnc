@@ -1,17 +1,15 @@
-import { auth } from '@/auth'
-import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
+import CompanyWiseProgressCard from '@/components/CompanyWiseProgressCard';
+import ProfileCard from '@/components/ProfileCard';
 import React from 'react'
 
 export default async function page() {
-  const session = await auth();
-  if(!session) redirect("/login")
-  const email = session?.user.email
-  console.log(session?.accessToken)
+  const sesssion = await auth()
+  const id = sesssion?.user.id
   return (
     <div className='cnt'>
-      <h1>{email}</h1>
-      <h1>{session?.accessToken}</h1>
-      <h1>{session.user.id}</h1>
+      <ProfileCard />
+      <CompanyWiseProgressCard userId={id as string}/>
     </div>
   )
 }

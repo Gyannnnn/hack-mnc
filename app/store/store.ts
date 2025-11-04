@@ -1,8 +1,8 @@
 // app/store/store.ts
 import { create } from "zustand";
 
-
 type UserProgressStore = {
+    // General progress
     easySolved: number;
     mediumSolved: number;
     hardSolved: number;
@@ -11,18 +11,36 @@ type UserProgressStore = {
     increaseHardSolved: () => void;
     decreaseEasySolved: () => void;
     decreaseMediumSolved: () => void;
-    decreaseHardSolved: () => void;
-   
-    initializeProgress: (easy: number, medium: number, hard: number) => void;
-   
+    decreaseHardSolved: () => void;   
+    initializeProgress: (easy: number, medium: number, hard: number) => void;   
     setProgress: (easy: number, medium: number, hard: number) => void;
+
+    // Company progress
+    easyCompanySolved: number;
+    mediumCompanySolved: number;
+    hardCompanySolved: number;
+    increaseCompanyEasySolved: () => void;
+    increaseCompanyMediumSolved: () => void;
+    increaseCompanyHardSolved: () => void;
+    decreaseCompanyEasySolved: () => void;
+    decreaseCompanyMediumSolved: () => void;
+    decreaseCompanyHardSolved: () => void;
+    initializeCompanyProgress: (easy: number, medium: number, hard: number) => void;
+    setCompanyProgress: (easy: number, medium: number, hard: number) => void;
 }
 
 export const useUserProgressStore = create<UserProgressStore>((set) => ({
+    // Initial state for general progress
     easySolved: 0,
     mediumSolved: 0, 
     hardSolved: 0,
     
+    // Initial state for company progress
+    easyCompanySolved: 0,
+    mediumCompanySolved: 0,
+    hardCompanySolved: 0,
+    
+    // General progress actions
     increaseEasySolved: () => {
         set((state) => ({
             easySolved: state.easySolved + 1
@@ -54,8 +72,15 @@ export const useUserProgressStore = create<UserProgressStore>((set) => ({
         }))
     },
     
-    
     initializeProgress: (easy: number, medium: number, hard: number) => {
+        set({
+            easySolved: easy,
+            mediumSolved: medium,
+            hardSolved: hard
+        });
+    },    
+    
+    setProgress: (easy: number, medium: number, hard: number) => {
         set({
             easySolved: easy,
             mediumSolved: medium,
@@ -63,12 +88,51 @@ export const useUserProgressStore = create<UserProgressStore>((set) => ({
         });
     },
     
+    // Company progress actions
+    increaseCompanyEasySolved: () => {
+        set((state) => ({
+            easyCompanySolved: state.easyCompanySolved + 1
+        }))
+    },
+    increaseCompanyMediumSolved: () => {
+        set((state) => ({
+            mediumCompanySolved: state.mediumCompanySolved + 1
+        }))
+    },
+    increaseCompanyHardSolved: () => {
+        set((state) => ({
+            hardCompanySolved: state.hardCompanySolved + 1
+        }))
+    },
+    decreaseCompanyEasySolved: () => {
+        set((state) => ({
+            easyCompanySolved: state.easyCompanySolved > 0 ? state.easyCompanySolved - 1 : 0
+        }))
+    },
+    decreaseCompanyMediumSolved: () => {
+        set((state) => ({
+            mediumCompanySolved: state.mediumCompanySolved > 0 ? state.mediumCompanySolved - 1 : 0
+        }))
+    },
+    decreaseCompanyHardSolved: () => {
+        set((state) => ({
+            hardCompanySolved: state.hardCompanySolved > 0 ? state.hardCompanySolved - 1 : 0
+        }))
+    },
     
-    setProgress: (easy: number, medium: number, hard: number) => {
+    initializeCompanyProgress: (easy: number, medium: number, hard: number) => {
         set({
-            easySolved: easy,
-            mediumSolved: medium,
-            hardSolved: hard
+            easyCompanySolved: easy,
+            mediumCompanySolved: medium,
+            hardCompanySolved: hard
+        });
+    },
+    
+    setCompanyProgress: (easy: number, medium: number, hard: number) => {
+        set({
+            easyCompanySolved: easy,
+            mediumCompanySolved: medium,
+            hardCompanySolved: hard
         });
     }
 }));

@@ -16,10 +16,10 @@ export default async function FeaturedCompany() {
       <div className="flex flex-col items-end max-sm:px-4 justify-center  gap-2 ">
         <div className="w-full sm:flex gap-2 ">
           {companyData?.map((data, index) => (
-            <Link className="flex sm:w-1/5 h-44  relative items-center justify-center mt-2" key={index} href={`/companies/${data.id}`}>
+            <Link rel="noopener noreferrer"  target="_blank" className="flex sm:w-1/5 h-44  relative items-center justify-center mt-2" key={index} href={`/companies/${data.id}`}>
             <Card
               
-              className="h-full w-full flex items-center justify-center hover:border-4"
+              className="h-full w-full flex items-center justify-center hover:border-4 bg"
             >
            
               <Image
@@ -46,5 +46,10 @@ export default async function FeaturedCompany() {
         </Link>
       </div>
     );
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    return <div>
+      <h1>Something went wrong</h1>
+    </div>
+  }
 }
