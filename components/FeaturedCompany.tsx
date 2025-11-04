@@ -1,4 +1,4 @@
-import { getAllCompanies } from "@/app/actions/company/company";
+import {  getAllFeaturedCompany } from "@/app/actions/company/company";
 import React from "react";
 import { Card } from "./ui/card";
 import Image from "next/image";
@@ -10,16 +10,18 @@ import Link from "next/link";
 export default async function FeaturedCompany() {
   let companyData;
   try {
-    const res = await getAllCompanies();
+    const res = await getAllFeaturedCompany();
     companyData = res?.data.splice(0, 5);
     return (
-      <div className="flex flex-col items-end max-sm:px-4 justify-center pt-16 gap-2 ">
+      <div className="flex flex-col items-end max-sm:px-4 justify-center  gap-2 ">
         <div className="w-full sm:flex gap-2 ">
           {companyData?.map((data, index) => (
+            <Link rel="noopener noreferrer"  target="_blank" className="flex sm:w-1/5 h-44  relative items-center justify-center mt-2" key={index} href={`/companies/${data.id}`}>
             <Card
-              key={index}
-              className="flex sm:w-1/5 h-44  relative items-center justify-center mt-2"
+              
+              className="h-full w-full flex items-center justify-center hover:border-4 bg"
             >
+           
               <Image
                 src={data.logo.trim()}
                 height={150}
@@ -33,6 +35,8 @@ export default async function FeaturedCompany() {
                 </Badge>
               </Badge>
             </Card>
+            
+            </Link>
           ))}
         </div>
         <Link href="/companies">
@@ -42,5 +46,10 @@ export default async function FeaturedCompany() {
         </Link>
       </div>
     );
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    return <div>
+      <h1>Something went wrong</h1>
+    </div>
+  }
 }

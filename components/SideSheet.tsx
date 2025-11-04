@@ -30,7 +30,7 @@ export function SideSheet() {
         </SheetHeader>
         <div className="grid flex-1 auto-rows-min gap-6 px-4">
           {navBarData.map((data, index) => (
-            <SheetClose asChild>
+            <SheetClose key={index} asChild>
               <Button variant={"secondary"}>
                 <Link href={data.link}>{data.Name}</Link>
               </Button>

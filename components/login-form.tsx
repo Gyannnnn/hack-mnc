@@ -1,30 +1,97 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+"use client";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import Link from "next/link"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { signIn } from "next-auth/react"; // Import from next-auth/react, not your auth file
+import { FaGoogle } from "react-icons/fa";
+import React, { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleCredentialsSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    console.log("Form data:", { email, password });
+    
+    const toastId = toast.loading("Signing in...");
+    
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      console.log("SignIn result:", result);
+
+      toast.remove(toastId);
+
+      if (result?.error) {
+        toast.error("Sign in failed: " + result.error);
+      } else {
+        toast.success("Sign in successful!");
+       
+        router.push("/");
+        router.refresh(); // Refresh the server components
+      }
+    } catch (error) {
+      console.error("Sign in error:", error);
+      toast.remove(toastId);
+      toast.error("Sign in failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+  setIsLoading(true);
+  const toastId = toast.loading("Redirecting to Google...");
+
+  try {
+    // ✅ Redirect-based flow is required for OAuth
+    await signIn("google", { callbackUrl: "/profile" });
+
+    // This line WON’T execute since signIn will redirect the page
+  } catch (error) {
+    console.error("Google sign in error:", error);
+    toast.error("Google sign in failed");
+  } finally {
+    setIsLoading(false);
+    toast.dismiss(toastId);
+  }
+};
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleCredentialsSubmit} className="p-6 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-muted-foreground text-balance">
-                  Login to your Hack MNC  account
+                  Login to your Hack MNC account
                 </p>
               </div>
               <Field>
@@ -32,8 +99,10 @@ export function LoginForm({
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="m@example.com"
                   required
+                  disabled={isLoading}
                 />
               </Field>
               <Field>
@@ -46,26 +115,32 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  id="password" 
+                  name="password" 
+                  type="password" 
+                  required 
+                  disabled={isLoading}
+                />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Login"}
+                </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
               </FieldSeparator>
-              <Field className="w-full flex items-center">
-                
-                <Button variant="outline" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  <span className="sr-only">Login with Google</span>
+              <Field className="w-full flex items-center justify-center">
+                <Button
+                  className="flex gap-2 justify-center items-center w-full"
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={isLoading}
+                  variant="outline"
+                >
+                  <FaGoogle /> Sign in with Google
                 </Button>
-                
               </Field>
               <FieldDescription className="text-center">
                 Don&apos;t have an account? <Link href="/signup">Sign up</Link>
@@ -80,11 +155,12 @@ export function LoginForm({
             />
           </div>
         </CardContent>
+        <Toaster/>
       </Card>
       <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-  )
+  );
 }

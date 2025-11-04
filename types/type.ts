@@ -1,3 +1,5 @@
+
+
 export interface company {
   id: string
   name: string,
@@ -7,7 +9,13 @@ export interface company {
   _count: {
     questions: number
   }
-  logoSmall: string
+  logoSmall: string,
+  questions: featuredQuestions[]
+}
+
+export interface companyDetails {
+  name: string,
+
 }
 
 
@@ -20,7 +28,7 @@ export interface companyResponse {
 }
 
 
-interface topic {
+export interface topic {
   id: string
   name: string
   _count: {
@@ -36,12 +44,13 @@ export interface topicResponse {
 
 }
 
-interface featuredQuestions {
+export interface featuredQuestions {
   name: string
   frequency: number
   acceptanceRate: number
   difficulty: string
-  leetCodeLink: string
+  leetCodeLink: string,
+  id: string,
   topics: Array<{
     id: string
     questionId: string
@@ -52,9 +61,11 @@ interface featuredQuestions {
   }>
   companies: Array<{
     company: {
-      logoSmall: string
+      logoSmall: string,
+      name: string
     }
   }>
+  isSolved: boolean
 }
 
 export interface featuredQuestionResponse {
@@ -63,5 +74,140 @@ export interface featuredQuestionResponse {
   data: {
     fetchQuestions: featuredQuestions[]
     hasMore: boolean
+  }
+}
+
+export interface companyDetailResponse {
+  success: boolean,
+  message: string,
+  data: company
+}
+
+export interface questionsByCompanyResponse {
+  success: boolean,
+  message: string
+  data: featuredQuestions[]
+}
+
+
+export interface queryQuestionResponse {
+  total: number;
+  page: number;
+  pageSize: number;
+  data: featuredQuestions[];
+}
+
+export interface topicStats {
+  topic: {
+    name: string
+  },
+  totalNumberOfQuestions: number,
+  easy: number,
+  medium: number,
+  hard: number,
+  easySolved: number,
+  mediumSolved: number,
+  hardSolved: number
+}
+
+export interface topicDetailResponse {
+  success: boolean,
+  message: string,
+  data: topicStats
+}
+
+
+
+export interface signInResponse {
+  success: boolean,
+  message: string,
+  data: {
+    user: {
+      id: string
+      name: string
+      email: string
+      password: string
+      role: string,
+      streak: number,
+      emailVerified: string,
+      image: string
+      createdAt: Date
+      updatedAt: Date
+      deletedAt: Date
+    },
+    token: string
+  }
+}
+
+
+export interface companyCardDetails {
+
+  success: boolean,
+  message: string
+  data: {
+    company: {
+      id: string
+      name: string
+      type: string
+      ctc: number,
+      logo: string
+      logoSmall: string
+    },
+    totalNumberOfQuestions: number,
+    easy: number,
+    medium: number,
+    hard: number,
+    userProgressData: {
+      totalQuestionsSolved: number,
+      percentageCompleted: number,
+      easySolved: number,
+      mediumSolved: number,
+      hardSolved: number
+    }
+  }
+
+}
+
+
+export interface userProgressResponse {
+
+  success: boolean
+  message: string
+  data: {
+    progresses: [
+      {
+        totalQuestionsSolved: number,
+        percentageCompleted: number,
+        company: {
+          logo: string
+          logoSmall: string
+          name: string
+        }
+      }
+    ]
+  }
+}
+
+export interface userOverallProgressResponse {
+  success: boolean,
+  message: string
+  data: {
+    totalQuestions: number,
+    userSolved: number,
+    overallProgress: number,
+    difficultyStats: {
+      EASY: {
+        total: number,
+        solved: number
+      },
+      MEDIUM: {
+        total: number,
+        solved: number
+      },
+      HARD: {
+        total: number,
+        solved: number
+      }
+    }
   }
 }
