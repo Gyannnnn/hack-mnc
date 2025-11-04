@@ -149,13 +149,7 @@ export default function Q2({ userId }: { userId: string }) {
   // const userId = session?.user.id ? session.user.id : "noid";
   console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
   console.log(userId);
-  if (userId === "noid") {
-    return (
-      <div>
-        <h1>pelo</h1>
-      </div>
-    );
-  }
+  const isGuestUser = userId === "noid";
   const {
     data,
     hasNextPage,
@@ -175,7 +169,7 @@ export default function Q2({ userId }: { userId: string }) {
     getNextPageParam: (lastPage, allPages) =>
       lastPage.data.hasMore ? allPages.length + 1 : undefined,
     initialPageParam: 1,
-    enabled: true,
+    enabled: !isGuestUser,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -278,6 +272,14 @@ export default function Q2({ userId }: { userId: string }) {
   );
 
   // --- RENDER LOGIC ---
+  if (isGuestUser) {
+    return (
+      <div>
+        <h1>pelo</h1>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return <QuestionCardLoader />;
   }

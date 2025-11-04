@@ -65,7 +65,7 @@ export default function QuestionCard({
           {data.companies?.slice(0, 7).map((company, companyIndex) => (
             <Tooltip key={companyIndex}>
               <TooltipTrigger>
-                <img src={company.company.logoSmall} className="h-4 "></img>
+                <img src={company.company.logoSmall} alt={`${company.company.name} logo`} className="h-4 "></img>
               </TooltipTrigger>
               <TooltipContent>{company.company.name}</TooltipContent>
             </Tooltip>
@@ -80,10 +80,9 @@ export default function QuestionCard({
               </TooltipTrigger>
               <TooltipContent className="flex justify-center items-center gap-1">
                 {data.companies.slice(5).map((data, index) => (
-                  <Tooltip>
+                  <Tooltip key={index}>
                     <TooltipTrigger>
                       <img
-                        key={index}
                         alt={`${data.company.name} logo`}
                         src={data.company.logoSmall}
                         className="h-6  "
@@ -135,6 +134,7 @@ export default function QuestionCard({
               <TooltipTrigger>
                 <img
                   src={"/logo/LeetCode_Logo_1.png"}
+                  alt="LeetCode logo"
                   className="h-5 w-5"
                 ></img>
               </TooltipTrigger>

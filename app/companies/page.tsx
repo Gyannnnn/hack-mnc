@@ -15,7 +15,7 @@ export default function Companies() {
 
   const debouncedSearch = useMemo(
     () =>
-      debounce((value: string, allCompanies: any[]) => {
+      debounce((value: string, allCompanies: company[]) => {
         if (!value.trim()) {
           setFilteredCompanies(allCompanies);
           return;

@@ -1,5 +1,6 @@
 import { getAllArticles, getArticlePage, getArticlePageData } from '@/utils/notion'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 
@@ -59,7 +60,8 @@ export async function generateStaticParams() {
     const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9")
     
     return articles.map((article) => {
-      const titleProperty = article.properties.title as any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const titleProperty = (article as any).properties.title
       const title = titleProperty?.title[0]?.plain_text || ''
       return {
         title: slugify(title).toLowerCase(),
@@ -79,11 +81,13 @@ function slugify(text: string): string {
 }
 
 // Notion block renderer component
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NotionBlockRenderer({ block }: { block: any }) {
   switch (block.type) {
     case 'paragraph':
       return (
         <p className="text-[var(--color-foreground)] leading-7 mb-4">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {block.paragraph.rich_text.map((text: any, index: number) => (
             <span
               key={index}
@@ -235,9 +239,9 @@ export default async function Page({ params }: {
           <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             {/* Breadcrumb */}
             <nav className="flex items-center space-x-2 text-sm text-[var(--color-muted-foreground)] mb-8">
-              <a href="/" className="hover:text-[var(--color-foreground)] transition-colors">Home</a>
+              <Link href="/" className="hover:text-[var(--color-foreground)] transition-colors">Home</Link>
               <span>›</span>
-              <a href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</a>
+              <Link href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</Link>
               <span>›</span>
               <span className="text-[var(--color-foreground)] text-wrap">{articleData.title}</span>
             </nav>
@@ -307,6 +311,7 @@ export default async function Page({ params }: {
 
             {/* Article Content */}
             <div className="prose prose-lg max-w-none">
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {articleData.content.map((block: any) => (
                 <NotionBlockRenderer key={block.id} block={block} />
               ))}
@@ -336,7 +341,7 @@ export default async function Page({ params }: {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {articleData.moreArticles.map((article) => (
-                    <a
+                    <Link
                       key={article.id}
                       href={`/blog/${slugify(article.title).toLowerCase()}`}
                       className="block bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius)] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group hover:border-[var(--color-primary)]"
@@ -354,7 +359,7 @@ export default async function Page({ params }: {
                           </time>
                         )}
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
