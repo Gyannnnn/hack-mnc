@@ -3,7 +3,7 @@ import axios from "axios"
 
 export const getUserProgress = async ({ userId }: { userId: string }) => {
     try {
-        const res = await axios.post<userProgressResponse>("http://localhost:8080/api/v1/user/progress", {
+        const res = await axios.post<userProgressResponse>("https://api.hackmnc.com/api/v1/user/progress", {
             userId
         })
         return res.data
@@ -14,7 +14,7 @@ export const getUserProgress = async ({ userId }: { userId: string }) => {
 
 export const getUserOverallProgress = async ({ userId }: { userId: string }) => {
     try {
-        const res = await axios.get<userOverallProgressResponse>(`http://localhost:8080/api/v1/user/progress/overall/${userId}`);
+        const res = await axios.get<userOverallProgressResponse>(`https://api.hackmnc.com/api/v1/user/progress/overall/${userId}`);
         return res.data;
     } catch (error) {
         console.log(error)

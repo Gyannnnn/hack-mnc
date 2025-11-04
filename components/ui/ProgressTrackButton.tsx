@@ -98,7 +98,7 @@ export default function ProgressTrackButton({
 
         // THEN make API call
         await axios.post(
-          "http://localhost:8080/api/v1/user/question/solved",
+          "https://api.hackmnc.com/api/v1/user/question/solved",
           {
             userId: session.user.id,
             questionId: questionId,
@@ -166,7 +166,7 @@ export default function ProgressTrackButton({
         }
 
         await axios.post(
-          "http://localhost:8080/api/v1/user/question/mark-unsolve",
+          "https://api.hackmnc.com/api/v1/user/question/mark-unsolve",
           {
             userId: session.user.id,
             questionId: questionId,
@@ -219,7 +219,7 @@ export default function ProgressTrackButton({
     try {
       // Call an API endpoint to clear relevant cache
       await axios.post(
-        "http://localhost:8080/api/v1/cache/invalidate",
+        "https://api.hackmnc.com/api/v1/cache/invalidate",
         {
           userId: session?.user.id,
           questionId: questionId,
