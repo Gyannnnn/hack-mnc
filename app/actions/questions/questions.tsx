@@ -4,7 +4,7 @@ import axios from "axios";
 export const getFeaturedQuestions = async () => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      "http://localhost:8080/api/v1/question/featured/get"
+      "https://api.hackmnc.com/api/v1/question/featured/get"
     );
     return res.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export const getQuestions = async ({
       userId && userId !== "loading" ? `&_t=${Date.now()}` : "";
 
     const res = await axios.post<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/paginated-questions/get?page=${pageParam}&limit=20&search=${encodeURIComponent(
+      `https://api.hackmnc.com/api/v1/question/paginated-questions/get?page=${pageParam}&limit=20&search=${encodeURIComponent(
         search
       )}${cacheBuster}`,
       {
@@ -69,7 +69,7 @@ export const getQuestionsByTopic = async ({
 }) => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
+      `https://api.hackmnc.com/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
     );
     console.log("API Response:", res.data);
     return res.data;
@@ -90,7 +90,7 @@ export const getQuestionsByCompany = async ({
 }) => {
   try {
     const res = await axios.post<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/company/${id}?page=${pageParam}&limit=20`,
+      `https://api.hackmnc.com/api/v1/question/company/${id}?page=${pageParam}&limit=20`,
       {
         userId,
       }

@@ -40,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
          
           
-          const res = await axios.post<signInResponse>("http://localhost:8080/api/v1/auth/signin", {
+          const res = await axios.post<signInResponse>("https://api.hackmnc.com/api/v1/auth/signin", {
             email: validatedCredentials.email,
             password: validatedCredentials.password,
           });
@@ -101,7 +101,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (account?.provider === "google" && account?.access_token) {
           try {
            
-            const res = await axios.post("http://localhost:8080/api/v1/auth/signin/google", {
+            const res = await axios.post("https://api.hackmnc.com/api/v1/auth/signin/google", {
               accessToken: account.access_token,
             });
             
