@@ -68,6 +68,7 @@ export async function generateStaticParams() {
       }
     })
   } catch (error) {
+    console.log(error)
     return []
   }
 }
@@ -86,7 +87,7 @@ function NotionBlockRenderer({ block }: { block: any }) {
   switch (block.type) {
     case 'paragraph':
       return (
-        <p className="text-[var(--color-foreground)] leading-7 mb-4">
+        <p className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-3 sm:mb-4 text-sm sm:text-base break-words overflow-wrap-anywhere">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {block.paragraph.rich_text.map((text: any, index: number) => (
             <span
@@ -94,7 +95,7 @@ function NotionBlockRenderer({ block }: { block: any }) {
               className={`
                 ${text.annotations.bold ? 'font-bold' : ''}
                 ${text.annotations.italic ? 'italic' : ''}
-                ${text.annotations.code ? 'font-mono bg-[var(--color-muted)] px-1 py-0.5 rounded-[var(--radius-sm)] text-sm' : ''}
+                ${text.annotations.code ? 'font-mono bg-[var(--color-muted)] px-1 py-0.5 rounded-[var(--radius-sm)] text-xs sm:text-sm break-all' : ''}
                 ${text.annotations.underline ? 'underline' : ''}
                 ${text.annotations.strikethrough ? 'line-through' : ''}
               `}
@@ -110,43 +111,43 @@ function NotionBlockRenderer({ block }: { block: any }) {
     
     case 'heading_1':
       return (
-        <h2 className="text-2xl font-bold text-[var(--color-foreground)] mt-8 mb-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--color-foreground)] mt-5 sm:mt-6 md:mt-8 mb-2 sm:mb-3 md:mb-4 break-words">
           {block.heading_1.rich_text[0]?.plain_text}
         </h2>
       )
     
     case 'heading_2':
       return (
-        <h3 className="text-xl font-semibold text-[var(--color-foreground)] mt-6 mb-3">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-[var(--color-foreground)] mt-4 sm:mt-5 md:mt-6 mb-2 sm:mb-3 break-words">
           {block.heading_2.rich_text[0]?.plain_text}
         </h3>
       )
     
     case 'heading_3':
       return (
-        <h4 className="text-lg font-medium text-[var(--color-foreground)] mt-4 mb-2">
+        <h4 className="text-base sm:text-lg md:text-xl font-medium text-[var(--color-foreground)] mt-3 sm:mt-4 mb-2 break-words">
           {block.heading_3.rich_text[0]?.plain_text}
         </h4>
       )
     
     case 'bulleted_list_item':
       return (
-        <li className="text-[var(--color-foreground)] leading-7 mb-1 ml-4 list-disc">
+        <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-disc text-sm sm:text-base break-words">
           {block.bulleted_list_item.rich_text[0]?.plain_text}
         </li>
       )
     
     case 'numbered_list_item':
       return (
-        <li className="text-[var(--color-foreground)] leading-7 mb-1 ml-4 list-decimal">
+        <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-decimal text-sm sm:text-base break-words">
           {block.numbered_list_item.rich_text[0]?.plain_text}
         </li>
       )
     
     case 'code':
       return (
-        <pre className="bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] p-4 rounded-[var(--radius)] overflow-x-auto mb-4">
-          <code className="font-mono text-sm">
+        <pre className="bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] p-3 sm:p-4 rounded-[var(--radius)] overflow-x-auto mb-4 w-full max-w-full">
+          <code className="font-mono text-xs sm:text-sm block whitespace-pre break-all">
             {block.code.rich_text[0]?.plain_text}
           </code>
         </pre>
@@ -154,7 +155,7 @@ function NotionBlockRenderer({ block }: { block: any }) {
     
     case 'quote':
       return (
-        <blockquote className="border-l-4 border-[var(--color-primary)] pl-4 italic text-[var(--color-muted-foreground)] my-4">
+        <blockquote className="border-l-4 border-[var(--color-primary)] pl-3 sm:pl-4 italic text-[var(--color-muted-foreground)] my-3 sm:my-4 text-sm sm:text-base break-words">
           {block.quote.rich_text[0]?.plain_text}
         </blockquote>
       )
@@ -165,14 +166,15 @@ function NotionBlockRenderer({ block }: { block: any }) {
         : block.image.file.url;
       
       return (
-        <figure className="my-6">
+        <figure className="my-4 sm:my-6 w-full">
           <img
             src={imageUrl}
             alt={block.image.caption?.[0]?.plain_text || 'Blog image'}
-            className="rounded-[var(--radius)] w-full h-auto border border-[var(--color-border)]"
+            className="rounded-lg sm:rounded-[var(--radius)] w-full h-auto max-w-full border border-[var(--color-border)]"
+            loading="lazy"
           />
           {block.image.caption && block.image.caption.length > 0 && (
-            <figcaption className="text-center text-sm text-[var(--color-muted-foreground)] mt-2">
+            <figcaption className="text-center text-xs sm:text-sm text-[var(--color-muted-foreground)] mt-2 px-2 break-words">
               {block.image.caption[0].plain_text}
             </figcaption>
           )}
@@ -180,7 +182,7 @@ function NotionBlockRenderer({ block }: { block: any }) {
       )
     
     case 'divider':
-      return <hr className="my-6 border-[var(--color-border)]" />
+      return <hr className="my-4 sm:my-6 border-[var(--color-border)]" />
     
     default:
       return null
@@ -234,25 +236,25 @@ export default async function Page({ params }: {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        <main className="min-h-screen bg-[var(--color-background)]">
+        <main className="min-h-screen bg-background w-full">
           {/* Article Header */}
-          <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <article className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-10 w-full">
             {/* Breadcrumb */}
-            <nav className="flex items-center space-x-2 text-sm text-[var(--color-muted-foreground)] mb-8">
-              <Link href="/" className="hover:text-[var(--color-foreground)] transition-colors">Home</Link>
-              <span>›</span>
-              <Link href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</Link>
-              <span>›</span>
-              <span className="text-[var(--color-foreground)] text-wrap">{articleData.title}</span>
+            <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 md:mb-8 overflow-hidden">
+              <Link href="/" className="hover:text-foreground transition-colors flex-shrink-0">Home</Link>
+              <span className="hidden sm:inline flex-shrink-0">›</span>
+              <Link href="/blog" className="hover:text-foreground transition-colors flex-shrink-0">Blog</Link>
+              <span className="hidden sm:inline flex-shrink-0">›</span>
+              <span className="text-foreground break-words min-w-0 flex-1">{articleData.title}</span>
             </nav>
 
             {/* Article Header */}
-            <header className="mb-8">
-              <h1 className="text-4xl font-bold text-[var(--color-foreground)] mb-4 leading-tight">
+            <header className="mb-4 sm:mb-6 md:mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight break-words">
                 {articleData.title}
               </h1>
               
-              <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-muted-foreground)] mb-6">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
                 {articleData.publishedDate && (
                   <time dateTime={articleData.publishedDate}>
                     Published: {new Date(articleData.publishedDate).toLocaleDateString('en-US', {
@@ -275,11 +277,11 @@ export default async function Page({ params }: {
 
               {/* Categories */}
               {articleData.categories.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                   {articleData.categories.map((category) => (
                     <span
                       key={category}
-                      className="px-3 py-1 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] text-sm font-medium rounded-full"
+                      className="px-2 sm:px-3 py-1 bg-primary text-primary-foreground text-xs sm:text-sm font-medium rounded-full"
                     >
                       {category}
                     </span>
@@ -290,11 +292,11 @@ export default async function Page({ params }: {
 
             {/* Thumbnail */}
             {articleData.thumbnail && (
-              <div className="mb-8">
+              <div className="mb-4 sm:mb-6 md:mb-8 w-full">
                 <img
                   src={articleData.thumbnail}
                   alt={articleData.title}
-                  className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-[var(--radius-xl)] border border-[var(--color-border)]"
+                  className="w-full h-40 sm:h-48 md:h-64 lg:h-80 xl:h-96 object-cover rounded-lg sm:rounded-xl border border-border max-w-full"
                   loading="eager"
                 />
               </div>
@@ -302,15 +304,15 @@ export default async function Page({ params }: {
 
             {/* Summary */}
             {articleData.summary && (
-              <div className="bg-[var(--color-muted)] border-l-4 border-[var(--color-primary)] p-6 rounded-r-[var(--radius)] mb-8">
-                <p className="text-lg text-[var(--color-foreground)] leading-relaxed">
+              <div className="bg-muted border-l-4 border-primary p-3 sm:p-4 md:p-6 rounded-r-lg mb-4 sm:mb-6 md:mb-8">
+                <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed break-words">
                   {articleData.summary}
                 </p>
               </div>
             )}
 
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-foreground break-words overflow-wrap-anywhere">
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {articleData.content.map((block: any) => (
                 <NotionBlockRenderer key={block.id} block={block} />
@@ -318,8 +320,8 @@ export default async function Page({ params }: {
             </div>
 
             {/* Article Footer */}
-            <footer className="mt-12 pt-8 border-t border-[var(--color-border)]">
-              <div className="flex justify-between items-center text-sm text-[var(--color-muted-foreground)]">
+            <footer className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 text-xs sm:text-sm text-muted-foreground">
                 <span>
                   {articleData.lastEditedAt && (
                     <>Last updated: {new Date(articleData.lastEditedAt).toLocaleDateString()}</>
@@ -334,27 +336,27 @@ export default async function Page({ params }: {
 
           {/* Suggested Articles */}
           {articleData.moreArticles.length > 0 && (
-            <section className="bg-[var(--color-muted)] py-12">
-              <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-8 text-center">
+            <section className="bg-muted py-6 sm:py-8 md:py-12 w-full">
+              <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6 sm:mb-8 text-center">
                   You Might Also Like
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {articleData.moreArticles.map((article) => (
                     <Link
                       key={article.id}
                       href={`/blog/${slugify(article.title).toLowerCase()}`}
-                      className="block bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius)] shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group hover:border-[var(--color-primary)]"
+                      className="block bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group hover:border-primary/40 w-full"
                     >
-                      <div className="p-6">
-                        <h3 className="font-bold text-lg text-[var(--color-foreground)] mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+                      <div className="p-3 sm:p-4 md:p-6">
+                        <h3 className="font-bold text-sm sm:text-base md:text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 break-words">
                           {article.title}
                         </h3>
-                        <p className="text-[var(--color-muted-foreground)] text-sm line-clamp-2">
+                        <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2 break-words">
                           {article.summary}
                         </p>
                         {article.publishedDate && (
-                          <time className="text-xs text-[var(--color-muted-foreground)] mt-3 block">
+                          <time className="text-xs text-muted-foreground mt-2 sm:mt-3 block">
                             {new Date(article.publishedDate).toLocaleDateString()}
                           </time>
                         )}

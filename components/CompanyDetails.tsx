@@ -1,7 +1,7 @@
 "use client"
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { LoaderCircle, LoaderCircleIcon } from 'lucide-react';
+import { LoaderCircleIcon } from 'lucide-react';
 import QuestionCard from './ui/questionCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getQuestionsByCompany } from '@/app/actions/questions/questions';

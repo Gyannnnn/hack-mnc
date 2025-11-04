@@ -19,6 +19,7 @@ export default function ProgressTrackButton({
   type: string;
 }) {
   const [solved, setSolved] = useState(isSolved);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
   const {
@@ -69,59 +70,68 @@ export default function ProgressTrackButton({
       });
     }
 
-    try {
-      // Update local state FIRST for immediate feedback
-      setSolved(true);
+    setIsLoading(true);
 
-      // Update global store SECOND
-      if (type === "topic") {
-        if (difficulty === "EASY") {
-          increaseEasySolved();
-        } else if (difficulty === "MEDIUM") {
-          increaseMediumSolved();
-        } else if (difficulty === "HARD") {
-          increaseHardSolved();
-        }
-      } else if (type === "company") {
-        if (difficulty === "EASY") {
-          increaseCompanyEasySolved();
-        } else if (difficulty === "MEDIUM") {
-          increaseCompanyMediumSolved();
-        } else if (difficulty === "HARD") {
-          increaseCompanyHardSolved();
-        }
-      }
+    toast.promise(
+      async () => {
+        // Update local state FIRST for immediate feedback
+        setSolved(true);
 
-      // THEN make API call
-      await axios.post(
-        "http://localhost:8080/api/v1/user/question/solved",
-        {
-          userId: session.user.id,
-          questionId: questionId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
+        // Update global store SECOND
+        if (type === "topic") {
+          if (difficulty === "EASY") {
+            increaseEasySolved();
+          } else if (difficulty === "MEDIUM") {
+            increaseMediumSolved();
+          } else if (difficulty === "HARD") {
+            increaseHardSolved();
+          }
+        } else if (type === "company") {
+          if (difficulty === "EASY") {
+            increaseCompanyEasySolved();
+          } else if (difficulty === "MEDIUM") {
+            increaseCompanyMediumSolved();
+          } else if (difficulty === "HARD") {
+            increaseCompanyHardSolved();
+          }
+        }
+
+        // THEN make API call
+        await axios.post(
+          "http://localhost:8080/api/v1/user/question/solved",
+          {
+            userId: session.user.id,
+            questionId: questionId,
           },
-        }
-      );
-
-      toast.success("Marked as done");
-    } catch (error) {
-      console.log(error);
-      setSolved(false);
-      if (type === "company") {
-        if (difficulty === "EASY") {
-          decreaseCompanyEasySolved();
-        } else if (difficulty === "MEDIUM") {
-          decreaseCompanyMediumSolved();
-        } else if (difficulty === "HARD") {
-          decreaseCompanyHardSolved();
-        }
+          {
+            headers: {
+              Authorization: `Bearer ${session?.accessToken}`,
+            },
+          }
+        );
+      },
+      {
+        loading: "Marking as done...",
+        success: "Marked as done!",
+        error: (error) => {
+          console.log(error);
+          setSolved(false);
+          if (type === "company") {
+            if (difficulty === "EASY") {
+              decreaseCompanyEasySolved();
+            } else if (difficulty === "MEDIUM") {
+              decreaseCompanyMediumSolved();
+            } else if (difficulty === "HARD") {
+              decreaseCompanyHardSolved();
+            }
+          }
+          return "Failed to mark as done";
+        },
+        finally: () => {
+          setIsLoading(false);
+        },
       }
-
-      toast.error("Failed to mark as done");
-    }
+    );
   };
 
   const handleUnSolve = async (difficulty: string) => {
@@ -129,50 +139,79 @@ export default function ProgressTrackButton({
       return toast.error("Sign in to continue");
     }
 
-    try {
-      // Update local state
-      setSolved(false);
+    setIsLoading(true);
 
-      // Update global store
-      if (type === "topic") {
-        if (difficulty === "EASY") {
-          decreaseEasySolved();
-        } else if (difficulty === "MEDIUM") {
-          decreaseMediumSolved();
-        } else if (difficulty === "HARD") {
-          decreaseHardSolved();
-        }
-      } else if (type === "company") {
-        if (difficulty === "EASY") {
-          decreaseCompanyEasySolved();
-        } else if (difficulty === "MEDIUM") {
-          decreaseCompanyMediumSolved();
-        } else if (difficulty === "HARD") {
-          decreaseCompanyHardSolved();
-        }
-      }
+    toast.promise(
+      async () => {
+        // Update local state
+        setSolved(false);
 
-      await axios.post(
-        "http://localhost:8080/api/v1/user/question/mark-unsolve",
-        {
-          userId: session.user.id,
-          questionId: questionId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
+        // Update global store
+        if (type === "topic") {
+          if (difficulty === "EASY") {
+            decreaseEasySolved();
+          } else if (difficulty === "MEDIUM") {
+            decreaseMediumSolved();
+          } else if (difficulty === "HARD") {
+            decreaseHardSolved();
+          }
+        } else if (type === "company") {
+          if (difficulty === "EASY") {
+            decreaseCompanyEasySolved();
+          } else if (difficulty === "MEDIUM") {
+            decreaseCompanyMediumSolved();
+          } else if (difficulty === "HARD") {
+            decreaseCompanyHardSolved();
+          }
+        }
+
+        await axios.post(
+          "http://localhost:8080/api/v1/user/question/mark-unsolve",
+          {
+            userId: session.user.id,
+            questionId: questionId,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${session?.accessToken}`,
+            },
+          }
+        );
 
-      // Invalidate cache to force fresh data on next load
-      await invalidateCache();
-
-      toast.success("Marked as undone");
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to mark as undone");
-    }
+        // Invalidate cache to force fresh data on next load
+        await invalidateCache();
+      },
+      {
+        loading: "Marking as undone...",
+        success: "Marked as undone!",
+        error: (error) => {
+          console.log(error);
+          setSolved(true);
+          // Revert store changes on error
+          if (type === "topic") {
+            if (difficulty === "EASY") {
+              increaseEasySolved();
+            } else if (difficulty === "MEDIUM") {
+              increaseMediumSolved();
+            } else if (difficulty === "HARD") {
+              increaseHardSolved();
+            }
+          } else if (type === "company") {
+            if (difficulty === "EASY") {
+              increaseCompanyEasySolved();
+            } else if (difficulty === "MEDIUM") {
+              increaseCompanyMediumSolved();
+            } else if (difficulty === "HARD") {
+              increaseCompanyHardSolved();
+            }
+          }
+          return "Failed to mark as undone";
+        },
+        finally: () => {
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   // Function to invalidate cache (you'll need to implement this on your backend)
@@ -202,14 +241,14 @@ export default function ProgressTrackButton({
       {solved ? (
         <ImCheckboxChecked
           size={20}
-          className="text-green-500"
-          onClick={() => handleUnSolve(difficulty)}
+          className={`text-green-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={() => !isLoading && handleUnSolve(difficulty)}
         />
       ) : (
         <ImCheckboxUnchecked
           size={20}
-          className="text-gray-400"
-          onClick={() => handleSolved(difficulty)}
+          className={`text-gray-400 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={() => !isLoading && handleSolved(difficulty)}
         />
       )}
     </div>

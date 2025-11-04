@@ -15,32 +15,32 @@ export default async function FeaturedArticles() {
   const featuredArticles = shuffleArray(articles)
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
        
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredArticles.map((article, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {featuredArticles.map((article) => (
             <article
               key={article.id}
-              className="group bg-[var(--color-card)] border border-[var(--color-border)] rounded-[var(--radius-lg)] overflow-hidden hover:shadow-lg transition-all duration-300 hover:translate-y-[-4px]"
+              className="group bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 hover:border-primary/40 hover:bg-card/60 h-full flex flex-col"
             >
   
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden aspect-video">
                 <img
                   src={article.thumbnail}
                   alt={article.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
         
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-card)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
            
                 {article.categories.length > 0 && (
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1">
                     {article.categories.slice(0, 2).map((category) => (
                       <span
                         key={category}
-                        className="px-2 py-1 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] text-xs font-medium rounded-full"
+                        className="px-2 py-1 bg-primary text-primary-foreground text-[10px] font-medium rounded-full"
                       >
                         {category}
                       </span>
@@ -50,10 +50,10 @@ export default async function FeaturedArticles() {
               </div>
 
  
-              <div className="p-6">
+              <div className="p-4 md:p-6 flex flex-col flex-1">
             
                 {article.publishedDate && (
-                  <time className="text-sm text-[var(--color-muted-foreground)] mb-2 block">
+                  <time className="text-xs text-muted-foreground mb-2 block">
                     {new Date(article.publishedDate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -63,20 +63,20 @@ export default async function FeaturedArticles() {
                 )}
 
                 {/* Title */}
-                <h3 className="font-bold text-xl text-[var(--color-foreground)] mb-3 line-clamp-2 group-hover:text-[var(--color-primary)] transition-colors duration-200">
+                <h3 className="font-semibold text-lg md:text-xl text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-200">
                   {article.title}
                 </h3>
 
                 {/* Summary */}
-                <p className="text-[var(--color-muted-foreground)] mb-4 line-clamp-3 leading-relaxed">
+                <p className="text-muted-foreground mb-4 line-clamp-3 leading-relaxed">
                   {article.summary}
                 </p>
 
          
-                <div className="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
+                <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
                   <Link
                     href={`/blog/${slugify(article.title).toLowerCase()}`}
-                    className="inline-flex items-center text-[var(--color-primary)] hover:text-[var(--color-primary)]/80 font-medium text-sm group/link transition-colors duration-200"
+                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm group/link transition-colors duration-200"
                   >
                     Read More
                     <svg 
@@ -89,7 +89,7 @@ export default async function FeaturedArticles() {
                     </svg>
                   </Link>
 
-                  <div className="flex items-center text-xs text-[var(--color-muted-foreground)]">
+                  <div className="flex items-center text-xs text-muted-foreground">
                     <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>

@@ -5,7 +5,7 @@ import Navlinks from "./Navlinks";
 import AvatarProfile from "./Avatar";
 
 export const navBarData = [
-  { Name: "Home", link: "/" },
+  { Name: "Problems", link: "/problems" },
   { Name: "Companies", link: "/companies" },
   { Name: "Topics", link: "/topic" },
   { Name: "Blogs", link: "/blogs" },
@@ -14,7 +14,7 @@ export const navBarData = [
 
 export default function Navbar() {
   return (
-    <div className="h-16 fixed top-0 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-10">
+    <div className="h-16 fixed top-0 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-20">
       <div className="flex gap-5 items-center">
         <Link
           href="/"

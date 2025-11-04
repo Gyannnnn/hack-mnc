@@ -2,7 +2,6 @@
 import { getQuestions } from "@/app/actions/questions/questions";
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { LoaderCircle } from "lucide-react";
 import {
   Select,
   SelectTrigger,

@@ -66,23 +66,37 @@ export default function Companies() {
 
   return (
     <div className="cnt">
-      <div className="w-full items-center justify-center sm:px-26  flex py-4">
-        <Input
-          placeholder="Search companies..."
-          value={query}
-          onChange={handleChange}
-          className="sm:w-1/2 w-full "
-        />
-      </div>
+      <div className="">
+        <div className="w-full flex items-center justify-start py-4">
+          <div className="relative w-full max-w-xl">
+            {/* search icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"
+              aria-hidden="true"
+            >
+              <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.243 11.964l4.271 4.272a.75.75 0 1 0 1.06-1.06l-4.272-4.272A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clipRule="evenodd" />
+            </svg>
+            <Input
+              placeholder="Search companies..."
+              value={query}
+              onChange={handleChange}
+              className="w-full pl-10 rounded-lg"
+            />
+          </div>
+        </div>
 
-      <div className="w-full min-h-screen flex flex-wrap justify-center gap-2">
-        {filteredCompanies.length > 0 ? (
-          filteredCompanies.map((company, index) => (
-            <CompanyCard type="small" key={index} data={company} />
-          ))
-        ) : (
-          <div>No companies found</div>
-        )}
+        <div className="w-full min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          {filteredCompanies.length > 0 ? (
+            filteredCompanies.map((company, index) => (
+              <CompanyCard type="large" key={index} data={company} />
+            ))
+          ) : (
+            <div>No companies found</div>
+          )}
+        </div>
       </div>
     </div>
   );
