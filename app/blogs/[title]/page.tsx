@@ -1,30 +1,38 @@
-import { getAllArticles, getArticlePage, getArticlePageData } from '@/utils/notion'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import type { Metadata } from 'next'
-
-
+import {
+  getAllArticles,
+  getArticlePage,
+  getArticlePageData,
+} from "@/utils/notion";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import type { Metadata } from "next";
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: {
-  params: Promise<{ title: string }>
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ title: string }>;
 }): Promise<Metadata> {
   const title = await (await params).title;
   const decodedTitle = decodeURIComponent(title);
-  
+
   try {
-    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9")
-    const page = getArticlePage(articles, decodedTitle)
+    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
+    const page = getArticlePage(articles, decodedTitle);
 
     if (!page) {
       return {
-        title: 'Article Not Found',
-        description: 'The requested article could not be found.',
-      }
+        title: "Article Not Found",
+        description: "The requested article could not be found.",
+      };
     }
 
-    const articleData = await getArticlePageData(page, decodedTitle, "291f49e716c081d9bf0be895bb2f85e9")
-    
+    const articleData = await getArticlePageData(
+      page,
+      decodedTitle,
+      "291f49e716c081d9bf0be895bb2f85e9"
+    );
+
     return {
       title: `${articleData.title} | Blog`,
       description: articleData.summary,
@@ -32,11 +40,11 @@ export async function generateMetadata({ params }: {
         title: articleData.title,
         description: articleData.summary,
         images: [articleData.thumbnail],
-        type: 'article',
+        type: "article",
         publishedTime: articleData.publishedDate || undefined,
       },
       twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: articleData.title,
         description: articleData.summary,
         images: [articleData.thumbnail],
@@ -44,32 +52,32 @@ export async function generateMetadata({ params }: {
       alternates: {
         canonical: `/blog/${decodedTitle}`,
       },
-    }
+    };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return {
-      title: 'Error',
-      description: 'An error occurred while loading the article.',
-    }
+      title: "Error",
+      description: "An error occurred while loading the article.",
+    };
   }
 }
 
 // Generate static params for SSG
 export async function generateStaticParams() {
   try {
-    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9")
-    
+    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
+
     return articles.map((article) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const titleProperty = (article as any).properties.title
-      const title = titleProperty?.title[0]?.plain_text || ''
+      const titleProperty = (article as any).properties.title;
+      const title = titleProperty?.title[0]?.plain_text || "";
       return {
         title: slugify(title).toLowerCase(),
-      }
-    })
+      };
+    });
   } catch (error) {
-    console.log(error)
-    return []
+    console.log(error);
+    return [];
   }
 }
 
@@ -77,15 +85,15 @@ export async function generateStaticParams() {
 function slugify(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[^\w ]+/g, '')
-    .replace(/ +/g, '-')
+    .replace(/[^\w ]+/g, "")
+    .replace(/ +/g, "-");
 }
 
 // Notion block renderer component
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NotionBlockRenderer({ block }: { block: any }) {
   switch (block.type) {
-    case 'paragraph':
+    case "paragraph":
       return (
         <p className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-3 sm:mb-4 text-sm sm:text-base break-words overflow-wrap-anywhere">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -93,83 +101,91 @@ function NotionBlockRenderer({ block }: { block: any }) {
             <span
               key={index}
               className={`
-                ${text.annotations.bold ? 'font-bold' : ''}
-                ${text.annotations.italic ? 'italic' : ''}
-                ${text.annotations.code ? 'font-mono bg-[var(--color-muted)] px-1 py-0.5 rounded-[var(--radius-sm)] text-xs sm:text-sm break-all' : ''}
-                ${text.annotations.underline ? 'underline' : ''}
-                ${text.annotations.strikethrough ? 'line-through' : ''}
+                ${text.annotations.bold ? "font-bold" : ""}
+                ${text.annotations.italic ? "italic" : ""}
+                ${
+                  text.annotations.code
+                    ? "font-mono bg-[var(--color-muted)] px-1 py-0.5 rounded-[var(--radius-sm)] text-xs sm:text-sm break-all"
+                    : ""
+                }
+                ${text.annotations.underline ? "underline" : ""}
+                ${text.annotations.strikethrough ? "line-through" : ""}
               `}
               style={{
-                color: text.annotations.color !== 'default' ? text.annotations.color : undefined,
+                color:
+                  text.annotations.color !== "default"
+                    ? text.annotations.color
+                    : undefined,
               }}
             >
               {text.plain_text}
             </span>
           ))}
         </p>
-      )
-    
-    case 'heading_1':
+      );
+
+    case "heading_1":
       return (
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--color-foreground)] mt-5 sm:mt-6 md:mt-8 mb-2 sm:mb-3 md:mb-4 break-words">
           {block.heading_1.rich_text[0]?.plain_text}
         </h2>
-      )
-    
-    case 'heading_2':
+      );
+
+    case "heading_2":
       return (
         <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-[var(--color-foreground)] mt-4 sm:mt-5 md:mt-6 mb-2 sm:mb-3 break-words">
           {block.heading_2.rich_text[0]?.plain_text}
         </h3>
-      )
-    
-    case 'heading_3':
+      );
+
+    case "heading_3":
       return (
         <h4 className="text-base sm:text-lg md:text-xl font-medium text-[var(--color-foreground)] mt-3 sm:mt-4 mb-2 break-words">
           {block.heading_3.rich_text[0]?.plain_text}
         </h4>
-      )
-    
-    case 'bulleted_list_item':
+      );
+
+    case "bulleted_list_item":
       return (
         <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-disc text-sm sm:text-base break-words">
           {block.bulleted_list_item.rich_text[0]?.plain_text}
         </li>
-      )
-    
-    case 'numbered_list_item':
+      );
+
+    case "numbered_list_item":
       return (
         <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-decimal text-sm sm:text-base break-words">
           {block.numbered_list_item.rich_text[0]?.plain_text}
         </li>
-      )
-    
-    case 'code':
+      );
+
+    case "code":
       return (
         <pre className="bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] p-3 sm:p-4 rounded-[var(--radius)] overflow-x-auto mb-4 w-full max-w-full">
           <code className="font-mono text-xs sm:text-sm block whitespace-pre break-all">
             {block.code.rich_text[0]?.plain_text}
           </code>
         </pre>
-      )
-    
-    case 'quote':
+      );
+
+    case "quote":
       return (
         <blockquote className="border-l-4 border-[var(--color-primary)] pl-3 sm:pl-4 italic text-[var(--color-muted-foreground)] my-3 sm:my-4 text-sm sm:text-base break-words">
           {block.quote.rich_text[0]?.plain_text}
         </blockquote>
-      )
-    
-    case 'image':
-      const imageUrl = block.image.type === 'external' 
-        ? block.image.external.url 
-        : block.image.file.url;
-      
+      );
+
+    case "image":
+      const imageUrl =
+        block.image.type === "external"
+          ? block.image.external.url
+          : block.image.file.url;
+
       return (
         <figure className="my-4 sm:my-6 w-full">
           <img
             src={imageUrl}
-            alt={block.image.caption?.[0]?.plain_text || 'Blog image'}
+            alt={block.image.caption?.[0]?.plain_text || "Blog image"}
             className="rounded-lg sm:rounded-[var(--radius)] w-full h-auto max-w-full border border-[var(--color-border)]"
             loading="lazy"
           />
@@ -179,54 +195,60 @@ function NotionBlockRenderer({ block }: { block: any }) {
             </figcaption>
           )}
         </figure>
-      )
-    
-    case 'divider':
-      return <hr className="my-4 sm:my-6 border-[var(--color-border)]" />
-    
+      );
+
+    case "divider":
+      return <hr className="my-4 sm:my-6 border-[var(--color-border)]" />;
+
     default:
-      return null
+      return null;
   }
 }
 
-export default async function Page({ params }: {
-  params: Promise<{ title: string }>
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ title: string }>;
 }) {
   const title = await (await params).title;
   const decodedTitle = decodeURIComponent(title);
 
   try {
-    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9")
-    const page = getArticlePage(articles, decodedTitle)
+    const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
+    const page = getArticlePage(articles, decodedTitle);
 
     if (!page) {
-      return notFound()
+      return notFound();
     }
 
-    const articleData = await getArticlePageData(page, decodedTitle, "291f49e716c081d9bf0be895bb2f85e9")
+    const articleData = await getArticlePageData(
+      page,
+      decodedTitle,
+      "291f49e716c081d9bf0be895bb2f85e9"
+    );
 
     // Structured data for SEO
     const structuredData = {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
       headline: articleData.title,
       description: articleData.summary,
       image: articleData.thumbnail,
       datePublished: articleData.publishedDate,
       dateModified: articleData.lastEditedAt,
       author: {
-        '@type': 'Person',
-        name: 'Your Name', // Replace with actual author
+        "@type": "Person",
+        name: "Your Name", // Replace with actual author
       },
       publisher: {
-        '@type': 'Organization',
-        name: 'Your Blog Name',
+        "@type": "Organization",
+        name: "Your Blog Name",
         logo: {
-          '@type': 'ImageObject',
-          url: '/logo.png', // Replace with your logo
+          "@type": "ImageObject",
+          url: "/logo.png", // Replace with your logo
         },
       },
-    }
+    };
 
     return (
       <>
@@ -240,12 +262,27 @@ export default async function Page({ params }: {
           {/* Article Header */}
           <article className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-10 w-full">
             {/* Breadcrumb */}
-            <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 md:mb-8 overflow-hidden">
-              <Link href="/" className="hover:text-foreground transition-colors flex-shrink-0">Home</Link>
-              <span className="hidden sm:inline flex-shrink-0">›</span>
-              <Link href="/blog" className="hover:text-foreground transition-colors flex-shrink-0">Blog</Link>
-              <span className="hidden sm:inline flex-shrink-0">›</span>
-              <span className="text-foreground break-words min-w-0 flex-1">{articleData.title}</span>
+            <nav className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 md:mb-8 overflow-hidden min-h-[20px]">
+              <Link
+                href="/"
+                className="hover:text-foreground transition-colors flex-shrink-0 truncate"
+              >
+                Home
+              </Link>
+              <span className="flex-shrink-0">›</span>
+              <Link
+                href="/blog"
+                className="hover:text-foreground transition-colors flex-shrink-0 truncate"
+              >
+                Blog
+              </Link>
+              <span className="flex-shrink-0">›</span>
+              <span
+                className="text-foreground truncate min-w-0 flex-1"
+                title={articleData.title}
+              >
+                {articleData.title}
+              </span>
             </nav>
 
             {/* Article Header */}
@@ -253,24 +290,35 @@ export default async function Page({ params }: {
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight break-words">
                 {articleData.title}
               </h1>
-              
+
               <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
                 {articleData.publishedDate && (
-                  <time dateTime={articleData.publishedDate}>
-                    Published: {new Date(articleData.publishedDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
+                  <time
+                    dateTime={articleData.publishedDate}
+                    className="text-primary"
+                  >
+                    Published:{" "}
+                    {new Date(articleData.publishedDate).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </time>
                 )}
                 {articleData.lastEditedAt && (
-                  <span>
-                    Updated: {new Date(articleData.lastEditedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
+                  <span className="text-primary">
+                    Updated:{" "}
+                    {new Date(articleData.lastEditedAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </span>
                 )}
               </div>
@@ -322,9 +370,12 @@ export default async function Page({ params }: {
             {/* Article Footer */}
             <footer className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 text-xs sm:text-sm text-muted-foreground">
-                <span>
+                <span className="text-primary">
                   {articleData.lastEditedAt && (
-                    <>Last updated: {new Date(articleData.lastEditedAt).toLocaleDateString()}</>
+                    <>
+                      Last updated:{" "}
+                      {new Date(articleData.lastEditedAt).toLocaleDateString()}
+                    </>
                   )}
                 </span>
                 <div className="flex space-x-4">
@@ -357,7 +408,9 @@ export default async function Page({ params }: {
                         </p>
                         {article.publishedDate && (
                           <time className="text-xs text-muted-foreground mt-2 sm:mt-3 block">
-                            {new Date(article.publishedDate).toLocaleDateString()}
+                            {new Date(
+                              article.publishedDate
+                            ).toLocaleDateString()}
                           </time>
                         )}
                       </div>
@@ -369,9 +422,9 @@ export default async function Page({ params }: {
           )}
         </main>
       </>
-    )
+    );
   } catch (error) {
-    console.error('Error rendering blog page:', error)
-    return notFound()
+    console.error("Error rendering blog page:", error);
+    return notFound();
   }
 }
