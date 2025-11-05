@@ -37,6 +37,32 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
   );
 }
 
+import Script from "next/script";
+
+<Script
+  id="ld-json-home"
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Hack MNC",
+      url: "https://hackmnc.com",
+      description:
+        "Hack MNC helps developers crack FAANG and top MNC interviews with free DSA problems, progress tracking, and real interview experiences.",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://hackmnc.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    }),
+  }}
+/>
+
+
+
+
+
 export default function Page() {
   
   const companies = [
@@ -260,7 +286,7 @@ export default function Page() {
           {[
             { k: "Problems", value: 1024, suffix: "+" },
             { k: "Companies", value: 20, suffix: "+" },
-            { k: "Active Users", value: 1000, suffix: "+" },
+            { k: "Active Users", value: 10, suffix: "+" },
           ].map((s) => (
             <motion.div
               key={s.k}
