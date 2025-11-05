@@ -75,7 +75,7 @@ export default async function FeaturedArticles() {
          
                 <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
                   <Link
-                    href={`/blog/${slugify(article.title).toLowerCase()}`}
+                    href={`/blogs/${slugify(article.title).toLowerCase()}`}
                     className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm group/link transition-colors duration-200"
                   >
                     Read More

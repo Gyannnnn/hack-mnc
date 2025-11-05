@@ -21,6 +21,7 @@ export default function CompanyDetailsCard({
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  console.log(error)
 
   const { easyCompanySolved, mediumCompanySolved, hardCompanySolved } =
     useUserProgressStore();
@@ -43,6 +44,7 @@ export default function CompanyDetailsCard({
         );
       }
     } catch (error) {
+      console.log(error)
       setError("Failed to fetch company details.");
     } finally {
       setLoading(false);
