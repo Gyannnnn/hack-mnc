@@ -10,7 +10,6 @@ import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -22,7 +21,8 @@ const geistMono = Geist_Mono({
 });
 export const metadata: Metadata = {
   title: {
-    default: "Hack MNC | Free LeetCode Premium Helper, DSA Tracker & Interview Prep",
+    default:
+      "Hack MNC | Free LeetCode Premium Helper, DSA Tracker & Interview Prep",
     template: "%s | Hack MNC",
   },
   description:
@@ -142,7 +142,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -160,14 +159,28 @@ export default function RootLayout({
                 <Navbar />
                 <main className="pt-20 min-h-screen flex items-center justify-center w-full sm:px-10">
                   {children}
-               
                 </main>
                 <Toaster position="top-center" />
                 <Footer />
               </ThemeProvider>
             </Providers>
           </SessionProvider>
-          <Script
+        </body>
+        <Script
+          id="microsoft-clarity"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "u180ru1k0k");
+    `,
+          }}
+        />
+
+        <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
@@ -185,7 +198,6 @@ export default function RootLayout({
             `,
           }}
         />
-        </body>
       </ReactLenis>
     </html>
   );
