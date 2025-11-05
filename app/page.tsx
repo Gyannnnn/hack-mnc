@@ -200,12 +200,12 @@ export default function Page() {
 
           {/* Company carousel */}
           <div className="mt-8 relative">
-            <div className="overflow-hidden">
+            <div className="">
               <motion.div
                 className="flex gap-4 will-change-transform py-2"
                 initial={{ x: 0 }}
-                animate={{ x: "-50%" }}
-                transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+                animate={{ x: "-80%" }}
+                transition={{ repeat: Infinity, duration: 40, ease: "easeIn" }}
               >
                 {[...Array(2)].flatMap(() =>
                   companies.map((company, i) => (

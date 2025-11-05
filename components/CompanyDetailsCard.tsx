@@ -21,7 +21,7 @@ export default function CompanyDetailsCard({
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  console.log(error)
+  console.log(error);
 
   const { easyCompanySolved, mediumCompanySolved, hardCompanySolved } =
     useUserProgressStore();
@@ -44,7 +44,7 @@ export default function CompanyDetailsCard({
         );
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError("Failed to fetch company details.");
     } finally {
       setLoading(false);
@@ -146,45 +146,39 @@ export default function CompanyDetailsCard({
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
       <Card className="md:col-span-1 h-40 p-6 flex flex-col justify-between relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-        <Badge
-          variant="secondary"
-          className="absolute top-3 left-3 bg-primary/10 text-white font-medium"
-        >
+        <Badge className="absolute top-2 left-2">
           {companyData?.data.company.name}
         </Badge>
 
-        <div className="flex items-center justify-center  gap-4">
+        <div className="flex items-center h-full w-full justify-between  gap-4">
           <div className="flex justify-center items-center gap-4">
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/10 rounded-lg scale-110"></div>
+              
               <Image
-                height={100}
-                width={100}
+                height={110}
+                width={110}
                 src={companyData?.data.company.logo as string}
                 alt={`${companyData?.data.company.name} logo`}
-                className="rounded-lg object-cover relative z-10 border"
+                
               />
             </div>
-
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground font-medium">
-                Total questions
-              </div>
-              <div className="text-2xl font-bold text-foreground">
-                {companyData?.data.totalNumberOfQuestions}
-              </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-sm text-muted-foreground font-medium text-wrap text-center">
+              Total questions
+            </div>
+            <div className="text-2xl font-bold text-foreground">
+              {companyData?.data.totalNumberOfQuestions}
             </div>
           </div>
 
           <div className="flex flex-col items-center justify-center">
-            <div className="h-16 w-16 flex items-center justify-center text-foreground font-bold text-lg rounded-full border-2 border-primary bg-primary/5 shadow-sm">
+            <div className="h-20 w-20 flex flex-col items-center justify-center text-foreground font-bold text-lg rounded-full border-2 border-primary bg-primary/5 shadow-sm">
               {easyCompanySolved + mediumCompanySolved + hardCompanySolved}
+              <h1 className=" text-xs">Solved</h1>
             </div>
-            <span className="text-xs text-muted-foreground mt-2">Solved</span>
           </div>
         </div>
-
-        
       </Card>
 
       <Card className="md:col-span-2 h-40 px-4 py-3 flex flex-col justify-center gap-4">

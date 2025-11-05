@@ -37,14 +37,15 @@ export default function QuestionCard({
   //   else if (difficulty === "MEDIUM") return increaseMediumSolved;
   //   else if (difficulty === "HARD") return increaseHardSolved;
   // };
+
   console.log(data);
 
   return (
     <Card
       key={`${data.name}-${index}`}
-      className={`px-2 py-2 ${index % 2 === 0 ? "bg-muted" : "bg-background"}`}
+      className={`px-2 py-2 ${index % 2 === 0 ? "bg-muted" : "bg-background"} max-sm:relative `}
     >
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         {/* Left: Progress + index + question name (fixed width, wraps) */}
         <div className="flex items-start md:items-center gap-3 w-full md:w-[520px] min-w-0">
           <ProgressTrackButton
@@ -53,7 +54,7 @@ export default function QuestionCard({
             isSolved={data.isSolved}
             difficulty={data.difficulty}
           />
-          <h1 className="w-full break-words leading-5 md:leading-6 text-[15px] md:text-base">
+          <h1 className="w-full break-words leading-5 md:leading-6 text-[15px] md:text-base max-sm:font-bold">
             {index + 1}. {data.name}
           </h1>
         </div>
@@ -129,7 +130,7 @@ export default function QuestionCard({
             <Link
               target="_blank"
               href={data.leetCodeLink}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center max-sm:absolute bottom-1 right-1"
             >
               <Tooltip>
                 <TooltipContent>
@@ -139,7 +140,7 @@ export default function QuestionCard({
                   <img
                     src={"/logo/LeetCode_Logo_1.png"}
                     alt="LeetCode logo"
-                    className="h-5 w-5"
+                    className="sm:h-5 sm:w-5 h-8 w-8"
                   />
                 </TooltipTrigger>
               </Tooltip>

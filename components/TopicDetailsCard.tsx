@@ -5,32 +5,32 @@ import { getTopicDetails } from "@/app/actions/topics/topics";
 import { Card } from "./ui/card";
 import { Progress } from "./ui/progress";
 import { Badge } from "./ui/badge";
-import {  topicStats } from "@/types/type";
+import { topicStats } from "@/types/type";
 import { useUserProgressStore } from "@/app/store/store";
 import { Skeleton } from "./ui/skeleton";
 
-export default function TopicDetailsCard({ id, userId }: { id: string; userId: string }) {
+export default function TopicDetailsCard({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) {
   const [topicData, setTopicData] = useState<topicStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
 
-  const { 
-    easySolved, 
-    mediumSolved, 
-    hardSolved, 
-    initializeProgress 
-  } = useUserProgressStore();
+  const { easySolved, mediumSolved, hardSolved, initializeProgress } =
+    useUserProgressStore();
 
   useEffect(() => {
     const fetchTopicDetails = async () => {
       try {
         setLoading(true);
         const res = await getTopicDetails({ id, userId });
-        
+
         if (res?.data) {
           setTopicData(res.data as topicStats);
-          
 
           initializeProgress(
             res.data.easySolved || 0,
@@ -93,7 +93,6 @@ export default function TopicDetailsCard({ id, userId }: { id: string; userId: s
 
   const { totalNumberOfQuestions, easy, medium, hard, topic } = topicData;
 
-
   const easyPercentage = easy > 0 ? (easySolved / easy) * 100 : 0;
   const mediumPercentage = medium > 0 ? (mediumSolved / medium) * 100 : 0;
   const hardPercentage = hard > 0 ? (hardSolved / hard) * 100 : 0;
@@ -101,15 +100,17 @@ export default function TopicDetailsCard({ id, userId }: { id: string; userId: s
   return (
     <div className="">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-        <Card className="md:col-span-1 h-40 p-4 flex items-center justify-between relative">
+        <Card className="md:col-span-1 h-40 p-4 flex items-center justify-center relative ">
           <Badge className="absolute top-2 left-2">{topic.name}</Badge>
           <div className="flex items-center gap-4">
             <div className="h-20 w-20 flex items-center justify-center text-foreground font-bold text-xl rounded-full border border-primary">
-              {(easySolved + mediumSolved + hardSolved)}/{totalNumberOfQuestions}
+              {easySolved + mediumSolved + hardSolved}/{totalNumberOfQuestions}
             </div>
-            <div className="space-y-1 text-sm text-muted-foreground">
+            <div className="space-y-1 text-muted-foreground text-center text-xl">
               <div>Total questions</div>
-              <div className="text-foreground font-medium">{totalNumberOfQuestions}</div>
+              <div className="text-foreground font-medium">
+                {totalNumberOfQuestions}
+              </div>
             </div>
           </div>
         </Card>
@@ -119,21 +120,27 @@ export default function TopicDetailsCard({ id, userId }: { id: string; userId: s
           <div className="flex gap-2 justify-between items-center">
             <h1 className="text-green-500 font-semibold w-20">EASY</h1>
             <Progress value={easyPercentage} className="flex-1" />
-            <h1 className="w-16 text-right">{easySolved}/{easy}</h1>
+            <h1 className="w-16 text-right">
+              {easySolved}/{easy}
+            </h1>
           </div>
 
           {/* Medium Progress */}
           <div className="flex gap-2 justify-between items-center">
             <h1 className="text-yellow-500 font-semibold w-20">MEDIUM</h1>
             <Progress value={mediumPercentage} className="flex-1" />
-            <h1 className="w-16 text-right">{mediumSolved}/{medium}</h1>
+            <h1 className="w-16 text-right">
+              {mediumSolved}/{medium}
+            </h1>
           </div>
 
           {/* Hard Progress */}
           <div className="flex gap-2 justify-between items-center">
             <h1 className="text-red-500 font-semibold w-20">HARD</h1>
             <Progress value={hardPercentage} className="flex-1" />
-            <h1 className="w-16 text-right">{hardSolved}/{hard}</h1>
+            <h1 className="w-16 text-right">
+              {hardSolved}/{hard}
+            </h1>
           </div>
         </Card>
       </div>

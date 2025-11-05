@@ -1,4 +1,4 @@
-import {  getAllFeaturedCompany } from "@/app/actions/company/company";
+import { getAllFeaturedCompany } from "@/app/actions/company/company";
 import React from "react";
 import { Card } from "./ui/card";
 import Image from "next/image";
@@ -13,33 +13,35 @@ export default async function FeaturedCompany() {
     const res = await getAllFeaturedCompany();
     companyData = res?.data.splice(0, 5);
     return (
-      <div className="flex flex-col items-end max-sm:px-4 justify-center  gap-2 ">
+      <div className="flex flex-col items-end justify-center ">
         <div className="w-full sm:flex gap-2 ">
           {companyData?.map((data, index) => (
-            <Link rel="noopener noreferrer"  target="_blank" className="flex sm:w-1/5 h-44  relative items-center justify-center mt-2" key={index} href={`/companies/${data.id}`}>
-            <Card
-              
-              className="h-full w-full flex items-center justify-center hover:border-4 bg"
+            <Link
+              rel="noopener noreferrer"
+              target="_blank"
+              className="flex sm:w-1/5 w-full h-44  relative items-center justify-center mt-2"
+              key={index}
+              href={`/companies/${data.id}`}
             >
-           
-              <Image
-                src={data.logo.trim()}
-                height={150}
-                width={150}
-                alt={`${data.name} logo`}
-              ></Image>
-              <Badge className="absolute top-1 right-1">
-                {data.name}{" "}
-                <Badge className="h-6" variant={"secondary"}>
-                  {data._count.questions} +
+              <Card className="h-full w-full flex items-center justify-center hover:border-4 bg">
+                <Image
+                  src={data.logo.trim()}
+                  height={150}
+                  width={150}
+                  alt={`${data.name} logo`}
+                  priority
+                ></Image>
+                <Badge className="absolute top-1 right-1">
+                  {data.name}{" "}
+                  <Badge className="h-6" variant={"secondary"}>
+                    {data._count.questions} +
+                  </Badge>
                 </Badge>
-              </Badge>
-            </Card>
-            
+              </Card>
             </Link>
           ))}
         </div>
-        <Link href="/companies">
+        <Link href="/companies" className="pt-2">
           <Button variant={"link"}>
             See all companies <ArrowRight />
           </Button>
@@ -48,8 +50,10 @@ export default async function FeaturedCompany() {
     );
   } catch (error) {
     console.log(error);
-    return <div>
-      <h1>Something went wrong</h1>
-    </div>
+    return (
+      <div>
+        <h1>Something went wrong</h1>
+      </div>
+    );
   }
 }

@@ -13,6 +13,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderCircleIcon } from "lucide-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import QuestionCardLoader from "./QuestionCardLoader";
+import { Card } from "./ui/card";
 
 
 const FilterControls = React.memo(
@@ -31,7 +32,7 @@ const FilterControls = React.memo(
     topicFilter: string;
     setTopicFilter: (value: string) => void;
   }) => (
-    <div className="flex flex-wrap gap-3 mb-4 justify-between items-center">
+    <Card className="flex sm:flex-row px-2 flex-wrap gap-3 mb-4 sm:justify-between justify-start items-start">
       {/* Sort */}
       <div className="flex gap-2 items-center">
         <p className="font-semibold">Sort by:</p>
@@ -80,7 +81,7 @@ const FilterControls = React.memo(
           }
         />
       </div>
-    </div>
+    </Card>
   )
 );
 

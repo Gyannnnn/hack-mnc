@@ -57,10 +57,10 @@ export const metadata = {
 export default async function Problems() {
   const session = await auth();
   return (
-    <div className="cnt">
+    <div className="cnt gap-3">
       <FeaturedCompany />
       <Topics />
-      <h1>Questions Topic wise company wise</h1>
+      <h1 className="sm:text-xl">Questions Topic wise company wise</h1>
       <Questions userId={session?.user.id as string} />
     </div>
   );

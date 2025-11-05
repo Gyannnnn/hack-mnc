@@ -12,6 +12,7 @@ import {
 import QuestionCard from "./ui/questionCard";
 import QuestionCardLoader from "./QuestionCardLoader";
 import { BiLoaderAlt } from "react-icons/bi";
+import { Card } from "./ui/card";
 
 
 
@@ -31,7 +32,7 @@ const FilterControls = React.memo(
     topicFilter: string;
     setTopicFilter: (value: string) => void;
   }) => (
-    <div className="flex flex-wrap gap-3 mb-4 justify-between items-center">
+    <Card className="flex sm:flex-row px-2 flex-wrap gap-3 mb-4 sm:justify-between justify-start items-start">
       {/* Sort */}
       <div className="flex gap-2 items-center">
         <p className="font-semibold">Sort by:</p>
@@ -80,7 +81,7 @@ const FilterControls = React.memo(
           }
         />
       </div>
-    </div>
+    </Card>
   )
 );
 
