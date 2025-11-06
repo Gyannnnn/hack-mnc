@@ -271,7 +271,7 @@ export default async function Page({
               </Link>
               <span className="flex-shrink-0">›</span>
               <Link
-                href="/blog"
+                href="/blogs"
                 className="hover:text-foreground transition-colors flex-shrink-0 truncate"
               >
                 Blog
@@ -396,7 +396,7 @@ export default async function Page({
                   {articleData.moreArticles.map((article) => (
                     <Link
                       key={article.id}
-                      href={`/blog/${slugify(article.title).toLowerCase()}`}
+                      href={`/blogs/${slugify(article.title).toLowerCase()}`}
                       className="block bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group hover:border-primary/40 w-full"
                     >
                       <div className="p-3 sm:p-4 md:p-6">

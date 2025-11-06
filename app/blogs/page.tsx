@@ -63,9 +63,12 @@ export default async function FeaturedArticles() {
                 )}
 
                 {/* Title */}
+                <Link target="_blank" href={`/blogs/${slugify(article.title).toLowerCase()}`}>
+                
                 <h3 className="font-semibold text-lg md:text-xl text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-200">
                   {article.title}
                 </h3>
+                </Link>
 
                 {/* Summary */}
                 <p className="text-muted-foreground mb-4 line-clamp-3 leading-relaxed">

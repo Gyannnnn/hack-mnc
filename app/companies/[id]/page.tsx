@@ -5,12 +5,9 @@ import CompanyDetailsCard from "@/components/CompanyDetailsCard";
 import { Metadata } from "next";
 import { getCompanyDetails } from "@/app/actions/company/company";
 
-
-
 type Props = {
   params: Promise<{ id: string }>;
 };
-
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -91,9 +88,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-
-
-
 export default async function page({
   params,
 }: {
@@ -118,7 +112,7 @@ export default async function page({
       </div>
     );
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return (
       <div className="cnt">
         <h1>Something went wrong</h1>
