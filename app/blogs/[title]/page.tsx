@@ -1,3 +1,9 @@
+import React from "react";
+import type {
+  BlockObjectResponse,
+  RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
+
 import {
   getAllArticles,
   getArticlePage,
@@ -146,9 +152,54 @@ function NotionBlockRenderer({ block }: { block: any }) {
       );
 
     case "bulleted_list_item":
+      const listBlock = block as Extract<
+        BlockObjectResponse,
+        { type: "bulleted_list_item" }
+      >;
+
       return (
-        <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-disc text-sm sm:text-base break-words">
-          {block.bulleted_list_item.rich_text[0]?.plain_text}
+        <li
+          key={listBlock.id}
+          className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-disc text-sm sm:text-base break-words"
+        >
+          {listBlock.bulleted_list_item.rich_text.map(
+            (text: RichTextItemResponse, i: number) => {
+              if (text.type === "text") {
+                const { content, link } = text.text;
+
+                return (
+                  <React.Fragment key={i}>
+                    {link ? (
+                      <a
+                        href={link.url}
+                        className="text-blue-600 hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <span
+                        className={[
+                          text.annotations.bold && "font-semibold",
+                          text.annotations.italic && "italic",
+                          text.annotations.code &&
+                            "font-mono bg-gray-100 px-1 rounded text-sm",
+                          text.annotations.strikethrough && "line-through",
+                          text.annotations.underline && "underline",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                      >
+                        {content}
+                      </span>
+                    )}
+                  </React.Fragment>
+                );
+              }
+              return null;
+            }
+          )}
         </li>
       );
 
