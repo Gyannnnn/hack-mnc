@@ -17,10 +17,11 @@ export default function CompanyCard({data,type}:{data: company,type:string}) {
         alt={`${data.name} logo`}
       ></Image>
       <Badge className="absolute top-1 right-1">
-        {data.name}{" "}
+      
         <Badge className="h-6" variant={"secondary"}>
           {data._count?.questions} +
         </Badge>
+        Questions
       </Badge>
     </Card>
     </Link>

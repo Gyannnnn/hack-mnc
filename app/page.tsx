@@ -38,6 +38,7 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
 }
 
 import Script from "next/script";
+import Testimonials from "@/components/Testimonials";
 
 <Script
   id="ld-json-home"
@@ -66,79 +67,326 @@ import Script from "next/script";
 export default function Page() {
   
   const companies = [
-    {
-      "companyName": "AMD",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/amd.png"
-    },
-    {
-      "companyName": "Adobe",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/adobe.png"
-    },
-    {
-      "companyName": "Amazon",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/1.png"
-    },
-    {
-      "companyName": "Apple",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/apple.png"
-    },
-    {
-      "companyName": "Atlassian",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/atlasian.png"
-    },
-    {
-      "companyName": "Capgemini",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/capegemini.png"
-    },
-    {
-      "companyName": "CARS24",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/CARS24_logo.svg.png"
-    },
-    {
-      "companyName": "Cisco",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/cisco.png"
-    },
-    {
-      "companyName": "Deloitte",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/deloitte.png"
-    },
-    {
-      "companyName": "Flipkart",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/flipkart.png"
-    },
-    {
-      "companyName": "Google",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Google-OfwXGx0Sl_brandlogos.net.svg"
-    },
-    {
-      "companyName": "Meta",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/meta.png"
-    },
-    {
-      "companyName": "Microsoft",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/microsoft.png"
-    },
-    {
-      "companyName": "Netflix",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Logonetflix.png"
-    },
-    {
-      "companyName": "Oracle",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/3.png"
-    },
-    {
-      "companyName": "TCS",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Tata_Consultancy_Services_old_logo.svg.png"
-    },
-    {
-      "companyName": "Uber",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/uber.png"
-    },
-    {
-      "companyName": "Wipro",
-      "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/wipro.png"
-    }
-  ]
+        {
+            "id": "fd5a7829-61a7-45ca-97ce-e04f18a04340",
+            "name": "Paypal",
+            "type": "PRODUCT_BASED",
+            "ctc": 32,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/3.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newPaypalSmall.png",
+            "_count": {
+                "questions": 175
+            }
+        },
+        {
+            "id": "ff82eb40-bfb5-43da-af6f-f22d0be55874",
+            "name": "Flipkart",
+            "type": "PRODUCT_BASED",
+            "ctc": 32,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/flipkart.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newFlpkartSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "84ef901d-8b56-441a-9859-157221c4fbd0",
+            "name": "Microsoft",
+            "type": "PRODUCT_BASED",
+            "ctc": 40,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/microsoft.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newMicrosoftSmall.png",
+            "_count": {
+                "questions": 521
+            }
+        },
+        {
+            "id": "6e37d3d1-b8d6-49c7-a75e-17c5ed1fb027",
+            "name": "Goldman Sachs",
+            "type": "SERVICE_BASED",
+            "ctc": 56,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/goldManSachs.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/goldManSachsSmall.png",
+            "_count": {
+                "questions": 112
+            }
+        },
+        {
+            "id": "d6bef37b-445d-4805-90ef-8d0f4bf1f7f1",
+            "name": "Wipro",
+            "type": "SERVICE_BASED",
+            "ctc": 15,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/wipro.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newWiproSmall.png",
+            "_count": {
+                "questions": 25
+            }
+        },
+        {
+            "id": "a203ee0d-e92b-476a-8ab7-30fecd3dc556",
+            "name": "Apple",
+            "type": "PRODUCT_BASED",
+            "ctc": 30,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/apple.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newAppleSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "8908f25e-c3c1-4a53-a6c1-f48989142c6f",
+            "name": "Uber",
+            "type": "PRODUCT_BASED",
+            "ctc": 32,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/uber.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newUberSmall.png",
+            "_count": {
+                "questions": 334
+            }
+        },
+        {
+            "id": "3aa46666-1793-48df-bb29-08e8af6f8b66",
+            "name": "JP Morgan",
+            "type": "PRODUCT_BASED",
+            "ctc": 43,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/jpMorgan.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/jpmorganSmall.png",
+            "_count": {
+                "questions": 79
+            }
+        },
+        {
+            "id": "01ee71b8-53d6-4415-9d88-9c2423df8691",
+            "name": "Google",
+            "type": "SERVICE_BASED",
+            "ctc": 64,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Google-OfwXGx0Sl_brandlogos.net.svg",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/google-favicon-logo-brandlogos.net_gvd970bt9.svg",
+            "_count": {
+                "questions": 906
+            }
+        },
+        {
+            "id": "e2ba08c2-992d-4539-ab8b-187f2e3e9ed3",
+            "name": "IBM",
+            "type": "SERVICE_BASED",
+            "ctc": 15,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/ibm.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/ibmSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "f28f2c5d-75f2-4803-9aca-7f9d3471551b",
+            "name": "Oracle",
+            "type": "PRODUCT_BASED",
+            "ctc": 16,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/oracle.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/oracleSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "8f3be5ba-089f-4ec3-be9f-566f69da4da1",
+            "name": "Tcs",
+            "type": "SERVICE_BASED",
+            "ctc": 6,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Tata_Consultancy_Services_old_logo.svg.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newTcsSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "839efa4c-49a9-4726-80b6-cb6f6d983dd5",
+            "name": "Amazon",
+            "type": "PRODUCT_BASED",
+            "ctc": 32,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/1.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newAmazonSmall.png",
+            "_count": {
+                "questions": 743
+            }
+        },
+        {
+            "id": "019de64b-f221-40e5-bf6c-47581b945336",
+            "name": "Capgemini",
+            "type": "PRODUCT_BASED",
+            "ctc": 12,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/capegemini.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newCapgeminiSmall.png",
+            "_count": {
+                "questions": 25
+            }
+        },
+        {
+            "id": "748b53bd-9576-4e61-9457-a1de8011b87c",
+            "name": "Meta",
+            "type": "PRODUCT_BASED",
+            "ctc": 34,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/meta.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newMetaSmall.png",
+            "_count": {
+                "questions": 563
+            }
+        },
+        {
+            "id": "18eca962-ecf7-46a6-b9b1-a2e00963bbaf",
+            "name": "Adobe",
+            "type": "PRODUCT_BASED",
+            "ctc": 45,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/adobe.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newAdobeSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "be3e6bac-ec1f-45d8-bb6f-d9d31e841d0a",
+            "name": "Nvidia",
+            "type": "PRODUCT_BASED",
+            "ctc": 64,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/nvidialogo.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/nvidiaSmall+(1).png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "f762d376-ca91-48a9-a89e-7f3dd99ec2e2",
+            "name": "Deloitte",
+            "type": "SERVICE_BASED",
+            "ctc": 7,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/deloitte.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newDelloitteSmall.png",
+            "_count": {
+                "questions": 27
+            }
+        },
+        {
+            "id": "2cd9d6bf-39fd-4402-a987-0dffde549612",
+            "name": "Cognizant",
+            "type": "SERVICE_BASED",
+            "ctc": 3,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/cognizant.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/cogniZantSmall.png",
+            "_count": {
+                "questions": 29
+            }
+        },
+        {
+            "id": "208952df-69f9-46dc-8d92-7716d355af29",
+            "name": "Netflix",
+            "type": "PRODUCT_BASED",
+            "ctc": 30,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/Logonetflix.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/netflix-logo-png_seeklogo-327627.png",
+            "_count": {
+                "questions": 8
+            }
+        },
+        {
+            "id": "8993a9e4-f2a9-4398-b32b-597641467f59",
+            "name": "Samsung",
+            "type": "PRODUCT_BASED",
+            "ctc": 64,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/samsung.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/smasung+small.png",
+            "_count": {
+                "questions": 73
+            }
+        },
+        {
+            "id": "7bc22832-d657-424a-8019-0c87d3574d52",
+            "name": "HCL Technologies",
+            "type": "SERVICE_BASED",
+            "ctc": 14,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/hcl.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/hclSmall.png",
+            "_count": {
+                "questions": 9
+            }
+        },
+        {
+            "id": "2624f4fa-dcac-403c-b008-48b5fb150b44",
+            "name": "Cisco",
+            "type": "SERVICE_BASED",
+            "ctc": 6,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/cisco.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newSicoSmall.png",
+            "_count": {
+                "questions": 87
+            }
+        },
+        {
+            "id": "734ee652-a58a-48ab-91da-dcd0d99d9166",
+            "name": "Tech Mahindra",
+            "type": "SERVICE_BASED",
+            "ctc": 9,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/techMahindra+(1).png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/techMahindraSmall.png",
+            "_count": {
+                "questions": 5
+            }
+        },
+        {
+            "id": "aa70cccc-8a48-4ef7-ba9c-f60b5f23636b",
+            "name": "Intel",
+            "type": "PRODUCT_BASED",
+            "ctc": 32,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/intel.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/intelSmall.png",
+            "_count": {
+                "questions": 25
+            }
+        },
+        {
+            "id": "50e04f19-e2de-41f2-8439-44214e194025",
+            "name": "Cars24",
+            "type": "PRODUCT_BASED",
+            "ctc": 17,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/CARS24_logo.svg.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/CARS24_logo.svg.png",
+            "_count": {
+                "questions": 8
+            }
+        },
+        {
+            "id": "70db1fe5-8b45-4443-b0bf-b4a0829806c3",
+            "name": "Infosys",
+            "type": "SERVICE_BASED",
+            "ctc": 5,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/infosys.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/infosysSmall.png",
+            "_count": {
+                "questions": 100
+            }
+        },
+        {
+            "id": "885de31c-0182-489f-853c-d55b7bc3b548",
+            "name": "Atlassian",
+            "type": "PRODUCT_BASED",
+            "ctc": 34,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/atlasian.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newAtlasianSmall.png",
+            "_count": {
+                "questions": 73
+            }
+        },
+        {
+            "id": "ff787fb2-aebf-4f45-9486-3588a7ef2ba5",
+            "name": "AMD",
+            "type": "PRODUCT_BASED",
+            "ctc": 60,
+            "logo": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/amd.png",
+            "logoSmall": "https://veerpreps.s3.ap-south-1.amazonaws.com/uploads/hackmnc/Small+Logos/newAmdSmall.png",
+            "_count": {
+                "questions": 11
+            }
+        }
+    ]
   
   const testimonials = [
     {
@@ -204,18 +452,18 @@ export default function Page() {
               <motion.div
                 className="flex gap-4 will-change-transform py-2"
                 initial={{ x: 0 }}
-                animate={{ x: "-80%" }}
-                transition={{ repeat: Infinity, duration: 40, ease: "easeIn" }}
+                animate={{ x: "-50%" }}
+                transition={{ repeat: Infinity, duration: 10, ease: "easeIn" }}
               >
                 {[...Array(2)].flatMap(() =>
                   companies.map((company, i) => (
                     <div
-                      key={`${company.companyName}-${i}-${Math.random()}`}
+                      key={`${company.name}-${i}-${Math.random()}`}
                       className="shrink-0 min-h-16 w-40 grid place-items-center rounded-lg border border-border bg-card/80 hover:bg-card hover:border-primary/40 transition-all p-3"
                     >
                       <Image
                         src={company.logo}
-                        alt={company.companyName}
+                        alt={company.name}
                         width={200}
                         height={40}
                         className="object-contain h-full w-full"
@@ -309,7 +557,7 @@ export default function Page() {
       </section>
 
       {/* Testimonials */}
-      <section className="px-4 sm:px-6 lg:px-8 py-10">
+      {/* <section className="px-4 sm:px-6 lg:px-8 py-10">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6 text-center">
             <h2 className="text-2xl sm:text-3xl font-bold">What our users say</h2>
@@ -349,8 +597,9 @@ export default function Page() {
           ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
+        <Testimonials/>
       {/* Blog teaser */}
       {/* <section className="px-4 sm:px-6 lg:px-8 py-10">
         <div className="max-w-7xl mx-auto">
