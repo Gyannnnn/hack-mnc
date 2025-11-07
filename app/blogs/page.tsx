@@ -21,10 +21,10 @@ export default async function FeaturedArticles() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {featuredArticles.map((article) => (
-            <Link target="_blank" href={`/blogs/${slugify(article.title).toLowerCase()}`}>
+            <Link  key={article.id} target="_blank" href={`/blogs/${slugify(article.title).toLowerCase()}`}>
             
             <article
-              key={article.id}
+             
               className="group bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 hover:border-primary/40 hover:bg-card/60 h-full flex flex-col"
             >
   

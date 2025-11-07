@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { Briefcase, Layers, Filter, CheckCircle2 } from "lucide-react";
 
@@ -388,27 +387,7 @@ export default function Page() {
         }
     ]
   
-  const testimonials = [
-    {
-      name: "Ananya S.",
-      quote:
-        "Tracked my prep company-wise and finally cracked my first MNC offer.",
-      role: "SWE Intern",
-    },
-    {
-      name: "Rohit K.",
-      quote:
-        "The topic filters + progress tracking feel like a premium paid tool.",
-      role: "SDE-1",
-    },
-    {
-      name: "Meera T.",
-      quote:
-        "Exactly what I needed to stay consistent before interviews.",
-      role: "Master's student",
-    },
-  ];
-
+  
   return (
     <main className="w-full">
       {/* Hero */}
