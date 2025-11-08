@@ -75,7 +75,8 @@ export async function generateStaticParams() {
 
     return articles.map((article) => {
       // Use type assertion instead of any
-      const titleProperty = (article as PageObjectResponse).properties.title as NotionTitleProperty;
+      const titleProperty = (article as PageObjectResponse).properties
+        .title as NotionTitleProperty;
       const title = titleProperty?.title[0]?.plain_text || "";
       return {
         title: slugify(title).toLowerCase(),
@@ -177,7 +178,7 @@ export default async function Page({
                 {articleData.publishedDate && (
                   <time
                     dateTime={articleData.publishedDate}
-                    className="text-primary"
+                    className="text-white"
                   >
                     Published:{" "}
                     {new Date(articleData.publishedDate).toLocaleDateString(
@@ -191,7 +192,7 @@ export default async function Page({
                   </time>
                 )}
                 {articleData.lastEditedAt && (
-                  <span className="text-primary">
+                  <span className="text-white">
                     Updated:{" "}
                     {new Date(articleData.lastEditedAt).toLocaleDateString(
                       "en-US",
@@ -222,15 +223,15 @@ export default async function Page({
 
             {/* Thumbnail */}
             {articleData.thumbnail && (
-  <div className="mb-4 sm:mb-6 md:mb-8 w-full">
-    <img
-      src={articleData.thumbnail}
-      alt={articleData.title}
-      className="w-full h-auto max-w-full rounded-lg sm:rounded-xl border border-border"
-      loading="eager"
-    />
-  </div>
-)}
+              <div className="mb-4 sm:mb-6 md:mb-8 w-full">
+                <img
+                  src={articleData.thumbnail}
+                  alt={articleData.title}
+                  className="w-full h-auto max-w-full rounded-lg sm:rounded-xl border border-border"
+                  loading="eager"
+                />
+              </div>
+            )}
 
             {/* Summary */}
             {articleData.summary && (

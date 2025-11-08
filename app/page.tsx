@@ -511,9 +511,9 @@ export default function Page() {
       <section className="px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { k: "Problems", value: 1024, suffix: "+" },
-            { k: "Companies", value: 20, suffix: "+" },
-            { k: "Active Users", value: 10, suffix: "+" },
+            { k: "Problems", value: 1679, suffix: "+" },
+            { k: "Companies", value: 29, suffix: "+" },
+            { k: "Active Users", value: 20, suffix: "+" },
           ].map((s) => (
             <motion.div
               key={s.k}
