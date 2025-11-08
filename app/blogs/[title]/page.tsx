@@ -1,17 +1,17 @@
+// app/blogs/[title]/page.tsx
 import React from "react";
-import type {
-  BlockObjectResponse,
-  RichTextItemResponse,
-} from "@notionhq/client/build/src/api-endpoints";
-
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   getAllArticles,
   getArticlePage,
   getArticlePageData,
+  NotionTitleProperty,
+  slugify,
 } from "@/utils/notion";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import type { Metadata } from "next";
+import { CustomNotionRenderer } from "@/components/notion-renderer";
+import { PageObjectResponse } from "@notionhq/client";
 
 // Generate metadata for SEO
 export async function generateMetadata({
@@ -74,8 +74,8 @@ export async function generateStaticParams() {
     const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
 
     return articles.map((article) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const titleProperty = (article as any).properties.title;
+      // Use type assertion instead of any
+      const titleProperty = (article as PageObjectResponse).properties.title as NotionTitleProperty;
       const title = titleProperty?.title[0]?.plain_text || "";
       return {
         title: slugify(title).toLowerCase(),
@@ -84,175 +84,6 @@ export async function generateStaticParams() {
   } catch (error) {
     console.log(error);
     return [];
-  }
-}
-
-// Helper function for slugify
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w ]+/g, "")
-    .replace(/ +/g, "-");
-}
-
-// Notion block renderer component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function NotionBlockRenderer({ block }: { block: any }) {
-  switch (block.type) {
-    case "paragraph":
-      return (
-        <p className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-3 sm:mb-4 text-sm sm:text-base break-words overflow-wrap-anywhere">
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {block.paragraph.rich_text.map((text: any, index: number) => (
-            <span
-              key={index}
-              className={`
-                ${text.annotations.bold ? "font-bold" : ""}
-                ${text.annotations.italic ? "italic" : ""}
-                ${
-                  text.annotations.code
-                    ? "font-mono bg-[var(--color-muted)] px-1 py-0.5 rounded-[var(--radius-sm)] text-xs sm:text-sm break-all"
-                    : ""
-                }
-                ${text.annotations.underline ? "underline" : ""}
-                ${text.annotations.strikethrough ? "line-through" : ""}
-              `}
-              style={{
-                color:
-                  text.annotations.color !== "default"
-                    ? text.annotations.color
-                    : undefined,
-              }}
-            >
-              {text.plain_text}
-            </span>
-          ))}
-        </p>
-      );
-
-    case "heading_1":
-      return (
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--color-foreground)] mt-5 sm:mt-6 md:mt-8 mb-2 sm:mb-3 md:mb-4 break-words">
-          {block.heading_1.rich_text[0]?.plain_text}
-        </h2>
-      );
-
-    case "heading_2":
-      return (
-        <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-[var(--color-foreground)] mt-4 sm:mt-5 md:mt-6 mb-2 sm:mb-3 break-words">
-          {block.heading_2.rich_text[0]?.plain_text}
-        </h3>
-      );
-
-    case "heading_3":
-      return (
-        <h4 className="text-base sm:text-lg md:text-xl font-medium text-[var(--color-foreground)] mt-3 sm:mt-4 mb-2 break-words">
-          {block.heading_3.rich_text[0]?.plain_text}
-        </h4>
-      );
-
-    case "bulleted_list_item":
-      const listBlock = block as Extract<
-        BlockObjectResponse,
-        { type: "bulleted_list_item" }
-      >;
-
-      return (
-        <li
-          key={listBlock.id}
-          className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-disc text-sm sm:text-base break-words"
-        >
-          {listBlock.bulleted_list_item.rich_text.map(
-            (text: RichTextItemResponse, i: number) => {
-              if (text.type === "text") {
-                const { content, link } = text.text;
-
-                return (
-                  <React.Fragment key={i}>
-                    {link ? (
-                      <a
-                        href={link.url}
-                        className="text-blue-600 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {content}
-                      </a>
-                    ) : (
-                      <span
-                        className={[
-                          text.annotations.bold && "font-semibold",
-                          text.annotations.italic && "italic",
-                          text.annotations.code &&
-                            "font-mono bg-gray-100 px-1 rounded text-sm",
-                          text.annotations.strikethrough && "line-through",
-                          text.annotations.underline && "underline",
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                      >
-                        {content}
-                      </span>
-                    )}
-                  </React.Fragment>
-                );
-              }
-              return null;
-            }
-          )}
-        </li>
-      );
-
-    case "numbered_list_item":
-      return (
-        <li className="text-[var(--color-foreground)] leading-6 sm:leading-7 mb-1 ml-4 sm:ml-6 list-decimal text-sm sm:text-base break-words">
-          {block.numbered_list_item.rich_text[0]?.plain_text}
-        </li>
-      );
-
-    case "code":
-      return (
-        <pre className="bg-[var(--color-card)] border border-[var(--color-border)] text-[var(--color-foreground)] p-3 sm:p-4 rounded-[var(--radius)] overflow-x-auto mb-4 w-full max-w-full">
-          <code className="font-mono text-xs sm:text-sm block whitespace-pre break-all">
-            {block.code.rich_text[0]?.plain_text}
-          </code>
-        </pre>
-      );
-
-    case "quote":
-      return (
-        <blockquote className="border-l-4 border-[var(--color-primary)] pl-3 sm:pl-4 italic text-[var(--color-muted-foreground)] my-3 sm:my-4 text-sm sm:text-base break-words">
-          {block.quote.rich_text[0]?.plain_text}
-        </blockquote>
-      );
-
-    case "image":
-      const imageUrl =
-        block.image.type === "external"
-          ? block.image.external.url
-          : block.image.file.url;
-
-      return (
-        <figure className="my-4 sm:my-6 w-full">
-          <img
-            src={imageUrl}
-            alt={block.image.caption?.[0]?.plain_text || "Blog image"}
-            className="rounded-lg sm:rounded-[var(--radius)] w-full h-auto max-w-full border border-[var(--color-border)]"
-            loading="lazy"
-          />
-          {block.image.caption && block.image.caption.length > 0 && (
-            <figcaption className="text-center text-xs sm:text-sm text-[var(--color-muted-foreground)] mt-2 px-2 break-words">
-              {block.image.caption[0].plain_text}
-            </figcaption>
-          )}
-        </figure>
-      );
-
-    case "divider":
-      return <hr className="my-4 sm:my-6 border-[var(--color-border)]" />;
-
-    default:
-      return null;
   }
 }
 
@@ -289,14 +120,14 @@ export default async function Page({
       dateModified: articleData.lastEditedAt,
       author: {
         "@type": "Person",
-        name: "Your Name", // Replace with actual author
+        name: "Your Name",
       },
       publisher: {
         "@type": "Organization",
         name: "Your Blog Name",
         logo: {
           "@type": "ImageObject",
-          url: "/logo.png", // Replace with your logo
+          url: "/logo.png",
         },
       },
     };
@@ -391,15 +222,15 @@ export default async function Page({
 
             {/* Thumbnail */}
             {articleData.thumbnail && (
-              <div className="mb-4 sm:mb-6 md:mb-8 w-full">
-                <img
-                  src={articleData.thumbnail}
-                  alt={articleData.title}
-                  className="w-full h-40 sm:h-48 md:h-64 lg:h-80 xl:h-96 object-cover rounded-lg sm:rounded-xl border border-border max-w-full"
-                  loading="eager"
-                />
-              </div>
-            )}
+  <div className="mb-4 sm:mb-6 md:mb-8 w-full">
+    <img
+      src={articleData.thumbnail}
+      alt={articleData.title}
+      className="w-full h-auto max-w-full rounded-lg sm:rounded-xl border border-border"
+      loading="eager"
+    />
+  </div>
+)}
 
             {/* Summary */}
             {articleData.summary && (
@@ -410,13 +241,10 @@ export default async function Page({
               </div>
             )}
 
-            {/* Article Content */}
-            <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-foreground break-words overflow-wrap-anywhere">
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {articleData.content.map((block: any) => (
-                <NotionBlockRenderer key={block.id} block={block} />
-              ))}
-            </div>
+            {/* Article Content - UPDATED: Using Notion Renderer */}
+            {articleData.renderedHTML && (
+              <CustomNotionRenderer html={articleData.renderedHTML} />
+            )}
 
             {/* Article Footer */}
             <footer className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border">

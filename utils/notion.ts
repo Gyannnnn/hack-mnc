@@ -1,8 +1,42 @@
-import { Client, PageObjectResponse } from '@notionhq/client'
+// utils/notion.ts
+import { BlockObjectResponse, Client, PageObjectResponse } from '@notionhq/client'
+import { NotionRenderer } from '@notion-render/client';
 
+// Initialize Notion client
 const notion = new Client({
   auth: process.env.NOTION_SECRET,
 })
+// Add these interfaces to your utils/notion.ts
+
+export interface NotionTitleProperty {
+  type: "title";
+  title: Array<{
+    type: "text";
+    text: { content: string };
+    plain_text: string;
+  }>;
+}
+// Add this function to your utils/notion.ts file
+export function getArticleTitle(article: PageObjectResponse): string {
+  const titleProperty = article.properties.title as any;
+  return titleProperty?.title[0]?.plain_text || '';
+}
+
+export interface NotionPageProperties {
+  title: NotionTitleProperty;
+  categories?: any;
+  thumbnail?: any;
+  published?: any;
+  summary?: any;
+  status?: any;
+}
+
+export interface NotionPageObjectResponse {
+  id: string;
+  properties: NotionPageProperties;
+  last_edited_time: string;
+  // Add other properties you need
+}
 
 export interface Article {
   id: string
@@ -17,6 +51,13 @@ export interface Article {
 export interface ArticleList {
   articles: Article[]
   categories: string[]
+}
+
+export interface ArticlePageData extends Article {
+  content: any[]
+  slug: string
+  moreArticles: Article[]
+  renderedHTML?: string
 }
 
 export const getAllArticles = async (databaseId: string): Promise<PageObjectResponse[]> => {
@@ -39,13 +80,12 @@ export const getAllArticles = async (databaseId: string): Promise<PageObjectResp
 }
 
 const mapArticleProperties = (article: PageObjectResponse): Article => {
-  const { id, properties } = article
+  const { id, properties, last_edited_time } = article
 
   const titleProperty = properties.title as any
   const categoriesProperty = properties.categories as any
   const thumbnailProperty = properties.thumbnail as any
   const publishedProperty = properties.published as any
-  const lastEditedProperty = properties.LastEdited as any
   const summaryProperty = properties.summary as any
 
   return {
@@ -56,7 +96,7 @@ const mapArticleProperties = (article: PageObjectResponse): Article => {
       thumbnailProperty?.files[0]?.external?.url ||
       '/image-background.png',
     publishedDate: publishedProperty?.date?.start || null,
-    lastEditedAt: lastEditedProperty?.last_edited_time || null,
+    lastEditedAt: last_edited_time || null,
     summary: summaryProperty?.rich_text[0]?.plain_text || ''
   }
 }
@@ -137,19 +177,21 @@ export function shuffleArray<T>(array: T[]): T[] {
   }
   return newArray
 }
-
-export const getArticlePageData = async (page: PageObjectResponse, slug: string, databaseId: string) => {
-  let content = []
-  const title = (page.properties.title as any).title[0].plain_text
+export const getArticlePageData = async (page: PageObjectResponse, slug: string, databaseId: string): Promise<ArticlePageData> => {
+  let content: BlockObjectResponse[] = []; // Specify the type
+  const title = getArticleTitle(page);
 
   try {
-    const moreArticles = await getMoreArticlesToSuggest(databaseId, title)
+    const moreArticles = await getMoreArticlesToSuggest(databaseId, title);
 
     let blocks = await notion.blocks.children.list({
       block_id: page.id
     })
 
-    content = [...blocks.results]
+    // Filter out PartialBlockObjectResponse and cast to BlockObjectResponse
+    content = blocks.results.filter((block): block is BlockObjectResponse => 
+      'type' in block
+    );
 
     while (blocks.has_more) {
       blocks = await notion.blocks.children.list({
@@ -157,22 +199,32 @@ export const getArticlePageData = async (page: PageObjectResponse, slug: string,
         start_cursor: blocks.next_cursor!
       })
 
-      content = [...content, ...blocks.results]
+      const additionalBlocks = blocks.results.filter((block): block is BlockObjectResponse => 
+        'type' in block
+      );
+      content = [...content, ...additionalBlocks];
     }
+
+    // Render blocks to HTML using NotionRenderer
+    const renderer = new NotionRenderer({
+      client: notion,
+    });
+
+    const renderedHTML = await renderer.render(...content);
 
     return {
       ...mapArticleProperties(page),
       content,
       slug,
-      moreArticles
+      moreArticles,
+      renderedHTML
     }
   } catch (error) {
     console.error('Error fetching article page data:', error)
     throw error
   }
 }
-
-// Helper function for slugify since you were using it
+// Helper function for slugify
 export function slugify(text: string): string {
   return text
     .toLowerCase()

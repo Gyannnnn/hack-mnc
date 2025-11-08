@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
-
+import "@/app/styles/notion-renderer.css"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
