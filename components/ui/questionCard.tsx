@@ -78,11 +78,11 @@ export default function QuestionCard({
             {data.companies && data.companies.length > 7 && (
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="text-primary font-bold animate-pulse">
+                  <Badge >
                     {data.companies.length - 7}+
-                  </span>
+                  </Badge>
                 </TooltipTrigger>
-                <TooltipContent className="flex justify-center items-center gap-1">
+                <TooltipContent className="flex justify-center items-center gap-1 bg-card">
                   {data.companies.slice(5).map((data, index) => (
                     <Tooltip key={index}>
                       <TooltipTrigger>

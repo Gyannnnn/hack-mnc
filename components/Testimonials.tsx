@@ -56,6 +56,12 @@ const testimonials = [
     quote:
       "I recommend Hack MNC to all  students. It consolidates premium DSA content and company-wise problems beautifully. It’s a must-use resource for serious interview preparation.",
   },
+  {
+    name: "Sujit Sah",
+    role: "B.tech 3rd year cse",
+    quote:
+      "Finding curated questions was a heck of a task searching from leetcode, hackerrank gfg and a hell lot of confusions but not anymore now cause i used hackmnc all the stuffs at one place.",
+  },
 ];
 
 export default function Testimonials() {
