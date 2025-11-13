@@ -32,7 +32,7 @@ const testimonials = [
       "I don’t have access to paid LeetCode Premium, but Hack MNC gave me everything I needed — structured problems, and interview insights. Amazing initiative for students like me!",
   },
   {
-    name: "Satyajeet Sahu",
+    name: "Satyajeet Sahoo",
     role: "200+ solved on leetcode",
     quote:
       "Hack MNC’s interface and tracking system made my DSA prep organized. It’s perfect for anyone who wants to cover all company-wise questions smartly, not randomly.",
@@ -46,12 +46,12 @@ const testimonials = [
   },
   {
     name: "Shivam Parihari",
-    role: "Senior python developer",
+    role: "GenAi Developer",
     quote:
       "I never thought tracking LeetCode questions by topic and company could be so satisfying. Hack MNC turned my chaotic prep into a measurable journey.",
   },
   {
-    name: "Chinmay sahu",
+    name: "Chinmaya Sahoo",
     role: "Senior IIC member",
     quote:
       "I recommend Hack MNC to all  students. It consolidates premium DSA content and company-wise problems beautifully. It’s a must-use resource for serious interview preparation.",
@@ -62,6 +62,11 @@ const testimonials = [
     quote:
       "Finding curated questions was a heck of a task searching from leetcode, hackerrank gfg and a hell lot of confusions but not anymore now cause i used hackmnc all the stuffs at one place.",
   },
+  {
+    name:"Swarup Dash",
+    role:"Topper, IT Branch – VSSUT Burla",
+    quote:"Hack MNC literally made my DSA prep stress-free! The company-wise question tracking and clean UI helped me stay focused on what actually matters for interviews. No more wasting time hopping between LeetCode, GFG, and random blogs — everything’s already sorted here. It’s like having a personal roadmap to crack big tech"
+  }
 ];
 
 export default function Testimonials() {
