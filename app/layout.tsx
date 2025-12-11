@@ -157,7 +157,7 @@ export default function RootLayout({
             <Providers>
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                 <Navbar />
-                <main className="pt-20 min-h-screen flex items-center justify-center w-full sm:px-10">
+                <main className="pt-10 min-h-screen flex items-center justify-center w-full sm:px-10">
                   {children}
                 </main>
                 <Toaster position="top-center" />
