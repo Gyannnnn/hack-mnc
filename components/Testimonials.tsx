@@ -10,13 +10,13 @@ const testimonials = [
     name: "Biswajit Panda",
     role: "Pre Final Year Student, Vssut Burla",
     quote:
-      "Hack MNC literally became my daily coding companion. The company-wise DSA tracking helped me focus on the exact problems asked by Google and Amazon",
+      "HackMNC literally became my daily coding companion. The company-wise DSA tracking helped me focus on the exact problems asked by Google and Amazon",
   },
   {
     name: "Prajnamayee Sahu",
     role: "B.Tech, 3rd Year",
     quote:
-      "I used to waste time searching for ‘most asked questions by companies’ on random blogs. Hack MNC solved that — everything is structured, updated, and FREE! The progress tracker keeps me consistent.",
+      "I used to waste time searching for ‘most asked questions by companies’ on random blogs. HackMNC solved that — everything is structured, updated, and FREE! The progress tracker keeps me consistent.",
   },
   {
     name: "Dharmendra Mahanta",
@@ -29,32 +29,32 @@ const testimonials = [
     name: "Sonakshi Pradhan",
     role: "B.Tech, 3rd year",
     quote:
-      "I don’t have access to paid LeetCode Premium, but Hack MNC gave me everything I needed — structured problems, and interview insights. Amazing initiative for students like me!",
+      "I don’t have access to paid LeetCode Premium, but HackMNC gave me everything I needed — structured problems, and interview insights. Amazing initiative for students like me!",
   },
   {
     name: "Satyajeet Sahoo",
     role: "200+ solved on leetcode",
     quote:
-      "Hack MNC’s interface and tracking system made my DSA prep organized. It’s perfect for anyone who wants to cover all company-wise questions smartly, not randomly.",
+      "HackMNC’s interface and tracking system made my DSA prep organized. It’s perfect for anyone who wants to cover all company-wise questions smartly, not randomly.",
   },
 
   {
     name: "Krishna Mundari",
     role: "B.tech, 3rd year",
     quote:
-      "Even as a beginner, I found Hack MNC super easy to navigate. It’s like having your own coding mentor — guiding you company by company.",
+      "Even as a beginner, I found HackMNC super easy to navigate. It’s like having your own coding mentor — guiding you company by company.",
   },
   {
     name: "Shivam Parihari",
     role: "GenAi Developer",
     quote:
-      "I never thought tracking LeetCode questions by topic and company could be so satisfying. Hack MNC turned my chaotic prep into a measurable journey.",
+      "I never thought tracking LeetCode questions by topic and company could be so satisfying. HackMNC turned my chaotic prep into a measurable journey.",
   },
   {
     name: "Chinmaya Sahoo",
     role: "Senior IIC member",
     quote:
-      "I recommend Hack MNC to all  students. It consolidates premium DSA content and company-wise problems beautifully. It’s a must-use resource for serious interview preparation.",
+      "I recommend HackMNC to all  students. It consolidates premium DSA content and company-wise problems beautifully. It’s a must-use resource for serious interview preparation.",
   },
   {
     name: "Sujit Sah",
@@ -65,7 +65,7 @@ const testimonials = [
   {
     name:"Swarup Dash",
     role:"Topper, IT Branch – VSSUT Burla",
-    quote:"Hack MNC literally made my DSA prep stress-free! The company-wise question tracking and clean UI helped me stay focused on what actually matters for interviews. No more wasting time hopping between LeetCode, GFG, and random blogs — everything’s already sorted here. It’s like having a personal roadmap to crack big tech"
+    quote:"HackMNC literally made my DSA prep stress-free! The company-wise question tracking and clean UI helped me stay focused on what actually matters for interviews. No more wasting time hopping between LeetCode, GFG, and random blogs — everything’s already sorted here. It’s like having a personal roadmap to crack big tech"
   }
 ];
 

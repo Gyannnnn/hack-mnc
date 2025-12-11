@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
-import "@/app/styles/notion-renderer.css"
+import "@/app/styles/notion-renderer.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -22,14 +22,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default:
-      "Hack MNC | Free LeetCode Premium Helper, DSA Tracker & Interview Prep",
-    template: "%s | Hack MNC",
+      "HackMNC | Free LeetCode Premium Helper, DSA Tracker & Interview Prep",
+    template: "%s | HackMNC",
   },
   description:
-    "Hack MNC is your ultimate free LeetCode premium helper and DSA practice tracker. Solve coding interview questions company-wise, topic-wise, and difficulty-wise with real acceptance rates, progress tracking, and interview experiences for FAANG and top MNCs.",
+    "HackMNC is your ultimate free LeetCode premium helper and DSA practice tracker. Solve coding interview questions company-wise, topic-wise, and difficulty-wise with real acceptance rates, progress tracking, and interview experiences for FAANG and top MNCs.",
   keywords: [
     // Core
-    "Hack MNC",
+    "HackMNC",
     "LeetCode",
     "LeetCode premium helper",
     "LeetCode premium bypass",
@@ -95,13 +95,13 @@ export const metadata: Metadata = {
     "Software engineer interview questions",
     "Data structures interview preparation",
   ],
-  authors: [{ name: "Hack MNC Team", url: "https://hackmnc.com" }],
+  authors: [{ name: "HackMNC Team", url: "https://hackmnc.com" }],
   openGraph: {
-    title: "Hack MNC - Free LeetCode Premium Helper & DSA Interview Tracker",
+    title: "HackMNC - Free LeetCode Premium Helper & DSA Interview Tracker",
     description:
       "Access company-wise, topic-wise DSA problems and LeetCode premium questions for free. Track your coding progress and read real interview experiences on Hack MNC.",
     url: "https://hackmnc.com",
-    siteName: "Hack MNC",
+    siteName: "HackMNC",
     images: [
       {
         url: "https://hackmnc.com/og-image.png",
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Hack MNC - Free LeetCode Premium Helper & DSA Tracker",
     description:
-      "Prepare for FAANG and MNC interviews with Hack MNC — company-wise DSA problems, progress tracker, and blogs — 100% free.",
+      "Prepare for FAANG and MNC interviews with HackMNC — company-wise DSA problems, progress tracker, and blogs — 100% free.",
     images: ["https://hackmnc.com/og-image.png"],
     creator: "@hackmnc",
   },
