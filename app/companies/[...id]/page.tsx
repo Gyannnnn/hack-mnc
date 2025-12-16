@@ -10,6 +10,7 @@ import { getCompanyPostBySlug } from "@/lib/getPostBySlug/GetPostbySlug";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/lib/mdx-components";
 import ClientMDX from "@/components/ClientMDX";
+import Script from "next/script";
 
 interface seoDataRes {
   success: boolean;
@@ -120,8 +121,14 @@ export default async function page({
     components: mdxComponents,
     options: { parseFrontmatter: false },
   });
+  const slug = decoded_name.toLowerCase().replace(/\s+/g, "-");
 
-  console.log(companyName);
+  const breadcrumbTitle = `${
+    decoded_name[0].toUpperCase() + decoded_name.slice(1)
+  } LeetCode Interview Questions`;
+  const companyDisplayName =
+    decoded_name.charAt(0).toUpperCase() + decoded_name.slice(1);
+
   try {
     const heading =
       frontmatter.title && frontmatter.title.trim().length > 0
@@ -132,6 +139,91 @@ export default async function page({
 
     return (
       <div className="cnt  gap-6">
+        <Script
+          id="breadcrumb-schema"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: "https://www.hackmnc.com/",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Companies",
+                  item: "https://www.hackmnc.com/companies",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: breadcrumbTitle,
+                  item: `https://www.hackmnc.com/companies/${slug}/leetcode-interview-questions`,
+                },
+              ],
+            }),
+          }}
+        />
+        <Script
+          id="faq-schema"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: `Which LeetCode questions are frequently asked in ${companyDisplayName} interviews?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: `HackMNC curates LeetCode questions that are frequently reported in ${companyDisplayName} interviews based on publicly available sources, community discussions, and interview experiences. The list is updated to reflect commonly repeated problems.`,
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: `How does HackMNC determine the frequency of ${companyDisplayName} interview questions?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: `HackMNC aggregates data from public resources such as GitHub repositories, LinkedIn posts, and interview discussion forums to estimate how often a LeetCode question appears in ${companyDisplayName} interviews.`,
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: `Are these actual ${companyDisplayName} interview questions?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: `No. The questions listed on HackMNC are curated from publicly shared interview experiences and community resources. They are intended for interview preparation only and do not represent official ${companyDisplayName} interview questions.`,
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: `Can I filter ${companyDisplayName} LeetCode questions by topic or difficulty?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: `Yes. HackMNC allows you to filter ${companyDisplayName} LeetCode interview questions by topic, difficulty level, acceptance rate, and frequency to help you prepare more effectively.`,
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: `How should I prepare for ${companyDisplayName} coding interviews using HackMNC?`,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: `You can prepare for ${companyDisplayName} interviews by practicing frequently asked LeetCode problems on HackMNC, focusing on high-frequency questions, revising key data structures and algorithms, and tracking your progress over time.`,
+                  },
+                },
+              ],
+            }),
+          }}
+        />
+
         <div className="flex flex-col pt-4">
           <CompanyQuestionPageNavigation companyName={decoded_name} />
           <div className="rounded-2xl border bg-card/70 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm space-y-3 mt-5">
