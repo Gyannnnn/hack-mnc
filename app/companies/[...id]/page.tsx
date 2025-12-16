@@ -165,7 +165,7 @@ export default async function page({
           </div>
         </div>
 
-        <div className="rounded-2xl border bg-card/90 px-4 py-6 sm:px-6 shadow-sm space-y-4 mb-10">
+        <div className="rounded-2xl border bg-card/90 px-1  sm:px-6 shadow-sm space-y-4 mb-10">
           <ClientMDX>
             <div className="prose prose-sm sm:prose-base max-w-none prose-invert">
               {mdx.content}
