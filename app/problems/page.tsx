@@ -5,11 +5,11 @@ import Topics from "@/components/Topics";
 import Questions from "@/components/Questions";
 import { auth } from "@/auth";
 
-
 export const metadata = {
-  title: "Problems",
+  title:
+    "LeetCode Questions with Solutions | 2000+ Problems by Company & Topic",
   description:
-    "Solve DSA problems company-wise and topic-wise with Hack MNC — the free LeetCode premium helper. Track your coding progress and read real interview experiences to prepare for FAANG and top MNCs.",
+    "Browse 2000+ LeetCode questions with solutions, sorted by company (Google, Amazon, Meta), topic, frequency & acceptance rate. Perfect for interview prep!",
   keywords: [
     "Hack MNC",
     "LeetCode premium helper",
@@ -53,15 +53,76 @@ export const metadata = {
   },
 };
 
-
 export default async function Problems() {
   const session = await auth();
   return (
-    <div className="cnt gap-3">
-      <FeaturedCompany />
-      <Topics />
-      <h1 className="sm:text-xl">Questions Topic wise company wise</h1>
-      <Questions userId={session?.user.id as string} />
-    </div>
+    <main className="cnt gap-6">
+      <header className="space-y-3 rounded-2xl border bg-card/80 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm">
+        <div className="space-y-2 ">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
+            Frequently asked leetcode questions
+          </p>
+          <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">
+            LeetCode Interview Questions by Company & Topic
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Master your coding interviews with the most comprehensive LeetCode
+            questions list, featuring real interview frequency data and
+            acceptance rates across 200+ companies. Explore LeetCode problems by
+            company and topic, identify high-frequency interview questions, and
+            understand which problems are asked most often at Google, Amazon,
+            Microsoft, Meta, and other top tech companies.
+          </p>
+        </div>
+      </header>
+
+      <section className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+          <div className="space-y-1">
+            <h2 className="text-xl font-semibold">
+              LeetCode Questions Asked by Top Companies
+            </h2>
+            {/* <p className="text-sm text-muted-foreground">
+              Quickly jump into frequently-asked problems from FAANG and other
+              top product companies.
+            </p> */}
+          </div>
+        </div>
+        <div className="rounded-2xl border bg-card/80 px-3 py-4 sm:px-4 shadow-sm">
+          <FeaturedCompany />
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-xl font-semibold">LeetCode Questions by Topic</h2>
+          {/* <p className="text-sm text-muted-foreground ">
+            Browse LeetCode interview questions categorized by data structures
+            and algorithms such as Arrays, Trees, Graphs, Dynamic Programming,
+            and more.
+          </p> */}
+        </div>
+        <div className="rounded-2xl border bg-card/80 px-0 py-3 sm:px-2 shadow-sm">
+          <Topics />
+        </div>
+      </section>
+
+      <section className="space-y-4 mb-10">
+        <div className="space-y-1">
+          <h2 className="text-xl font-semibold">
+            Company-Wise & Topic-Wise LeetCode Interview Questions
+          </h2>
+          {/* <p className="text-sm text-muted-foreground">
+            View all LeetCode problems sorted by company frequency, acceptance
+            rate, and difficulty. This section highlights the most frequently
+            asked coding interview questions across FAANG and other top tech
+            companies.
+          </p> */}
+        </div>
+        <div className="">
+          <Questions userId={session?.user.id as string} />
+        </div>
+      </section>
+    </main>
   );
 }

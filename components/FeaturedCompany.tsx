@@ -16,12 +16,10 @@ export default async function FeaturedCompany() {
       <div className="flex flex-col items-end justify-center ">
         <div className="w-full sm:flex gap-2 ">
           {companyData?.map((data, index) => (
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
+            <Link              
               className="flex sm:w-1/5 w-full h-44  relative items-center justify-center mt-2"
               key={index}
-              href={`/companies/${data.id}`}
+              href={`/companies/${data.name.toLowerCase()}`}
             >
               <Card className="h-full w-full flex items-center justify-center hover:border-4 bg">
                 <Image
@@ -41,7 +39,7 @@ export default async function FeaturedCompany() {
             </Link>
           ))}
         </div>
-        <Link href="/companies" className="pt-2">
+        <Link href="/companies" className="text-white">
           <Button variant={"link"}>
             See all companies <ArrowRight />
           </Button>

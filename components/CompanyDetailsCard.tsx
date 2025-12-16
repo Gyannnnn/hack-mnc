@@ -11,10 +11,10 @@ import { Skeleton } from "./ui/skeleton";
 
 export default function CompanyDetailsCard({
   userId,
-  companyId,
+  companyName,
 }: {
   userId: string;
-  companyId: string;
+  companyName: string;
 }) {
   const [companyData, setCompanyData] = useState<companyCardDetails | null>(
     null
@@ -34,7 +34,7 @@ export default function CompanyDetailsCard({
     try {
       setLoading(true);
       setError(null);
-      const res = await getCompanyDetails({ companyId, userId });
+      const res = await getCompanyDetails({ companyName, userId });
       if (res?.data) {
         setCompanyData(res as companyCardDetails);
         initializeCompanyProgress(
@@ -49,21 +49,21 @@ export default function CompanyDetailsCard({
     } finally {
       setLoading(false);
     }
-  }, [companyId, userId, initializeCompanyProgress]);
+  }, [companyName, userId, initializeCompanyProgress]);
 
   useEffect(() => {
-    console.log("IDs:", { companyId, userId });
-    if (companyId) {
+    console.log("IDs:", { companyName, userId });
+    if (companyName) {
       fetchCompanyDetails();
     }
-  }, [companyId, userId, fetchCompanyDetails]); // Use the memoized function
+  }, [companyName, userId, fetchCompanyDetails]); // Use the memoized function
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await getCompanyDetails({ companyId, userId });
+        const res = await getCompanyDetails({ companyName, userId });
 
         if (res?.data) {
           setCompanyData(res as companyCardDetails);
@@ -81,10 +81,10 @@ export default function CompanyDetailsCard({
       }
     };
 
-    if (companyId && userId) {
+    if (companyName && userId) {
       fetchData();
     }
-  }, [companyId, userId]); // Remove initializeCompanyProgress
+  }, [initializeCompanyProgress, companyName, userId]); // Remove initializeCompanyProgress
 
   useEffect(() => {
     console.log("Company progress in CompanyDetailsCard updated:", {
@@ -153,13 +153,11 @@ export default function CompanyDetailsCard({
         <div className="flex items-center h-full w-full justify-between  gap-4">
           <div className="flex justify-center items-center gap-4">
             <div className="relative">
-              
               <Image
                 height={110}
                 width={110}
                 src={companyData?.data.company.logo as string}
                 alt={`${companyData?.data.company.name} logo`}
-                
               />
             </div>
           </div>

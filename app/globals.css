@@ -4,6 +4,38 @@
 @custom-variant dark (&:is(.dark *));
 
 
+
+body {
+  --sb-track-color: #201b25;
+  --sb-thumb-color: #004ee6;
+  --sb-size: 5px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+}
+
+/* body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 16px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 16px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
+} */
+
 ::-webkit-scrollbar{
   display: none;
 }

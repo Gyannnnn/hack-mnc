@@ -32,12 +32,12 @@ const FilterControls = React.memo(
     topicFilter: string;
     setTopicFilter: (value: string) => void;
   }) => (
-    <Card className="flex sm:flex-row px-2 flex-wrap gap-3 mb-4 sm:justify-between justify-start items-start">
+    <Card className="mb-4 px-3 py-3 sm:px-4 sm:py-3 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
       {/* Sort */}
-      <div className="flex gap-2 items-center">
-        <p className="font-semibold">Sort by:</p>
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <p className="text-sm font-semibold whitespace-nowrap">Sort by:</p>
         <Select value={sortOption} onValueChange={setSortOption}>
-          <SelectTrigger className="w-44">
+          <SelectTrigger className="w-full sm:w-44">
             <SelectValue placeholder="Sort option" />
           </SelectTrigger>
           <SelectContent>
@@ -51,10 +51,10 @@ const FilterControls = React.memo(
       </div>
 
       {/* Filter Difficulty */}
-      <div className="flex gap-2 items-center">
-        <p className="font-semibold">Difficulty:</p>
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <p className="text-sm font-semibold whitespace-nowrap">Difficulty:</p>
         <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
-          <SelectTrigger className="w-36">
+          <SelectTrigger className="w-full sm:w-36">
             <SelectValue placeholder="All" />
           </SelectTrigger>
           <SelectContent>
@@ -67,12 +67,12 @@ const FilterControls = React.memo(
       </div>
 
       {/* Filter Topic */}
-      <div className="flex gap-2 items-center">
-        <p className="font-semibold">Topic:</p>
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <p className="text-sm font-semibold whitespace-nowrap">Topic:</p>
         <input
           type="text"
           placeholder="Search topic..."
-          className="border rounded-md px-2 py-1 w-48"
+          className="w-full sm:w-60 rounded-md border border-input bg-background px-3 py-1.5 text-sm"
           value={topicFilter === "all" ? "" : topicFilter}
           onChange={(e) =>
             setTopicFilter(
@@ -265,7 +265,7 @@ export default function Q2({ userId }: { userId: string }) {
           data={question}
           index={index}
           type="topic"
-          companyId=""
+          companyName=""
         />
       )),
     [filteredAndSortedQuestions]

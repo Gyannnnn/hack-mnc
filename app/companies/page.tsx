@@ -77,7 +77,11 @@ export default function Companies() {
               className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"
               aria-hidden="true"
             >
-              <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.243 11.964l4.271 4.272a.75.75 0 1 0 1.06-1.06l-4.272-4.272A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clipRule="evenodd" />
+              <path
+                fillRule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 1 0 4.243 11.964l4.271 4.272a.75.75 0 1 0 1.06-1.06l-4.272-4.272A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z"
+                clipRule="evenodd"
+              />
             </svg>
             <Input
               placeholder="Search companies..."
@@ -88,7 +92,7 @@ export default function Companies() {
           </div>
         </div>
 
-        <div className="w-full min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+        <div className="w-full min-h-screen grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-10">
           {filteredCompanies.length > 0 ? (
             filteredCompanies.map((company, index) => (
               <CompanyCard type="large" key={index} data={company} />

@@ -14,7 +14,7 @@ export default function QuestionCard({
 }: {
   data: featuredQuestions;
   index: number;
-  companyId: string;
+  companyName: string;
   type: string;
 }) {
   // const increaseEasySolved = useUserProgressStore(
