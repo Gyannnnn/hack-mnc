@@ -132,7 +132,7 @@ export default async function page({
 
     return (
       <div className="cnt  gap-6">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col pt-4">
           <CompanyQuestionPageNavigation companyName={decoded_name} />
           <div className="rounded-2xl border bg-card/70 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm space-y-3 mt-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
