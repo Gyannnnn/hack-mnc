@@ -21,12 +21,12 @@ export function CompanyQuestionPageNavigation({
             <Link href="/">Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
+        {/* <BreadcrumbSeparator /> */}
+        {/* <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link href="/problems">Problems</Link>
           </BreadcrumbLink>
-        </BreadcrumbItem>
+        </BreadcrumbItem> */}
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
@@ -35,7 +35,7 @@ export function CompanyQuestionPageNavigation({
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className="max-sm:truncate max-sm:w-25">
+          <BreadcrumbPage className="max-sm:truncate max-sm:w-35">
             {" "}
             {companyName} leetcode questions
           </BreadcrumbPage>

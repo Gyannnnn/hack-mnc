@@ -323,8 +323,8 @@ export default function CompanyDetails({
         <>{questionCards}</>
       )}
       {hasNextPage && !isFetchingNextPage && (
-        <div className="flex items-end justify-end max-sm:justify-center pt-6">
-          <Button onClick={() => fetchNextPage()}>Fetch more questions</Button>
+        <div className="flex items-end justify-end max-sm:justify-center pt-2">
+          <Button className="max-sm:w-full" onClick={() => fetchNextPage()}>Fetch more questions <LoaderCircleIcon className="animate-spin"/></Button>
         </div>
       )}
 
