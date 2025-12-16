@@ -287,7 +287,8 @@ export default function TopicQuestionsPage({
               data={question}
               index={index}
               type={type}
-              companyId={companyId}
+              companyName=""
+              // companyId={companyId}
             />
           );
         })

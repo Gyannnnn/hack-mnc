@@ -80,17 +80,17 @@ export const getQuestionsByTopic = async ({
 };
 
 export const getQuestionsByCompany = async ({
-  id,
+  companyName,
   pageParam,
   userId,
 }: {
-  id: string;
+  companyName: string;
   pageParam: number;
   userId: string;
 }) => {
   try {
     const res = await axios.post<featuredQuestionResponse>(
-      `https://api.hackmnc.com/api/v1/question/company/${id}?page=${pageParam}&limit=20`,
+      `https://api.hackmnc.com/api/v1/question/companyName/${companyName}?page=${pageParam}&limit=20`,
       {
         userId,
       }

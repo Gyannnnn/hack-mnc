@@ -1,7 +1,6 @@
 import React from "react";
 import { getTopics } from "@/app/actions/topics/topics";
 import Link from "next/link";
-import { Card } from "./ui/card";
 
 export default async function Topics() {
   let topicData;
@@ -10,7 +9,7 @@ export default async function Topics() {
     topicData = res?.data;
 
     return (
-      <Card className="bg-transparent px-4 py-3">
+      <div className="bg-transparent px-4 py-3">
         {/* Desktop: all topics as compact pills */}
         <div className="hidden md:flex flex-row flex-wrap justify-start gap-2">
           {topicData?.map((topic, index) => (
@@ -86,7 +85,7 @@ export default async function Topics() {
             );
           })()}
         </div>
-      </Card>
+      </div>
     );
   } catch (error) {
     console.log(error)

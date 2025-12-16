@@ -422,8 +422,8 @@ export default function Page() {
     <main className="w-full">
       {/* Hero */}
       <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_-20%,theme(colors.primary/0.18),transparent)] pointer-events-none" />
-        <div className="absolute inset-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black,transparent_80%)] bg-[linear-gradient(to_right,transparent_0,transparent_95%,theme(colors.border)_95%),linear-gradient(to_bottom,transparent_0,transparent_95%,theme(colors.border)_95%)] bg-[size:24px_24px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_-20%,var(--color-primary),transparent)]/18 pointer-events-none" />
+        <div className="absolute inset-0 pointer-events-none mask-[linear-gradient(to_bottom,black,transparent_80%)]" />
         <div className="max-w-7xl mx-auto pt-12 pb-16 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -432,7 +432,7 @@ export default function Page() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-center"
           >
-            <h1 className="mt-10 text-5xl md:text-6xl font-black tracking-tight bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="mt-10 text-5xl md:text-6xl font-black tracking-tight bg-linear-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               &lt;HackMNC/&gt;
             </h1>
             <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -460,40 +460,37 @@ export default function Page() {
           </motion.div>
 
           {/* Company carousel */}
-          <div className="mt-8 relative">
-            <div className="">
-              <motion.div
-                className="flex gap-4 will-change-transform py-2"
-                initial={{ x: 0 }}
-                animate={{ x: "-50%" }}
-                transition={{ repeat: Infinity, duration: 10, ease: "easeIn" }}
-              >
-                {[...Array(2)].flatMap(() =>
-                  companies.map((company) => (
-                    <Link
-                      key={company.id}
-                      href={`/companies/${company.id}`}
-                      target="_blank"
-                      className="shrink-0 min-h-16 w-40 grid place-items-center rounded-lg border border-border bg-card/80 hover:bg-card hover:border-primary/40 transition-all p-3"
-                    >
-                      <div
-                        key={`${company.id}`}
-                        
-                      >
-                        <Image
-                          src={company.logo}
-                          alt={company.name}
-                          width={200}
-                          height={40}
-                          className="object-contain h-full w-full"
-                          unoptimized
-                        />
-                      </div>
-                    </Link>
-                  ))
-                )}
-              </motion.div>
-            </div>
+          <div className="mt-8 relative overflow-hidden">
+            <motion.div
+              className="flex gap-4 py-2 w-max"
+              initial={{ x: "0%" }}
+              animate={{ x: "-50%" }}
+              transition={{
+                repeat: Infinity,
+                duration: 30,
+                ease: "linear",
+              }}
+            >
+              {[...Array(2)].flatMap(() =>
+                companies.map((company) => (
+                  <Link
+                    key={`${company.id}-${Math.random()}`}
+                    href={`/companies/${company.name}`}
+
+                    className="shrink-0 min-h-16 w-40 grid place-items-center rounded-lg border border-border bg-card/80 hover:bg-card hover:border-primary/40 transition-all p-3"
+                  >
+                    <Image
+                      src={company.logo}
+                      alt={company.name}
+                      width={200}
+                      height={40}
+                      className="object-contain h-full w-full"
+                      unoptimized
+                    />
+                  </Link>
+                ))
+              )}
+            </motion.div>
           </div>
         </div>
       </section>

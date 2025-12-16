@@ -1,4 +1,3 @@
-// app/blogs/[title]/page.tsx
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -68,13 +67,11 @@ export async function generateMetadata({
   }
 }
 
-// Generate static params for SSG
 export async function generateStaticParams() {
   try {
     const articles = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
 
     return articles.map((article) => {
-      // Use type assertion instead of any
       const titleProperty = (article as PageObjectResponse).properties
         .title as NotionTitleProperty;
       const title = titleProperty?.title[0]?.plain_text || "";

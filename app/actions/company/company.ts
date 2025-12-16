@@ -33,10 +33,10 @@ export const getCompanyById = async (id: string) => {
 }
 
 
-export const getCompanyDetails = async ({ companyId, userId }: { companyId: string, userId: string }) => {
+export const getCompanyDetails = async ({ companyName, userId }: { companyName: string, userId: string }) => {
     try {
-        const res = await axios.post<companyCardDetails>("https://api.hackmnc.com/api/v1/company/details", {
-            id: companyId,
+        const res = await axios.post<companyCardDetails>(" https://api.hackmnc.com/api/v1/company/detailsByname", {
+            companyName,
             userId: userId
         })
         return res.data;

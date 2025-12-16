@@ -14,16 +14,19 @@ export const navBarData = [
 
 export default function Navbar() {
   return (
-    <div className="h-16 fixed top-0 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-20">
-      <div className="flex gap-5 items-center">
+    <div className="h-16 fixed top-1 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-20 rounded-2xl">
+      <div className="flex items-center gap-10">
         <Link
           href="/"
-          className="sm:text-2xl text-xl font-bold text-[var(--color-foreground)] hover:text-[var(--color-primary)] transition-all duration-300 font-mono tracking-tight"
+          className="sm:text-2xl text-xl font-bold text-primary"
         >
           &lt;HackMNC/&gt;
-        </Link>
-        <Navlinks />
+        </Link>  
+           <Navlinks />     
       </div>
+  
+      
+    
 
       <div className="flex gap-2 items-center">
         {/* <AvatarProfile/> */}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -13,6 +13,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getQuestionsByCompany } from "@/app/actions/questions/questions";
 import QuestionCardLoader from "./QuestionCardLoader";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 const FilterControls = React.memo(
   ({
@@ -128,7 +129,7 @@ const NoResultsState = ({
 const LoadingMoreState = () => (
   <div className="flex justify-center py-4">
     <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />
-    <span className="ml-2">Loading more questions...</span>
+    
   </div>
 );
 
@@ -139,12 +140,12 @@ const NoMoreResultsState = () => (
 );
 
 export default function CompanyDetails({
-  id,
+  companyName,
   userId,
 }: {
-  id: string;
+  companyName: string;
   userId: string;
-  companyId: string;
+  // companyId: string;
 }) {
   const [sortOption, setSortOption] = useState("default");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
@@ -159,10 +160,10 @@ export default function CompanyDetails({
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["company-questions", id], // Include company ID in query key
+    queryKey: ["company-questions", companyName], // Include company ID in query key
     queryFn: ({ pageParam = 1 }) =>
       getQuestionsByCompany({
-        id,
+        companyName,
         pageParam,
         userId,
       }),
@@ -171,7 +172,7 @@ export default function CompanyDetails({
       return lastPage?.data?.hasMore ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
-    enabled: !!id, // Only enable when id is available
+    enabled: !!companyName, // Only enable when id is available
     staleTime: 5 * 60 * 1000,
   });
 
@@ -186,33 +187,33 @@ export default function CompanyDetails({
   }, [data]);
 
   // Throttled scroll handler
-  const handleScroll = useCallback(() => {
-    const bottom =
-      window.innerHeight + window.scrollY >=
-      document.documentElement.scrollHeight - 500;
+  // const handleScroll = useCallback(() => {
+  //   const bottom =
+  //     window.innerHeight + window.scrollY >=
+  //     document.documentElement.scrollHeight-4000;
 
-    if (bottom && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  //   if (bottom && hasNextPage && !isFetchingNextPage) {
+  //     fetchNextPage();
+  //   }
+  // }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // Optimized scroll event listener
-  useEffect(() => {
-    let ticking = false;
+  // // Optimized scroll event listener
+  // useEffect(() => {
+  //   let ticking = false;
 
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+  //   const throttledScroll = () => {
+  //     if (!ticking) {
+  //       requestAnimationFrame(() => {
+  //         handleScroll();
+  //         ticking = false;
+  //       });
+  //       ticking = true;
+  //     }
+  //   };
 
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    return () => window.removeEventListener("scroll", throttledScroll);
-  }, [handleScroll]);
+  //   window.addEventListener("scroll", throttledScroll, { passive: true });
+  //   return () => window.removeEventListener("scroll", throttledScroll);
+  // }, [handleScroll]);
 
   // Filter and sort logic with useMemo and safe access
   const filteredAndSortedQuestions = useMemo(() => {
@@ -282,13 +283,13 @@ export default function CompanyDetails({
               key={`${question?.name}-${index}`}
               data={question}
               index={index}
-              companyId={id}
+              companyName={companyName}
               type="company"
             />
           );
         })
         .filter(Boolean), // Remove any null entries
-    [filteredAndSortedQuestions, id]
+    [filteredAndSortedQuestions, companyName]
   );
 
   // --- RENDER LOGIC ---
@@ -320,6 +321,11 @@ export default function CompanyDetails({
         />
       ) : (
         <>{questionCards}</>
+      )}
+      {hasNextPage && !isFetchingNextPage && (
+        <div className="flex items-end justify-end max-sm:justify-center pt-6">
+          <Button onClick={() => fetchNextPage()}>Fetch more questions</Button>
+        </div>
       )}
 
       {/* Loading and pagination states */}
