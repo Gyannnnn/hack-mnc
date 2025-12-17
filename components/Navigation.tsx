@@ -44,3 +44,34 @@ export function CompanyQuestionPageNavigation({
     </Breadcrumb>
   );
 }
+
+export function TopicQuestionPageNavigation({
+  topicName,
+}: {
+  topicName: string;
+}) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/">Home</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/topic">Topics</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage className="max-sm:truncate max-sm:w-35">
+            {" "}
+            {topicName} leetcode questions
+          </BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}

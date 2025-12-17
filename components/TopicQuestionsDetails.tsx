@@ -1,6 +1,9 @@
 "use client";
 
-import { getQuestionsByTopic } from "@/app/actions/questions/questions";
+import {
+  getQuestionsByTopic,
+  getQuestionsByTopicName,
+} from "@/app/actions/questions/questions";
 import QuestionCard from "@/components/ui/questionCard";
 import {
   Select,
@@ -14,7 +17,7 @@ import { LoaderCircleIcon } from "lucide-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import QuestionCardLoader from "./QuestionCardLoader";
 import { Card } from "./ui/card";
-
+import { Button } from "./ui/button";
 
 const FilterControls = React.memo(
   ({
@@ -129,8 +132,7 @@ const NoResultsState = ({
 
 const LoadingMoreState = () => (
   <div className="flex justify-center py-4">
-    <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />
-    <span className="ml-2">Loading more questions...</span>
+    <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />    
   </div>
 );
 
@@ -142,12 +144,12 @@ const NoMoreResultsState = () => (
 
 // Client component that receives the ID as a prop
 export default function TopicQuestionsPage({
-  id,
+  name,
   userId,
   type,
   companyId,
 }: {
-  id: string;
+  name: string;
   userId: string;
   type: string;
   companyId: string;
@@ -165,10 +167,15 @@ export default function TopicQuestionsPage({
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["topic-questions", id], // Include topic ID in query key
+    queryKey: ["topic-questions", name], // Include topic ID in query key
     queryFn: ({ pageParam = 1 }) =>
-      getQuestionsByTopic({
-        id,
+      // getQuestionsByTopic({
+      //   id,
+      //   pageParam,
+      //   userId,
+      // }),
+      getQuestionsByTopicName({
+        name,
         pageParam,
         userId,
       }),
@@ -176,7 +183,7 @@ export default function TopicQuestionsPage({
       return lastPage?.data?.hasMore ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
-    enabled: !!id,
+    enabled: !!name,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -190,33 +197,33 @@ export default function TopicQuestionsPage({
   }, [data]);
 
   // Throttled scroll handler
-  const handleScroll = useCallback(() => {
-    const bottom =
-      window.innerHeight + window.scrollY >=
-      document.documentElement.scrollHeight - 500;
+  // const handleScroll = useCallback(() => {
+  //   const bottom =
+  //     window.innerHeight + window.scrollY >=
+  //     document.documentElement.scrollHeight - 500;
 
-    if (bottom && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  //   if (bottom && hasNextPage && !isFetchingNextPage) {
+  //     fetchNextPage();
+  //   }
+  // }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // Optimized scroll event listener
-  useEffect(() => {
-    let ticking = false;
+  // // Optimized scroll event listener
+  // useEffect(() => {
+  //   let ticking = false;
 
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+  //   const throttledScroll = () => {
+  //     if (!ticking) {
+  //       requestAnimationFrame(() => {
+  //         handleScroll();
+  //         ticking = false;
+  //       });
+  //       ticking = true;
+  //     }
+  //   };
 
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    return () => window.removeEventListener("scroll", throttledScroll);
-  }, [handleScroll]);
+  //   window.addEventListener("scroll", throttledScroll, { passive: true });
+  //   return () => window.removeEventListener("scroll", throttledScroll);
+  // }, [handleScroll]);
 
   // Filter and sort logic with useMemo and safe access
   const filteredAndSortedQuestions = useMemo(() => {
@@ -293,7 +300,7 @@ export default function TopicQuestionsPage({
           );
         })
         .filter(Boolean),
-    [filteredAndSortedQuestions,companyId]
+    [filteredAndSortedQuestions, companyId]
   );
 
   // --- RENDER LOGIC ---
@@ -331,6 +338,16 @@ export default function TopicQuestionsPage({
       {isFetchingNextPage && <LoadingMoreState />}
       {!hasNextPage && filteredAndSortedQuestions.length > 0 && (
         <NoMoreResultsState />
+      )}
+      {hasNextPage && !isFetchingNextPage && (
+        <div className="flex justify-center pt-2">
+          <Button
+            onClick={() => fetchNextPage()}
+            className=""
+          >
+            Load more questions <LoaderCircleIcon className="animate-spin"/>
+          </Button>
+        </div>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
 import { debounce } from "lodash";
 import { topic } from "@/types/type";
+import { slugify } from "@/utils/slugify.utility";
 
 type Props = {
   topics: topic[];
@@ -62,7 +63,7 @@ export default function TopicSearch({ topics }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
           {filtered.length > 0 ? (
             filtered.map((topic) => (
-              <Link key={topic.id} href={`/topic/${topic.id}`} className="group block">
+              <Link key={topic.id} href={`/topic/${slugify(topic.name)}/leetcode-interview-questions`} className="group block">
                 <div className="flex flex-col p-3 md:p-4 rounded-lg border border-border bg-card hover:bg-card/60 hover:border-primary/40 transition-colors duration-200 h-full">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-semibold text-foreground text-base md:text-lg line-clamp-2 group-hover:text-primary transition-colors">

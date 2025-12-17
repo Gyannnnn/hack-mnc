@@ -55,8 +55,6 @@ export function SignupForm({
     }
 
     const id = toast.loading("Signing up");
-
-    console.log(name, email, password);
     setIsLoading(true);
     try {
       await axios.post("https://api.hackmnc.com/api/v1/auth/signup", {

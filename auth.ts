@@ -29,7 +29,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           
           
           if (!credentials?.email || !credentials?.password) {
-            console.log("Missing email or password");
             return null;
           }
 
@@ -50,7 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const responseData = res.data;
           
           if (!responseData.success) {
-            console.log("Backend returned error:", responseData.message);
             return null;
           }
 

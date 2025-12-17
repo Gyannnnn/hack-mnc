@@ -21,12 +21,6 @@ export const getQuestions = async ({
   search: string;
   userId: string;
 }): Promise<featuredQuestionResponse> => {
-  console.log("=== FRONTEND DEBUG ===");
-  console.log("Sending request with:");
-  console.log("pageParam:", pageParam);
-  console.log("search:", search);
-  console.log("userId:", userId);
-  console.log("=====================");
 
   try {
     // Add cache busting for "noid" and valid users
@@ -69,15 +63,39 @@ export const getQuestionsByTopic = async ({
 }) => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      `https://api.hackmnc.com/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
+      ` http://localhost:8080/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
     );
-    console.log("API Response:", res.data);
+    
     return res.data;
   } catch (error) {
-    console.log("API Error:", error);
     throw error;
   }
 };
+
+
+
+export const getQuestionsByTopicName = async ({
+  name,
+  pageParam = 1,
+  userId,
+}: {
+  name: string;
+  pageParam: number;
+  userId: string;
+}) => {
+  try {
+    const res = await axios.get<featuredQuestionResponse>(
+      `http://localhost:8080/api/v1/question/get/topic-by-name/${name}/${userId}?page=${pageParam}&limit=20`
+    );
+    
+    return res.data;
+  } catch (error) {
+   
+    throw error;
+  }
+};
+
+
 
 export const getQuestionsByCompany = async ({
   companyName,

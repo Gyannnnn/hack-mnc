@@ -11,6 +11,7 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/lib/mdx-components";
 import ClientMDX from "@/components/ClientMDX";
 import Script from "next/script";
+import { decodeSlug } from "@/utils/slugify.utility";
 
 interface seoDataRes {
   success: boolean;
@@ -27,7 +28,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const ids = (await params).id;
-  const name = decodeURIComponent(ids[0]);
+  const name = decodeSlug(ids[0]);
   const slug = name.toLowerCase().replace(/\s+/g, "-");
 
   const title = `${
@@ -114,27 +115,27 @@ export default async function page({
   const session = await auth();
   const ids = (await params).id;
   const companyName = ids[0];
-  const decoded_name = decodeURIComponent(companyName);
-  const { content, frontmatter } = await getCompanyPostBySlug(decoded_name);
+  const decodedCompanyName = decodeSlug(companyName)
+  const { content, frontmatter } = await getCompanyPostBySlug(decodedCompanyName);
   const mdx = await compileMDX({
     source: content,
     components: mdxComponents,
     options: { parseFrontmatter: false },
   });
-  const slug = decoded_name.toLowerCase().replace(/\s+/g, "-");
+  const slug = decodedCompanyName.toLowerCase().replace(/\s+/g, "-");
 
   const breadcrumbTitle = `${
-    decoded_name[0].toUpperCase() + decoded_name.slice(1)
+    decodedCompanyName[0].toUpperCase() + decodedCompanyName.slice(1)
   } LeetCode Interview Questions`;
   const companyDisplayName =
-    decoded_name.charAt(0).toUpperCase() + decoded_name.slice(1);
+    decodedCompanyName.charAt(0).toUpperCase() + decodedCompanyName.slice(1);
 
   try {
     const heading =
       frontmatter.title && frontmatter.title.trim().length > 0
         ? frontmatter.title
         : `LeetCode Questions Asked in ${
-            decoded_name[0].toUpperCase() + decoded_name.slice(1)
+            decodedCompanyName[0].toUpperCase() + decodedCompanyName.slice(1)
           } Interviews`;
 
     return (
@@ -225,7 +226,7 @@ export default async function page({
         />
 
         <div className="flex flex-col pt-4">
-          <CompanyQuestionPageNavigation companyName={decoded_name} />
+          <CompanyQuestionPageNavigation companyName={decodedCompanyName} />
           <div className="rounded-2xl border bg-card/70 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm space-y-3 mt-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="space-y-2">
@@ -245,12 +246,12 @@ export default async function page({
 
         <div className="space-y-4">
           <CompanyDetailsCard
-            companyName={decoded_name}
+            companyName={decodedCompanyName}
             userId={session?.user.id as string}
           />
           <div>
             <CompanyDetails
-              companyName={decoded_name}
+              companyName={decodedCompanyName}
               userId={session?.user.id as string}
               // id={id}
             />

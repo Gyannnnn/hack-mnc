@@ -52,7 +52,6 @@ export default function CompanyDetailsCard({
   }, [companyName, userId, initializeCompanyProgress]);
 
   useEffect(() => {
-    console.log("IDs:", { companyName, userId });
     if (companyName) {
       fetchCompanyDetails();
     }
@@ -86,19 +85,9 @@ export default function CompanyDetailsCard({
     }
   }, [initializeCompanyProgress, companyName, userId]); // Remove initializeCompanyProgress
 
-  useEffect(() => {
-    console.log("Company progress in CompanyDetailsCard updated:", {
-      easyCompanySolved,
-      mediumCompanySolved,
-      hardCompanySolved,
-    });
-  }, [easyCompanySolved, mediumCompanySolved, hardCompanySolved]);
+  
 
-  // Add debug logging
-  useEffect(() => {
-    console.log("Loading state:", loading);
-    console.log("Company data:", companyData);
-  }, [loading, companyData]);
+ 
 
   const easy = companyData?.data.easy as number;
   const medium = companyData?.data.medium as number;
