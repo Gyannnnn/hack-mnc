@@ -63,7 +63,7 @@ export const getQuestionsByTopic = async ({
 }) => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      ` http://localhost:8080/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
+      ` https://www.hackmnc.com/api/v1/question/get/topic/${id}/${userId}?page=${pageParam}&limit=20`
     );
     
     return res.data;
@@ -85,7 +85,7 @@ export const getQuestionsByTopicName = async ({
 }) => {
   try {
     const res = await axios.get<featuredQuestionResponse>(
-      `http://localhost:8080/api/v1/question/get/topic-by-name/${name}/${userId}?page=${pageParam}&limit=20`
+      `https://www.hackmnc.com/api/v1/question/get/topic-by-name/${name}/${userId}?page=${pageParam}&limit=20`
     );
     
     return res.data;
