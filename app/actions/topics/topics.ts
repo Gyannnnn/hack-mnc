@@ -36,7 +36,7 @@ export const getTopicDetails = async ({ id, userId }: { id: string; userId: stri
 export const getTopicDetailsByName = async ({ name, userId }: { name: string; userId: string }) => {
     try {
         const res = await axios.post<topicDetailResponse>(
-            `https://www.hackmnc.com/api/v1/question-topic/detail-by-name/${name}`,
+            `https://api.hackmnc.com/api/v1/question-topic/detail-by-name/${name}`,
             { userId }
         );
         
