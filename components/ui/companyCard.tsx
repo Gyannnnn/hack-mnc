@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Badge } from "./badge";
 import { company } from "@/types/type";
 import Link from "next/link";
+import { slugify } from "@/utils/slugify.utility";
 
 export default function CompanyCard({
   data,
@@ -15,7 +16,7 @@ export default function CompanyCard({
   console.log(type);
   return (
     <Link
-      href={`/companies/${data.name.toLowerCase()}/leetcode-interview-questions`}
+      href={`/companies/${slugify(data.name.toLowerCase())}/leetcode-interview-questions`}
 
       className={`w-full h-44 relative`}
     >

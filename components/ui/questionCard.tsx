@@ -6,6 +6,7 @@ import { Card } from "./card";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
 import ProgressTrackButton from "./ProgressTrackButton";
+import { slugify } from "@/utils/slugify.utility";
 
 export default function QuestionCard({
   data,
@@ -38,12 +39,12 @@ export default function QuestionCard({
   //   else if (difficulty === "HARD") return increaseHardSolved;
   // };
 
-  console.log(data);
-
   return (
     <Card
       key={`${data.name}-${index}`}
-      className={`px-2 py-2 ${index % 2 === 0 ? "bg-muted" : "bg-background"} max-sm:relative `}
+      className={`px-2 py-2 ${
+        index % 2 === 0 ? "bg-muted" : "bg-background"
+      } max-sm:relative `}
     >
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         {/* Left: Progress + index + question name (fixed width, wraps) */}
@@ -63,37 +64,42 @@ export default function QuestionCard({
         <div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:flex-1 md:justify-between">
           <div className="flex items-center gap-2 flex-wrap">
             {data.companies?.slice(0, 7).map((company, companyIndex) => (
-              <Tooltip key={companyIndex}>
-                <TooltipTrigger>
-                  <img
-                    src={company.company.logoSmall}
-                    alt={`${company.company.name} logo`}
-                    className="h-5 md:h-6"
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{company.company.name}</TooltipContent>
-              </Tooltip>
+              <Link
+                key={companyIndex}
+                href={`/companies/${company.company.name}`}
+              >
+                <Tooltip>
+                  <TooltipTrigger>
+                    <img
+                      src={company.company.logoSmall}
+                      alt={`${company.company.name} logo`}
+                      className="h-5 md:h-6"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>{company.company.name}</TooltipContent>
+                </Tooltip>
+              </Link>
             ))}
 
             {data.companies && data.companies.length > 7 && (
               <Tooltip>
                 <TooltipTrigger>
-                  <Badge >
-                    {data.companies.length - 7}+
-                  </Badge>
+                  <Badge>{data.companies.length - 7}+</Badge>
                 </TooltipTrigger>
                 <TooltipContent className="flex justify-center items-center gap-1 bg-card">
                   {data.companies.slice(5).map((data, index) => (
-                    <Tooltip key={index}>
-                      <TooltipTrigger>
-                      <img
-                          alt={`${data.company.name} logo`}
-                          src={data.company.logoSmall}
-                        className="h-5 md:h-6"
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>{data.company.name}</TooltipContent>
-                    </Tooltip>
+                    <Link key={index} href={`/companies/${data.company.name}`}>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <img
+                            alt={`${data.company.name} logo`}
+                            src={data.company.logoSmall}
+                            className="h-5 md:h-6"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>{data.company.name}</TooltipContent>
+                      </Tooltip>
+                    </Link>
                   ))}
                 </TooltipContent>
               </Tooltip>
@@ -102,12 +108,16 @@ export default function QuestionCard({
 
           <div className="flex gap-1 flex-wrap">
             {data.topics?.slice(0, 4).map((topic, topicIndex) => (
-              <Badge
-                className={`${index % 2 === 0 ? "bg-card" : "bg-muted"}`}
+              <Link
                 key={topicIndex}
+                href={`/topic/${slugify(topic.topic.name)}`}
               >
-                {topic.topic.name}
-              </Badge>
+                <Badge
+                  className={`${index % 2 === 0 ? "bg-card" : "bg-muted"}`}
+                >
+                  {topic.topic.name}
+                </Badge>
+              </Link>
             ))}
             {data.topics && data.topics.length > 4 && (
               <Tooltip>
@@ -116,7 +126,12 @@ export default function QuestionCard({
                 </TooltipTrigger>
                 <TooltipContent className="flex gap-2 flex-wrap">
                   {data.topics.slice(4).map((topic, index) => (
-                    <Badge key={index}>{topic.topic.name}</Badge>
+                    <Link
+                      key={index}
+                      href={`/topic/${slugify(topic.topic.name)}`}
+                    >
+                      <Badge>{topic.topic.name}</Badge>
+                    </Link>
                   ))}
                 </TooltipContent>
               </Tooltip>
@@ -151,16 +166,24 @@ export default function QuestionCard({
 
           <Tooltip>
             <TooltipTrigger>
-              <p className="font-mono md:w-20 w-auto text-right text-sm md:text-base">{data.acceptanceRate?.toFixed(2)} % </p>
+              <p className="font-mono md:w-20 w-auto text-right text-sm md:text-base">
+                {data.acceptanceRate?.toFixed(2)} %{" "}
+              </p>
             </TooltipTrigger>
             <TooltipContent>Acceptance rate</TooltipContent>
           </Tooltip>
-          <p className={`font-bold text-center min-w-[70px] md:min-w-[80px] text-sm md:text-base ${levelColor(data.difficulty)}`}>
+          <p
+            className={`font-bold text-center min-w-[70px] md:min-w-[80px] text-sm md:text-base ${levelColor(
+              data.difficulty
+            )}`}
+          >
             {data.difficulty}
           </p>
           <Tooltip>
             <TooltipTrigger>
-              <p className="font-mono md:w-20 w-auto text-right text-sm md:text-base">{data.frequency?.toFixed(2)} %</p>
+              <p className="font-mono md:w-20 w-auto text-right text-sm md:text-base">
+                {data.frequency?.toFixed(2)} %
+              </p>
             </TooltipTrigger>
             <TooltipContent>Frequncy</TooltipContent>
           </Tooltip>

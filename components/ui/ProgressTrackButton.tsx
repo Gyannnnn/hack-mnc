@@ -39,21 +39,21 @@ export default function ProgressTrackButton({
 
   const storeState = useUserProgressStore();
 
-  useEffect(() => {
-    console.log("Store state updated:", storeState);
-  }, [storeState]);
+  // useEffect(() => {
+  //   console.log("Store state updated:", storeState);
+  // }, [storeState]);
 
-  useEffect(() => {
-    console.log("Company progress:", {
-      easy: storeState.easyCompanySolved,
-      medium: storeState.mediumCompanySolved,
-      hard: storeState.hardCompanySolved,
-    });
-  }, [
-    storeState.easyCompanySolved,
-    storeState.mediumCompanySolved,
-    storeState.hardCompanySolved,
-  ]);
+  // useEffect(() => {
+  //   console.log("Company progress:", {
+  //     easy: storeState.easyCompanySolved,
+  //     medium: storeState.mediumCompanySolved,
+  //     hard: storeState.hardCompanySolved,
+  //   });
+  // }, [
+  //   storeState.easyCompanySolved,
+  //   storeState.mediumCompanySolved,
+  //   storeState.hardCompanySolved,
+  // ]);
 
   useEffect(() => {
     setSolved(isSolved);

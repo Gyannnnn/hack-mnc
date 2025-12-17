@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getTopicDetails } from "@/app/actions/topics/topics";
+import { getTopicDetails, getTopicDetailsByName } from "@/app/actions/topics/topics";
 import { Card } from "./ui/card";
 import { Progress } from "./ui/progress";
 import { Badge } from "./ui/badge";
@@ -10,10 +10,12 @@ import { useUserProgressStore } from "@/app/store/store";
 import { Skeleton } from "./ui/skeleton";
 
 export default function TopicDetailsCard({
-  id,
+  // id,
+  name,
   userId,
 }: {
-  id: string;
+  // id: string;
+  name:string,
   userId: string;
 }) {
   const [topicData, setTopicData] = useState<topicStats | null>(null);
@@ -27,7 +29,8 @@ export default function TopicDetailsCard({
     const fetchTopicDetails = async () => {
       try {
         setLoading(true);
-        const res = await getTopicDetails({ id, userId });
+        // const res = await getTopicDetails({ id, userId });
+        const res = await getTopicDetailsByName({name,userId})
 
         if (res?.data) {
           setTopicData(res.data as topicStats);
@@ -47,7 +50,7 @@ export default function TopicDetailsCard({
     };
 
     fetchTopicDetails();
-  }, [id, userId, initializeProgress]);
+  }, [name, userId, initializeProgress]);
 
   if (loading) {
     return (

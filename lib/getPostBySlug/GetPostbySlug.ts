@@ -35,3 +35,39 @@ export async function getCompanyPostBySlug(slug: string) {
         };
     }
 }
+
+
+
+export async function getTopicPostBySlug(slug: string) {
+    try {
+        const filePath = path.join(
+            process.cwd(),
+            "app/topic/topic-blogs",
+            `${slug.toLowerCase()}.mdx`
+        );
+
+
+        if (!fs.existsSync(filePath)) {
+            return {
+                frontmatter: {},
+                content: "",
+            };
+        }
+
+        const file = fs.readFileSync(filePath, "utf-8");
+        const { data, content } = matter(file);
+
+        return {
+            frontmatter: data ?? {},
+            content: content ?? "",
+        };
+    } catch (error) {
+
+        console.error(`Failed to load MDX for slug: ${slug}`, error);
+
+        return {
+            frontmatter: {},
+            content: "",
+        };
+    }
+}

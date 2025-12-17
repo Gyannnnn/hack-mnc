@@ -32,7 +32,7 @@ export function LoginForm({
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    console.log("Form data:", { email, password });
+    
     
     const toastId = toast.loading("Signing in...");
     
@@ -43,7 +43,7 @@ export function LoginForm({
         redirect: false,
       });
 
-      console.log("SignIn result:", result);
+   
 
       toast.remove(toastId);
 
