@@ -17,7 +17,7 @@ export default function CompanyCard({
   return (
     <Link
       href={`/companies/${slugify(data.name.toLowerCase())}/leetcode-interview-questions`}
-
+      rel="canonical"
       className={`w-full h-44 relative`}
     >
       <Card

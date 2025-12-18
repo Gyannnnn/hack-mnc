@@ -10,6 +10,7 @@ import { mdxComponents } from "@/lib/mdx-components";
 import { decodeSlug, slugify } from "@/utils/slugify.utility";
 import { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
+import Head from "next/head";
 import Script from "next/script";
 import React from "react";
 
@@ -114,6 +115,12 @@ export default async function TopicPage({
 
   return (
     <div className="cnt">
+      <Head>
+          <link
+          rel="canonical"
+          href={`https://hackmnc.com/topic/${slug}/leetcode-interview-questions`}
+        />
+        </Head>
       <Script
         id="topic-breadcrumb-schema"
         type="application/ld+json"
