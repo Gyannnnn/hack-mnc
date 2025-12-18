@@ -45,6 +45,7 @@ function AnimatedCounter({
 
 import Script from "next/script";
 import Testimonials from "@/components/Testimonials";
+import { slugify } from "@/utils/slugify.utility";
 
 <Script
   id="ld-json-home"
@@ -417,6 +418,7 @@ export default function Page() {
       },
     },
   ];
+  
 
   return (
     <main className="w-full">
@@ -475,7 +477,7 @@ export default function Page() {
                 companies.map((company) => (
                   <Link
                     key={`${company.id}-${Math.random()}`}
-                    href={`/companies/${company.name}`}
+                    href={`/companies/${slugify(company.name.toLowerCase())}/leetcode-interview-questions`}
 
                     className="shrink-0 min-h-16 w-40 grid place-items-center rounded-lg border border-border bg-card/80 hover:bg-card hover:border-primary/40 transition-all p-3"
                   >

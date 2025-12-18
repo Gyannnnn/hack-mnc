@@ -12,6 +12,7 @@ import { mdxComponents } from "@/lib/mdx-components";
 import ClientMDX from "@/components/ClientMDX";
 import Script from "next/script";
 import { decodeSlug } from "@/utils/slugify.utility";
+import Head from "next/head";
 
 interface seoDataRes {
   success: boolean;
@@ -140,6 +141,12 @@ export default async function page({
 
     return (
       <div className="cnt  gap-6">
+        <Head>
+          <link
+          rel="canonical"
+          href={`https://www.hackmnc.com/companies/${slug}/leetcode-interview-questions`}
+        />
+        </Head>
         <Script
           id="breadcrumb-schema"
           type="application/ld+json"

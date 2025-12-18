@@ -26,13 +26,37 @@ export interface CompanyResponse {
   data: Company[];
 }
 
+export interface AllTopicResponse {
+  success: boolean,
+  message: string
+  data: [
+    {
+      name: string
+    },
+  ]
+}
+
 export const getAllCompaniesForSeo = async (): Promise<Company[]> => {
   try {
     const res = await axios.get<CompanyResponse>(
-      'https://api.hackmnc.com/api/v1/company/all'
+      'https://api.hackmnc.com/api/v1/company/sitemap-details'
     );
 
-    // ✅ Return only the array of companies, not the wrapper object
+
+    return res.data.data || [];
+  } catch (error) {
+    console.error('Error fetching companies:', error);
+    return [];
+  }
+};
+
+export const getAllTopicsForSeo = async (): Promise<Company[]> => {
+  try {
+    const res = await axios.get<CompanyResponse>(
+      'https://api.hackmnc.com/api/v1/question-topic/sitemap-details'
+    );
+
+
     return res.data.data || [];
   } catch (error) {
     console.error('Error fetching companies:', error);
