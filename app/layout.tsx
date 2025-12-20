@@ -32,7 +32,6 @@ export const metadata: Metadata = {
     "HackMNC",
     "LeetCode",
     "LeetCode premium helper",
-    "LeetCode premium bypass",
     "LeetCode alternative",
     "DSA questions",
     "DSA practice",
@@ -80,7 +79,6 @@ export const metadata: Metadata = {
     "LeetCode tracker",
     "Coding progress tracker",
     "Crack coding interviews",
-    "Free LeetCode premium questions",
     "Coding interview blogs",
     "System design interview prep",
     "Technical interview preparation",
@@ -149,24 +147,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <ReactLenis root>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
-        >
-          <SessionProvider>
-            <Providers>
-              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                <Navbar />
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5112161751368867"
+          crossOrigin="anonymous"
+        ></Script>
 
-                <main className="pt-10 min-h-screen flex items-center justify-center w-full sm:px-10">
-                  {children}
-                </main>
-                <Toaster position="top-center" />
-                <Footer />
-              </ThemeProvider>
-            </Providers>
-          </SessionProvider>
-        </body>
         <Script
           id="microsoft-clarity"
           strategy="afterInteractive"
@@ -199,7 +186,27 @@ export default function RootLayout({
             `,
           }}
         />
-      </ReactLenis>
+      </head>
+
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+      >
+        <ReactLenis root>
+          <SessionProvider>
+            <Providers>
+              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                <Navbar />
+
+                <main className="pt-10 min-h-screen flex items-center justify-center w-full sm:px-10">
+                  {children}
+                </main>
+                <Toaster position="top-center" />
+                <Footer />
+              </ThemeProvider>
+            </Providers>
+          </SessionProvider>
+        </ReactLenis>
+      </body>
     </html>
   );
 }
