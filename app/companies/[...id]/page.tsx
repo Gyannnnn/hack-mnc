@@ -13,6 +13,8 @@ import ClientMDX from "@/components/ClientMDX";
 import Script from "next/script";
 import { decodeSlug } from "@/utils/slugify.utility";
 import Head from "next/head";
+import remarkToc from "remark-toc";
+import rehypeSlug from "rehype-slug";
 
 interface seoDataRes {
   success: boolean;
