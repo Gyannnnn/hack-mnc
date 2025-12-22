@@ -1,8 +1,7 @@
 import { auth } from "@/auth";
 import ClientMDX from "@/components/ClientMDX";
-import {
-  TopicQuestionPageNavigation,
-} from "@/components/Navigation";
+import { TopicQuestionPageNavigation } from "@/components/Navigation";
+import SocialShare from "@/components/SocialShare";
 import TopicDetailsCard from "@/components/TopicDetailsCard";
 import TopicQuestionsPage from "@/components/TopicQuestionsDetails";
 import { getTopicPostBySlug } from "@/lib/getPostBySlug/GetPostbySlug";
@@ -111,16 +110,23 @@ export default async function TopicPage({
   const heading =
     frontmatter.title && frontmatter.title.trim().length > 0
       ? frontmatter.title
-      : `${decodedTopicName} Interview Questions - Google, Amazon, Microsoft (2025)`;
+      : `${decodedTopicName} Interview Questions Asked in Top Tech Companies (2025)
+`;
+
+  const summary =
+    frontmatter.title && frontmatter.title.trim().length > 0
+      ? frontmatter.summary
+      : `This page lists the most frequently asked ${decodedTopicName} interview questions, collected from real interviews at top tech companies, with tools to help you track your preparation progress.
+`;
 
   return (
     <div className="cnt">
       <Head>
-          <link
+        <link
           rel="canonical"
           href={`https://hackmnc.com/topic/${slug}/leetcode-interview-questions`}
         />
-        </Head>
+      </Head>
       <Script
         id="topic-breadcrumb-schema"
         type="application/ld+json"
@@ -243,7 +249,13 @@ export default async function TopicPage({
       />
 
       <div className="flex flex-col pt-4">
-        <TopicQuestionPageNavigation topicName={decodedTopicName} />
+        <div className="flex max-sm:flex-col max-sm:gap-1 w-full justify-between sm:items-end">
+          <TopicQuestionPageNavigation topicName={decodedTopicName} />
+          <SocialShare
+            url={`https://www.hackmnc.com/topic/${slug}/leetcode-interview-questions`}
+            title={`Top ${decodedTopicName} LeetCode Questions Asked in Interviews`}
+          />
+        </div>
         <div className="rounded-2xl border bg-card/70 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm space-y-3 mt-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="space-y-2">
@@ -256,7 +268,7 @@ export default async function TopicPage({
             </div>
           </div>
           <section className="text-sm leading-relaxed text-muted-foreground">
-            {frontmatter.summary}
+            {summary}
           </section>
         </div>
       </div>

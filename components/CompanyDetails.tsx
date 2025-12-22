@@ -129,7 +129,6 @@ const NoResultsState = ({
 const LoadingMoreState = () => (
   <div className="flex justify-center py-4">
     <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />
-    
   </div>
 );
 
@@ -323,8 +322,10 @@ export default function CompanyDetails({
         <>{questionCards}</>
       )}
       {hasNextPage && !isFetchingNextPage && (
-        <div className="flex items-end justify-end max-sm:justify-center pt-2">
-          <Button className="max-sm:w-full" onClick={() => fetchNextPage()}>Fetch more questions <LoaderCircleIcon className="animate-spin"/></Button>
+        <div className="flex items-end justify-center pt-2">
+          <Button className="max-sm:w-full" onClick={() => fetchNextPage()}>
+            Fetch more questions <LoaderCircleIcon className="animate-spin" />
+          </Button>
         </div>
       )}
 

@@ -66,7 +66,7 @@ export default function QuestionCard({
             {data.companies?.slice(0, 7).map((company, companyIndex) => (
               <Link
                 key={companyIndex}
-                href={`/companies/${company.company.name}/leetcode-interview-questions`}
+                href={`/companies/${slugify(company.company.name)}/leetcode-interview-questions`}
               >
                 <Tooltip>
                   <TooltipTrigger>
@@ -88,7 +88,7 @@ export default function QuestionCard({
                 </TooltipTrigger>
                 <TooltipContent className="flex justify-center items-center gap-1 bg-card">
                   {data.companies.slice(5).map((data, index) => (
-                    <Link key={index} href={`/companies/${data.company.name}/leetcode-interview-questions`}>
+                    <Link key={index} href={`/companies/${slugify(data.company.name)}/leetcode-interview-questions`}>
                       <Tooltip>
                         <TooltipTrigger>
                           <img

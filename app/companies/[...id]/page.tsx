@@ -13,8 +13,7 @@ import ClientMDX from "@/components/ClientMDX";
 import Script from "next/script";
 import { decodeSlug } from "@/utils/slugify.utility";
 import Head from "next/head";
-import remarkToc from "remark-toc";
-import rehypeSlug from "rehype-slug";
+import SocialShare from "@/components/SocialShare";
 
 interface seoDataRes {
   success: boolean;
@@ -118,8 +117,10 @@ export default async function page({
   const session = await auth();
   const ids = (await params).id;
   const companyName = ids[0];
-  const decodedCompanyName = decodeSlug(companyName)
-  const { content, frontmatter } = await getCompanyPostBySlug(decodedCompanyName);
+  const decodedCompanyName = decodeSlug(companyName);
+  const { content, frontmatter } = await getCompanyPostBySlug(
+    decodedCompanyName
+  );
   const mdx = await compileMDX({
     source: content,
     components: mdxComponents,
@@ -137,17 +138,24 @@ export default async function page({
     const heading =
       frontmatter.title && frontmatter.title.trim().length > 0
         ? frontmatter.title
-        : `LeetCode Questions Asked in ${
+        : `${
             decodedCompanyName[0].toUpperCase() + decodedCompanyName.slice(1)
-          } Interviews`;
+          } LeetCode Interview Questions – Most Asked Problems`;
+
+    const summary =
+      frontmatter.summary && frontmatter.summary.trim().length > 0
+        ? frontmatter.summary
+        : `This page lists the most frequently asked LeetCode interview questions in ${
+            decodedCompanyName[0].toUpperCase() + decodedCompanyName.slice(1)
+          } interviews, based on real interview experiences, with tools to help you track your preparation progress.`;
 
     return (
       <div className="cnt  gap-6">
         <Head>
           <link
-          rel="canonical"
-          href={`https://www.hackmnc.com/companies/${slug}/leetcode-interview-questions`}
-        />
+            rel="canonical"
+            href={`https://www.hackmnc.com/companies/${slug}/leetcode-interview-questions`}
+          />
         </Head>
         <Script
           id="breadcrumb-schema"
@@ -235,7 +243,16 @@ export default async function page({
         />
 
         <div className="flex flex-col pt-4">
-          <CompanyQuestionPageNavigation companyName={decodedCompanyName} />
+          <div className="flex max-sm:flex-col max-sm:gap-1 w-full justify-between sm:items-end">
+            <CompanyQuestionPageNavigation companyName={decodedCompanyName} />
+            <SocialShare
+              title={`Top LeetCode Questions Asked in ${
+                decodedCompanyName[0].toUpperCase() +
+                decodedCompanyName.slice(1)
+              } Interviews`}
+              url={`https://www.hackmnc.com/companies/${companyName}/leetcode-interview-questions`}
+            />
+          </div>
           <div className="rounded-2xl border bg-card/70 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm space-y-3 mt-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="space-y-2">
@@ -248,7 +265,7 @@ export default async function page({
               </div>
             </div>
             <section className="text-sm leading-relaxed text-muted-foreground">
-              {frontmatter.summary}
+              {summary}
             </section>
           </div>
         </div>
