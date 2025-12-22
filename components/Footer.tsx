@@ -152,7 +152,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t border-border bg-card/30 backdrop-blur-sm mt-auto">
-      <div className="pl-4 sm:px-6 lg:px-8 pt-12 pb-6">
+      <div className="sm:px-6 lg:px-8 pt-12 pb-6">
         {/* Main Footer Content */}
         <div className="w-screen sm:px-8 px-2">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 mb-8 items-start justify-between">
