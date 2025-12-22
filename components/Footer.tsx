@@ -152,7 +152,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full border-t border-border bg-card/30 backdrop-blur-sm mt-auto">
-      <div className="px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+      <div className="pl-4 sm:px-6 lg:px-8 pt-12 pb-6">
         {/* Main Footer Content */}
         <div className="w-screen sm:px-8 px-2">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 mb-8 items-start justify-between">
@@ -177,7 +177,7 @@ export default function Footer() {
               </div>
               <div className="mt-5 flex flex-col gap-2 text-xs text-muted-foreground">
                 <Link
-                target="_blank"
+                  target="_blank"
                   href="mailto:hackmnc.mail@gmail.com"
                   className="hover:text-primary transition-colors flex gap-2 items-center justify-start"
                 >
@@ -326,7 +326,6 @@ export default function Footer() {
               </p>
               <div className="flex items-center  gap-6 text-xs text-muted-foreground">
                 <Link
-
                   href="/about-us"
                   className="hover:text-primary transition-colors"
                 >
