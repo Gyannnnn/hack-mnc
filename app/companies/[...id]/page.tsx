@@ -14,6 +14,8 @@ import Script from "next/script";
 import { decodeSlug } from "@/utils/slugify.utility";
 import Head from "next/head";
 import SocialShare from "@/components/SocialShare";
+import CompanyGroupNav from "@/components/CompanyGroupNav";
+import HorizontalScroll from "@/components/HorixontalScroll";
 
 interface seoDataRes {
   success: boolean;
@@ -150,7 +152,7 @@ export default async function page({
           } interviews, based on real interview experiences, with tools to help you track your preparation progress.`;
 
     return (
-      <div className="cnt  gap-6">
+      <div className="gap-6 min-h-screen w-full flex flex-col  px-2">
         <Head>
           <link
             rel="canonical"
@@ -242,8 +244,8 @@ export default async function page({
           }}
         />
 
-        <div className="flex flex-col pt-4">
-          <div className="flex max-sm:flex-col max-sm:gap-1 w-full justify-between sm:items-end">
+        <div className="flex flex-col ">
+          <div className="flex max-sm:flex-col max-sm:pt-2 max-sm:gap-1 w-full justify-between sm:items-end">
             <CompanyQuestionPageNavigation companyName={decodedCompanyName} />
             <SocialShare
               title={`Top LeetCode Questions Asked in ${

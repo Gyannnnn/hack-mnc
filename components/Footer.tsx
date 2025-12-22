@@ -341,20 +341,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
-      <p className="text-center text-xs text-muted-foreground pb-5">
-        Developed by:{" "}
-        <span>
-          <Link
-            className="hover:text-primary hover:underline"
-            target="_blank"
-            href={"https://www.linkedin.com/in/higyan/"}
-          >
-            Gyan
-          </Link>
-        </span>{" "}
-        ❤️
-      </p>
+      </div>      
     </footer>
   );
 }

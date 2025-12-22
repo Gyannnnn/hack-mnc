@@ -10,6 +10,11 @@ import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 import "@/app/styles/notion-renderer.css";
+import HorizontalScroll from "@/components/HorixontalScroll";
+import CompanyGroupNav from "@/components/CompanyGroupNav";
+import TopicGroupNav from "@/components/TopicGroupNav";
+import { GroupNav, GroupNavTopic } from "@/components/GroupNav";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -196,8 +201,9 @@ export default function RootLayout({
             <Providers>
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                 <Navbar />
-
-                <main className="pt-10 min-h-screen flex items-center justify-center w-full sm:px-10">
+                <GroupNav />
+                <GroupNavTopic />
+                <main className=" min-h-screen flex items-center justify-center w-full sm:px-10">
                   {children}
                 </main>
                 <Toaster position="top-center" />

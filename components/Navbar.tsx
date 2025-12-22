@@ -14,7 +14,7 @@ export const navBarData = [
 
 export default function Navbar() {
   return (
-    <div className="h-16 fixed top-1 bg-card w-full flex items-center sm:justify-between px-10 justify-between max-sm:px-4 border-b z-20 rounded-2xl">
+    <div className="h-16 fixed top-1 bg-card w-full flex items-center sm:justify-between px-12 justify-between max-sm:px-4 border-b z-20 rounded-2xl">
       <div className="flex items-center gap-10">
         <Link
           href="/"
