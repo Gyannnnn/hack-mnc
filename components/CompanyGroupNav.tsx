@@ -45,6 +45,7 @@ export default function CompanyGroupNav() {
                 alt={company.name}
                 width={16}
                 height={16}
+                unoptimized
               />
 
               <span>{company.name}</span>
