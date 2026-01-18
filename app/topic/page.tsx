@@ -11,7 +11,7 @@ export default async function page() {
     topicData = res?.data;
 
     return (
-      <div className="cnt px-10">
+      <div className="cnt sm:px-10">
         {/* Topics Browser with search */}
         {topicData && topicData.length > 0 ? (
           <TopicSearch topics={topicData} />

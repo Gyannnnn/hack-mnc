@@ -181,7 +181,7 @@ body::-webkit-scrollbar-thumb {
     @apply bg-background text-foreground;
   }
   .cnt{
-    @apply min-h-screen w-full flex flex-col gap-5 px-2 pt-20
+    @apply min-h-screen w-full flex flex-col gap-5 px-2 pt-20 pb-10
   }
   .center{
     @apply flex items-center justify-center
