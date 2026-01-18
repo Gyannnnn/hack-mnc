@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllCompaniesForSeo } from '@/lib/getAllCompanies';
 import { slugify } from '@/utils/slugify.utility';
 import { getAllTopicsForSeo } from '@/lib/getAllCompanies';
+import { getBlogPosts } from '@/lib/mdx';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://hackmnc.com';
 
@@ -22,6 +23,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   }));
 
+  const blogs = getBlogPosts();
+
+  const blogUrls: MetadataRoute.Sitemap = blogs.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: new Date(post.metadata.publishedAt),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -44,5 +53,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   ];
 
-  return [...staticPages, ...companyUrls, ...topicUrls];
+  return [...staticPages, ...companyUrls, ...topicUrls, ...blogUrls];
 }

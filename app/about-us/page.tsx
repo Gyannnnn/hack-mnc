@@ -32,7 +32,7 @@ export default function AboutUsPage() {
               We Are HackMNC
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Built by engineers, for engineers. We're on a mission to
+              Built by engineers, for engineers. We&apos;re on a mission to
               democratize technical interview preparation using real-world data
               and structured learning paths.
             </p>
@@ -68,9 +68,10 @@ export default function AboutUsPage() {
             <Users className="w-10 h-10 text-primary mb-4" />
             <h2 className="text-2xl font-bold mb-4">Who We Are</h2>
             <p className="text-muted-foreground leading-relaxed">
-              HackMNC is built by solo developers who've been in the trenches.
-              We understand the frustration of scattered resources and paywalls,
-              so we built the platform we wish we had during our own prep.
+              HackMNC is built by solo developers who&apos;ve been in the
+              trenches. We understand the frustration of scattered resources and
+              paywalls, so we built the platform we wish we had during our own
+              prep.
             </p>
           </motion.div>
         </div>
@@ -151,10 +152,10 @@ export default function AboutUsPage() {
             </div>
             <div className="bg-background rounded-xl p-6 border border-border text-sm text-muted-foreground">
               <p>
-                "The questions listed on HackMNC are based on real interview
-                experiences shared by candidates. We constantly update our
-                database to reflect the latest trends in FAANG and top MNC
-                interviews."
+                &quot;The questions listed on HackMNC are based on real
+                interview experiences shared by candidates. We constantly update
+                our database to reflect the latest trends in FAANG and top MNC
+                interviews.&quot;
               </p>
             </div>
           </div>

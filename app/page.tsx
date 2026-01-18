@@ -532,7 +532,8 @@ export default function Page() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-secondary/50 border border-secondary text-secondary-foreground text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="max-sm:hidden">🚀 HackMNC:</span> The Ultimate Free Interview Resource
+              <span className="max-sm:hidden">🚀 HackMNC:</span> The Ultimate
+              Free Interview Resource
             </span>
             <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text text-transparent drop-shadow-sm">
               Crack Your Dream <br className="hidden md:block" />
@@ -804,7 +805,7 @@ export default function Page() {
                   A Complete Learning Ecosystem
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  It's not just about solving problems. HackMNC provides a
+                  It&apos;s not just about solving problems. HackMNC provides a
                   holistic approach to interview preparation, covering
                   everything from core data structures to complex system design.
                 </p>
@@ -922,7 +923,7 @@ export default function Page() {
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground">
-              Got questions about HackMNC? We've got answers.
+              Got questions about HackMNC? We&apos;ve got answers.
             </p>
           </div>
           <Faqs items={faqs} />
@@ -937,8 +938,8 @@ export default function Page() {
             Ready to Crack Your Next Interview with HackMNC?
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Join thousands of developers mastering DSA with HackMNC today. It's
-            free, forever.
+            Join thousands of developers mastering DSA with HackMNC today.
+            It&apos;s free, forever.
           </p>
           <Button
             asChild
