@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
-import "@/app/styles/notion-renderer.css";
+
 import HorizontalScroll from "@/components/HorixontalScroll";
 import CompanyGroupNav from "@/components/CompanyGroupNav";
 import TopicGroupNav from "@/components/TopicGroupNav";
@@ -199,13 +199,16 @@ export default function RootLayout({
         <ReactLenis root>
           <SessionProvider>
             <Providers>
-              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem={false}
+                forcedTheme="dark"
+              >
                 <Navbar />
                 <GroupNav />
                 <GroupNavTopic />
-                <main className=" min-h-screen flex items-center justify-center w-full sm:px-10">
-                  {children}
-                </main>
+                <main className="min-h-screen w-full relative">{children}</main>
                 <Toaster position="top-center" />
                 <Footer />
               </ThemeProvider>

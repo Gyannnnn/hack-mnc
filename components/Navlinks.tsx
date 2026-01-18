@@ -24,7 +24,7 @@ export default function Navlinks() {
                 key={index}
                 href={data.link}
                 className={`transition-colors duration-200 hover:text-primary ${
-                  isActive ? "text-primary " : "text-gray-400"
+                  isActive ? "text-primary font-medium" : "text-muted-foreground"
                 }`}
               >
                 {data.Name}

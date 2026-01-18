@@ -120,7 +120,7 @@ export default async function TopicPage({
 `;
 
   return (
-    <div className="min-h-screen w-full flex flex-col gap-5 px-2 ">
+    <div className="min-h-screen w-full flex flex-col gap-5 px-2 sm:px-10">
       <Head>
         <link
           rel="canonical"

@@ -1,0 +1,80 @@
+---
+title: "Process Management in Operating Systems"
+slug: "process-management-os"
+author: "Gyanaranjan Patra"
+publishedAt: "2026-01-15"
+updatedAt: "2026-01-18"
+status: "un-published"
+category: "Operating System"
+tags:
+  - operating systems
+  - process
+  - scheduling
+difficulty: "intermediate"
+readingTime: 8
+coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop"
+summary: "A comprehensive guide to understanding process management, scheduling algorithms, and lifecycle in modern operating systems."
+---
+
+# Introduction to Process Management
+
+In an operating system, a **process** is a program in execution. It is more than just the program code; it includes the current activity, as represented by the value of the program counter and the contents of the processor's registers.
+
+## Process Lifecycle
+
+A process goes through various states during its lifecycle:
+
+1.  **New**: The process is being created.
+2.  **Running**: Instructions are being executed.
+3.  **Waiting**: The process is waiting for some event to occur (such as an I/O completion or reception of a signal).
+4.  **Ready**: The process is waiting to be assigned to a processor.
+5.  **Terminated**: The process has finished execution.
+
+## Process Control Block (PCB)
+
+Each process is represented in the operating system by a Process Control Block (PCB) - also called a Task Control Block. It contains many pieces of information associated with a specific process:
+
+-   Process state
+-   Program counter
+-   CPU registers
+-   CPU scheduling information
+-   Memory-management information
+-   Accounting information
+-   I/O status information
+
+```c
+struct task_struct {
+    volatile long state;    /* -1 unrunnable, 0 runnable, >0 stopped */
+    void *stack;
+    atomic_t usage;
+    unsigned int flags;     /* per process flags, defined below */
+    unsigned int ptrace;
+    
+    int lock_depth;         /* BKL lock depth */
+    
+    // ... many more fields
+};
+```
+
+## Scheduling Algorithms
+
+Process scheduling is an essential part of a Multiprogramming operating system. Such operating systems allow more than one process to be loaded into the executable memory at a time and the loaded process shares the CPU using time multiplexing.
+
+### First-Come, First-Served (FCFS)
+
+-   **Description**: The process that requests the CPU first is allocated the CPU first.
+-   **Pros**: Simple to understand and implement.
+-   **Cons**: Convoy effect (short process behind long process).
+
+### Shortest Job Next (SJN)
+
+-   **Description**: Associate with each process the length of its next CPU burst. Use these lengths to schedule the process with the shortest time.
+-   **Pros**: Minimum average waiting time for a given set of processes.
+-   **Cons**: Diffcult to know the length of the next CPU request.
+
+> [!IMPORTANT]
+> Modern operating systems use complex combinations of these algorithms, often prioritizing interactive processes to ensure a smooth user experience.
+
+## Conclusion
+
+Understanding process management is crucial for grasping how operating systems manage resources and execute programs efficiently. It forms the backbone of multitasking environments.

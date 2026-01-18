@@ -1,115 +1,80 @@
-// components/FeaturedArticles.tsx
-import {
-  getAllArticles,
-  convertToArticleList,
-  shuffleArray,
-} from "@/utils/notion";
-import Link from "next/link";
-import { slugify } from "@/utils/notion";
+import { getBlogPosts, getAllCategories } from "@/lib/mdx";
+import { BlogCard } from "@/components/blog/blog-card";
+import { FeaturedPost } from "@/components/blog/featured-post";
+import { CategoryFilter } from "@/components/blog/category-filter";
+import { SearchIcon } from "lucide-react";
 
-export default async function FeaturedArticles() {
-  const pages = await getAllArticles("291f49e716c081d9bf0be895bb2f85e9");
-  const { articles } = convertToArticleList(pages);
+export const metadata = {
+  title: "Blog | HackMNC",
+  description:
+    "Expert insights on software engineering, interviews, and system design.",
+};
 
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>; // Updated type for Next.js 15
+}) {
+  const posts = getBlogPosts();
+  const categories = getAllCategories();
+  const { category: selectedCategory } = await searchParams;
 
-  const featuredArticles = shuffleArray(articles)
+  // Filter posts
+  const filteredPosts = selectedCategory
+    ? posts.filter((post) => post.metadata.category === selectedCategory)
+    : posts;
+
+  // Select featured posts (taking first 4 for now, or use random logic)
+  const featuredPosts = posts.slice(0, 5);
+
+  // Remove featured post from the main list if you don't want it duplicated,
+  // or keep it. Let's keep it in the list for now but maybe we can exclude it?
+  // const listPosts = filteredPosts.filter(p => p.slug !== featuredPost.slug);
+  const listPosts = filteredPosts;
 
   return (
-    <section className="py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       
+    <main className="min-h-screen bg-background pt-24 pb-16 sm:px-10">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3">
+            <CategoryFilter categories={categories} />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {featuredArticles.map((article) => (
-            <Link  key={article.id} target="_blank" href={`/blogs/${slugify(article.title).toLowerCase()}`}>
-            
-            <article
-             
-              className="group bg-card border border-border rounded-lg overflow-hidden transition-all duration-300 hover:border-primary/40 hover:bg-card/60 h-full flex flex-col"
-            >
-  
-              <div className="relative overflow-hidden aspect-video">
-                <img
-                  src={article.thumbnail}
-                  alt={article.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-        
-                <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-           
-                {article.categories.length > 0 && (
-                  <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-                    {article.categories.slice(0, 2).map((category) => (
-                      <span
-                        key={category}
-                        className="px-2 py-1 bg-primary text-primary-foreground text-[10px] font-medium rounded-full"
-                      >
-                        {category}
-                      </span>
-                    ))}
-                  </div>
-                )}
+            {listPosts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {listPosts.map((post) => (
+                  <BlogCard key={post.slug} post={post} />
+                ))}
               </div>
-
- 
-              <div className="p-4 md:p-6 flex flex-col flex-1">
-            
-                {article.publishedDate && (
-                  <time className="text-xs text-muted-foreground mb-2 block">
-                    {new Date(article.publishedDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </time>
-                )}
-
-                {/* Title */}
-                <Link target="_blank" href={`/blogs/${slugify(article.title).toLowerCase()}`}>
-                
-                <h3 className="font-semibold text-lg md:text-xl text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-200">
-                  {article.title}
-                </h3>
-                </Link>
-
-                {/* Summary */}
-                <p className="text-muted-foreground mb-4 line-clamp-3 leading-relaxed">
-                  {article.summary}
+            ) : (
+              <div className="text-center py-20 bg-muted/30 rounded-2xl border border-dashed border-border">
+                <h3 className="text-xl font-semibold mb-2">No blogs found</h3>
+                <p className="text-muted-foreground">
+                  Try selecting a different category or check back later.
                 </p>
-
-         
-                <div className="mt-auto flex items-center justify-between pt-4 border-t border-border">
-                  <Link
-                    href={`/blogs/${slugify(article.title).toLowerCase()}`}
-                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm group/link transition-colors duration-200"
-                  >
-                    Read More
-                    <svg 
-                      className="ml-2 w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-1" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {Math.ceil(article.summary.length / 200)} min read
-                  </div>
-                </div>
               </div>
-            </article>
-            
-            </Link>
-          ))}
-        </div>
+            )}
+          </div>
 
-        
+          {/* Sidebar Sticky Area */}
+          <aside className="hidden lg:block lg:col-span-1 space-y-8 sticky top-28 h-fit">
+            <div>
+              <div className="pl-4 mb-6 border-l-4 border-primary">
+                <h2 className="text-xl font-bold text-foreground">
+                  Popular Posts
+                </h2>
+              </div>
+              <div className="space-y-4">
+                {featuredPosts.map((post) => (
+                  <FeaturedPost key={post.slug} post={post} />
+                ))}
+              </div>
+            </div>
+
+            {/* Newsletter or other sidebar content could go here */}
+          </aside>
+        </div>
       </div>
-    </section>
+    </main>
   );
 }

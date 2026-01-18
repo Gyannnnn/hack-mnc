@@ -1,133 +1,160 @@
+"use client";
+import React from "react";
 import Link from "next/link";
-
-export const metadata = {
-  title: "About Us | HackMNC",
-  description:
-    "HackMNC is a free interview preparation platform built by a solo developer to make DSA interview preparation easier using real questions from publicly available sources.",
-};
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import {
+  Code2,
+  Users,
+  Target,
+  Rocket,
+  Heart,
+  Shield,
+  Lock,
+  Eye,
+} from "lucide-react";
 
 export default function AboutUsPage() {
   return (
-    <main className="bg-background text-foreground pb-10">
-      {/* Hero */}
-      <section className="py-20 px-4">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-            We are HackMNC
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            HackMNC is a free interview preparation platform built with one clear
-            goal — to make data structures and algorithms (DSA) preparation
-            easier and more focused for aspiring software engineers.
-          </p>
+    <main className="w-full overflow-x-hidden pt-24 pb-20">
+      {/* Hero Section */}
+      <section className="relative px-4 mb-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center justify-center p-3 mb-6 bg-primary/10 rounded-full text-primary">
+              <Code2 className="w-6 h-6" />
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+              We Are HackMNC
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Built by engineers, for engineers. We're on a mission to
+              democratize technical interview preparation using real-world data
+              and structured learning paths.
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Content Wrapper */}
-      <section className="px-4 pb-20">
-        <div className="max-w-5xl mx-auto space-y-16">
-          {/* Who Built */}
-          <div className="grid sm:grid-cols-3 gap-8">
-            <h2 className="text-2xl font-semibold sm:col-span-1">
-              Who Built HackMNC?
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed sm:col-span-2">
-              HackMNC is built and maintained by a solo developer who has
-              personally gone through the challenges of interview preparation.
-              The platform is shaped by real preparation pain points — scattered
-              resources, outdated lists, and too much noise — and aims to solve
-              them with structure and clarity.
+      {/* Mission & Vision Grid */}
+      <section className="px-4 mb-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm"
+          >
+            <Target className="w-10 h-10 text-primary mb-4" />
+            <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              To simplify DSA preparation by cutting through the noise. We
+              aggregate and curate interview questions that actually matter,
+              saving candidates from aimless grinding and helping them focus on
+              high-impact problems.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm"
+          >
+            <Users className="w-10 h-10 text-primary mb-4" />
+            <h2 className="text-2xl font-bold mb-4">Who We Are</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              HackMNC is built by solo developers who've been in the trenches.
+              We understand the frustration of scattered resources and paywalls,
+              so we built the platform we wish we had during our own prep.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="px-4 mb-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Our Core Values</h2>
+            <p className="text-muted-foreground">
+              The principles that drive everything we do.
             </p>
           </div>
-
-          {/* Mission */}
-          <div className="grid sm:grid-cols-3 gap-8">
-            <h2 className="text-2xl font-semibold">Our Mission</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed sm:col-span-2">
-              Preparing for coding interviews shouldn’t feel overwhelming.
-              HackMNC’s mission is to simplify DSA preparation by highlighting
-              questions that actually matter, so candidates can spend less time
-              searching and more time practicing.
-            </p>
+          <div className="grid sm:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Accessibility",
+                desc: "Premium quality education should be free and accessible to all.",
+                icon: Heart,
+              },
+              {
+                title: "Transparency",
+                desc: "No hidden sources. We use public data and community contributions.",
+                icon: Eye,
+              },
+              {
+                title: "Community",
+                desc: "We grow together. Your success is our success.",
+                icon: Rocket,
+              },
+            ].map((val, i) => (
+              <motion.div
+                key={val.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-xl border border-border bg-background hover:border-primary/50 transition-colors"
+              >
+                <val.icon className="w-8 h-8 text-primary mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{val.title}</h3>
+                <p className="text-muted-foreground text-sm">{val.desc}</p>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* Data Collection */}
-          <div className="rounded-2xl border border-border bg-card p-8">
-            <h2 className="text-2xl font-semibold mb-4">
-              How HackMNC Compiles Interview Questions
-            </h2>
-
-            <p className="text-sm text-muted-foreground mb-4">
-              HackMNC collects and organizes interview questions from
-              <span className="text-foreground font-medium">
-                {" "}publicly available sources
-              </span>, including:
-            </p>
-
-            <ul className="grid sm:grid-cols-2 gap-3 list-disc pl-5 text-sm text-muted-foreground">
-              <li>Public LeetCode discussion threads</li>
-              <li>Interview experiences on Reddit and Quora</li>
-              <li>Open-source GitHub interview repositories</li>
-              <li>Public interview blogs and write-ups</li>
-            </ul>
-
-            <p className="text-sm text-muted-foreground mt-4">
-              The data is reviewed, deduplicated, and structured into
-              company-wise and topic-wise lists. Updates typically happen every{" "}
-              <span className="text-foreground font-medium">5–10 months</span>,
-              based on newly available public information.
-            </p>
-          </div>
-
-          {/* Why HackMNC */}
-          <div>
-            <h2 className="text-2xl font-semibold mb-6">Why HackMNC?</h2>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {[
-                {
-                  title: "Focused Preparation",
-                  desc: "Emphasis on questions actually reported in interviews.",
-                },
-                {
-                  title: "Beginner Friendly",
-                  desc: "Designed for freshers and early-career engineers.",
-                },
-                {
-                  title: "Structured Learning",
-                  desc: "Company-wise, topic-wise, and frequency-based lists.",
-                },
-                {
-                  title: "Built from Experience",
-                  desc: "Created by someone who understands the interview grind.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-border bg-card p-5"
-                >
-                  <h3 className="font-medium mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Free & Disclaimer */}
-          <div className="grid sm:grid-cols-2 gap-8">
-            <div className="rounded-xl border border-border p-6 bg-card/50">
-              <h3 className="font-semibold mb-2">Free & Accessible</h3>
-              <p className="text-sm text-muted-foreground">
-                HackMNC is currently completely free to use, with the goal of
-                keeping interview preparation accessible without paywalls.
+      {/* Data Source Info */}
+      <section className="px-4 mb-24">
+        <div className="max-w-4xl mx-auto bg-muted/30 rounded-3xl p-8 md:p-12 border border-border">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+            How We Source Questions
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <p className="text-muted-foreground mb-4">
+                We believe in transparency. Our data is aggregated from publicly
+                available sources to ensure authenticity and relevance.
               </p>
+              <ul className="space-y-3">
+                {[
+                  "LeetCode Discuss",
+                  "Blind & Reddit",
+                  "GitHub Repositories",
+                  "Student Contributions",
+                ].map((src) => (
+                  <li
+                    key={src}
+                    className="flex items-center gap-2 text-sm font-medium"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    {src}
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <div className="rounded-xl border border-border p-6 bg-card/50">
-              <h3 className="font-semibold mb-2">Disclaimer</h3>
-              <p className="text-sm text-muted-foreground">
-                HackMNC is an independent educational platform and is not
-                affiliated with or endorsed by any company mentioned.
+            <div className="bg-background rounded-xl p-6 border border-border text-sm text-muted-foreground">
+              <p>
+                "The questions listed on HackMNC are based on real interview
+                experiences shared by candidates. We constantly update our
+                database to reflect the latest trends in FAANG and top MNC
+                interviews."
               </p>
             </div>
           </div>
@@ -135,23 +162,13 @@ export default function AboutUsPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border py-20 px-4 bg-card/30">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-semibold mb-4">
-            Make your DSA preparation easier
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Practice company-wise interview questions trusted by thousands of
-            candidates.
-          </p>
-
-          <Link
-            href="/companies"
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 transition"
-          >
-            Explore Companies →
-          </Link>
-        </div>
+      <section className="px-4 py-12 text-center">
+        <h2 className="text-2xl font-bold mb-6">
+          Ready to start your journey?
+        </h2>
+        <Button asChild size="lg" className="rounded-full px-8">
+          <Link href="/problems">Start Solving Now</Link>
+        </Button>
       </section>
     </main>
   );

@@ -1,4 +1,4 @@
-import { MailIcon } from "lucide-react";
+import { Shield, Lock, Eye, Mail, FileText } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
@@ -9,165 +9,137 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="bg-background text-foreground">
+    <main className="w-full overflow-x-hidden pt-24 pb-20 bg-background">
       {/* Header */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-14">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">
+      <section className="relative px-4 border-b border-border/50 pb-16 mb-16">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center p-3 mb-6 bg-primary/10 rounded-full text-primary">
+            <Shield className="w-6 h-6" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
             Privacy Policy
           </h1>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            This Privacy Policy explains how{" "}
-            <strong className="text-foreground">HackMNC</strong> collects, uses,
-            and protects your information when you use our platform.
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            We value your trust. This policy outlines how we handle your data
+            with transparency and care.
           </p>
-          <p className="text-xs text-muted-foreground mt-3">
-            Last updated: {new Date().toLocaleDateString()}
+          <p className="text-sm font-medium text-muted-foreground mt-8">
+            Last updated: January 16, 2026
           </p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <section className="max-w-3xl mx-auto px-4 space-y-12">
         {/* Overview */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Overview</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC is an independent interview preparation platform created to
-            help aspiring engineers practice data structures and algorithms more
-            effectively. We respect your privacy and collect only the data
-            necessary to operate and improve the platform.
-          </p>
+        <div className="prose prose-zinc dark:prose-invert max-w-none">
+          <div className="flex items-start gap-4">
+            <div className="mt-1 p-2 rounded-lg bg-secondary/50 text-secondary-foreground">
+              <Eye className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-semibold mb-3 mt-0">Overview</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                HackMNC is an independent interview preparation platform created
+                to help aspiring engineers practice data structures and
+                algorithms more effectively. We respect your privacy and collect
+                only the data necessary to operate and improve the platform.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Data We Collect */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Information We Collect</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-            When you create an account or use HackMNC, we may collect the
-            following information:
-          </p>
-
-          <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-            <li>Name and email address</li>
-            <li>Authentication details (via credentials or OAuth)</li>
-            <li>Account-related data used for progress tracking</li>
-          </ul>
+        {/* Data Collection */}
+        <div className="flex items-start gap-4">
+          <div className="mt-1 p-2 rounded-lg bg-secondary/50 text-secondary-foreground">
+            <FileText className="w-5 h-5" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-2xl font-semibold mb-3">
+              Information We Collect
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              When you create an account or use HackMNC, we may collect:
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-xl border border-border bg-card/40">
+                <h3 className="font-medium mb-1">Identity Data</h3>
+                <p className="text-sm text-muted-foreground">
+                  Name, email address, and profile picture (via OAuth).
+                </p>
+              </div>
+              <div className="p-4 rounded-xl border border-border bg-card/40">
+                <h3 className="font-medium mb-1">Usage Data</h3>
+                <p className="text-sm text-muted-foreground">
+                  Progress tracking, problems solved, and interaction logs.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Authentication */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Authentication</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC uses modern authentication mechanisms powered by{" "}
-            <strong className="text-foreground">Auth.js</strong>. Users can sign
-            up using credentials or supported OAuth providers. Authentication
-            data is used solely for account access and security.
-          </p>
+        {/* Auth & Security */}
+        <div className="flex items-start gap-4">
+          <div className="mt-1 p-2 rounded-lg bg-secondary/50 text-secondary-foreground">
+            <Lock className="w-5 h-5" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-semibold mb-3">
+              Authentication & Security
+            </h2>
+            <p className="text-muted-foreground mb-4">
+              We use <strong className="text-foreground">Auth.js</strong> for
+              secure authentication. Users can sign up using supported OAuth
+              providers (like Google/GitHub). We do not store passwords directly
+              for OAuth users.
+            </p>
+            <p className="text-muted-foreground">
+              While we implement industry-standard security measures, no method
+              of transmission is 100% secure.
+            </p>
+          </div>
         </div>
 
-        {/* Analytics */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Analytics</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            We use <strong className="text-foreground">Google Analytics</strong>{" "}
-            to understand how users interact with the platform. This helps us
-            improve performance, usability, and content relevance. Analytics
-            data is aggregated and does not directly identify individual users.
-          </p>
-        </div>
+        <div className="h-px bg-border/50" />
 
-        {/* Ads */}
+        {/* Third Party Services */}
         <div>
-          <h2 className="text-xl font-semibold mb-3">Advertising</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC currently displays advertisements via{" "}
-            <strong className="text-foreground">Google AdSense</strong>. Google
-            may use cookies or similar technologies to show relevant ads based
-            on your browsing behavior. HackMNC does not control how Google
-            collects or uses this data.
-          </p>
-        </div>
-
-        {/* Cookies */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Cookies</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC does not intentionally set custom cookies for tracking or
-            profiling. Some cookies may be set automatically by authentication
-            services, analytics providers, or advertising partners as part of
-            normal operation.
-          </p>
-        </div>
-
-        {/* Data Sharing */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Data Sharing</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            We do not sell, trade, or share your personal information with third
-            parties, except where required to operate core services such as
-            authentication, analytics, or advertising.
-          </p>
-        </div>
-
-        {/* Data Security */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Data Security</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Reasonable technical and organizational measures are used to protect
-            your data. However, no method of transmission or storage is 100%
-            secure, and we cannot guarantee absolute security.
-          </p>
-        </div>
-
-        {/* Audience */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Intended Audience</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC is intended for students, job seekers, and professionals
-            preparing for software engineering interviews. The platform does not
-            contain adult content.
-          </p>
-        </div>
-
-        {/* Jurisdiction */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Jurisdiction</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            HackMNC operates from India and complies with applicable Indian
-            laws, including the Information Technology Act. Users from other
-            regions acknowledge that their data may be processed in India.
-          </p>
+          <h2 className="text-xl font-semibold mb-4">Third-Party Services</h2>
+          <div className="grid gap-4">
+            <div className="p-4 rounded-xl bg-muted/20 border border-border flex items-center justify-between">
+              <div>
+                <h3 className="font-medium">Google Analytics</h3>
+                <p className="text-sm text-muted-foreground">
+                  Used to understand platform usage patterns.
+                </p>
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-muted/20 border border-border flex items-center justify-between">
+              <div>
+                <h3 className="font-medium">Google AdSense</h3>
+                <p className="text-sm text-muted-foreground">
+                  May serve ads based on browsing behavior.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Contact */}
-        <div className="rounded-xl border border-border bg-card p-6">
-          <h2 className="text-lg font-semibold mb-2">Contact</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            If you have any questions about this Privacy Policy or how your data
-            is handled, you can contact us at:
+        <div className="rounded-2xl border border-border bg-card/40 p-8 text-center">
+          <h2 className="text-xl font-semibold mb-2">
+            Have specific questions?
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            We are happy to answer any questions about our privacy practices.
           </p>
-          <p className="mt-3 text-sm font-medium flex gap-2 items-center justify-center">
-            <MailIcon />{" "}
-            <Link
-              href="mailto:hackmnc.mail@gmail.com"
-              className="text-primary hover:underline"
-            >
-              hackmnc.mail@gmail.com
-            </Link>
-          </p>
-        </div>
-
-        {/* Footer CTA */}
-        <div className="pt-6 border-t border-border text-sm text-muted-foreground">
-          <p>
-            By using HackMNC, you agree to this Privacy Policy. You can also
-            read our{" "}
-            <Link href="/about" className="text-primary hover:underline">
-              About Us
-            </Link>{" "}
-            page to learn more about the platform.
-          </p>
+          <Link
+            href="mailto:hackmnc.mail@gmail.com"
+            className="inline-flex items-center gap-2 text-primary hover:underline font-medium bg-primary/10 px-4 py-2 rounded-full transition-colors"
+          >
+            <Mail className="w-4 h-4" />
+            hackmnc.mail@gmail.com
+          </Link>
         </div>
       </section>
     </main>

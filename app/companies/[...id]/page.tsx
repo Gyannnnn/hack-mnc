@@ -152,7 +152,7 @@ export default async function page({
           } interviews, based on real interview experiences, with tools to help you track your preparation progress.`;
 
     return (
-      <div className="gap-6 min-h-screen w-full flex flex-col  px-2">
+      <div className="gap-6 min-h-screen w-full flex flex-col  px-2 sm:px-10">
         <Head>
           <link
             rel="canonical"

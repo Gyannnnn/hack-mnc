@@ -1,347 +1,211 @@
 import React from "react";
 import Link from "next/link";
 import { SiGmail } from "react-icons/si";
-
-import { FaLinkedin } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const topCompanies = [
+  const companyGroups = [
     {
-      name: "Google Interview Questions",
-      href: "https://www.hackmnc.com/companies/google/leetcode-interview-questions",
+      title: "Product Based MNCs",
+      links: [
+        "Google",
+        "Amazon",
+        "Microsoft",
+        "Meta",
+        "Apple",
+        "Netflix",
+        "Uber",
+        "Adobe",
+        "Atlassian",
+        "PayPal",
+      ].map((c) => ({
+        name: c,
+        href: `/companies/${c
+          .toLowerCase()
+          .replace(/\s+/g, "-")}/leetcode-interview-questions`,
+      })),
     },
     {
-      name: "Microsoft Interview Questions",
-      href: "https://www.hackmnc.com/companies/microsoft/leetcode-interview-questions",
-    },
-    {
-      name: "Amazon Interview Questions",
-      href: "https://www.hackmnc.com/companies/amazon/leetcode-interview-questions",
-    },
-    {
-      name: "Meta (Facebook) Interview Questions",
-      href: "https://www.hackmnc.com/companies/meta/leetcode-interview-questions",
-    },
-    {
-      name: "Apple Interview Questions",
-      href: "https://www.hackmnc.com/companies/apple/leetcode-interview-questions",
-    },
-    {
-      name: "Netflix Interview Questions",
-      href: "https://www.hackmnc.com/companies/netflix/leetcode-interview-questions",
-    },
-  ];
-
-  const serviceCompanies = [
-    {
-      name: "TCS Interview Questions",
-      href: "https://www.hackmnc.com/companies/tcs/leetcode-interview-questions",
-    },
-    {
-      name: "Infosys Interview Questions",
-      href: "https://www.hackmnc.com/companies/infosys/leetcode-interview-questions",
-    },
-    {
-      name: "Wipro Interview Questions",
-      href: "https://www.hackmnc.com/companies/wipro/leetcode-interview-questions",
-    },
-    {
-      name: "Cognizant Interview Questions",
-      href: "https://www.hackmnc.com/companies/cognizant/leetcode-interview-questions",
-    },
-    {
-      name: "HCL Technologies Interview Questions",
-      href: "https://www.hackmnc.com/companies/hcl-technologies/leetcode-interview-questions",
-    },
-    {
-      name: "Capgemini Interview Questions",
-      href: "https://www.hackmnc.com/companies/capgemini/leetcode-interview-questions",
+      title: "Service Based MNCs",
+      links: [
+        "TCS",
+        "Infosys",
+        "Wipro",
+        "Cognizant",
+        "Accenture",
+        "Capgemini",
+        "HCL Tech",
+        "Tech Mahindra",
+      ].map((c) => ({
+        name: c,
+        href: `/companies/${c
+          .toLowerCase()
+          .replace(/\s+/g, "-")}/leetcode-interview-questions`,
+      })),
     },
   ];
 
-  const techCompanies = [
-    {
-      name: "Adobe Interview Questions",
-      href: "https://www.hackmnc.com/companies/adobe/leetcode-interview-questions",
-    },
-    {
-      name: "Uber Interview Questions",
-      href: "https://www.hackmnc.com/companies/uber/leetcode-interview-questions",
-    },
-    {
-      name: "Nvidia Interview Questions",
-      href: "https://www.hackmnc.com/companies/nvidia/leetcode-interview-questions",
-    },
-    {
-      name: "Intel Interview Questions",
-      href: "https://www.hackmnc.com/companies/intel/leetcode-interview-questions",
-    },
-    {
-      name: "AMD Interview Questions",
-      href: "https://www.hackmnc.com/companies/amd/leetcode-interview-questions",
-    },
-    {
-      name: "Cisco Interview Questions",
-      href: "https://www.hackmnc.com/companies/cisco/leetcode-interview-questions",
-    },
-    {
-      name: "Oracle Interview Questions",
-      href: "https://www.hackmnc.com/companies/oracle/leetcode-interview-questions",
-    },
-    {
-      name: "IBM Interview Questions",
-      href: "https://www.hackmnc.com/companies/ibm/leetcode-interview-questions",
-    },
-    {
-      name: "Samsung Interview Questions",
-      href: "https://www.hackmnc.com/companies/samsung/leetcode-interview-questions",
-    },
+  const learnResources = [
+    { name: "LeetCode Problems", href: "/problems" },
+    { name: "Company Wise Questions", href: "/companies" },
+    { name: "DSA Roadmap", href: "/topic" },
+    { name: "System Design", href: "/blogs/system-design" },
   ];
 
-  const otherCompanies = [
+  const recentBlogs = [
     {
-      name: "Atlassian Interview Questions",
-      href: "https://www.hackmnc.com/companies/atlassian/leetcode-interview-questions",
+      name: "How to Crack FAANG Interviews",
+      href: "/blogs/how-to-crack-faang",
     },
+    { name: "Top 50 Array Problems", href: "/blogs/top-50-array-problems" },
     {
-      name: "PayPal Interview Questions",
-      href: "https://www.hackmnc.com/companies/paypal/leetcode-interview-questions",
+      name: "Dynamic Programming Guide",
+      href: "/blogs/dynamic-programming-guide",
     },
-    {
-      name: "Goldman Sachs Interview Questions",
-      href: "https://www.hackmnc.com/companies/goldman-sachs/leetcode-interview-questions",
-    },
-    {
-      name: "Flipkart Interview Questions",
-      href: "https://www.hackmnc.com/companies/flipkart/leetcode-interview-questions",
-    },
-    {
-      name: "Cars24 Interview Questions",
-      href: "https://www.hackmnc.com/companies/cars24/leetcode-interview-questions",
-    },
-    {
-      name: "Deloitte Interview Questions",
-      href: "https://www.hackmnc.com/companies/deloitte/leetcode-interview-questions",
-    },
-  ];
-
-  const resources = [
-    {
-      name: "LeetCode Problems",
-      href: "/problems",
-      description: "Practice coding questions",
-    },
-    {
-      name: "Company-wise Questions",
-      href: "/companies",
-      description: "Interview prep by company",
-    },
-    {
-      name: "Topic-wise DSA",
-      href: "/topic",
-      description: "Learn by data structure",
-    },
-    {
-      name: "Interview Experiences",
-      href: "/blogs",
-      description: "Real candidate stories",
-    },
+    { name: "Resume Tips for SDE", href: "/blogs/resume-tips-for-sde" },
   ];
 
   return (
     <footer className="w-full border-t border-border bg-card/30 backdrop-blur-sm mt-auto">
-      <div className="sm:px-6 lg:px-8 pt-12 pb-6">
-        {/* Main Footer Content */}
-        <div className="w-screen sm:px-8 px-2">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8 mb-8 items-start justify-between">
-            {/* Brand Section */}
-            <div className="lg:col-span-3">
-              <Link
-                href="/"
-                className="text-2xl font-bold text-foreground hover:text-primary transition-colors font-mono tracking-tight mb-4 inline-block"
-                aria-label="HackMNC - Free DSA Interview Preparation Platform"
-              >
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
+          {/* Brand & Mission */}
+          <div className="lg:col-span-4 space-y-6">
+            <Link href="/" className="inline-block">
+              <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 &lt;HackMNC/&gt;
+              </span>
+            </Link>
+            <p className="text-muted-foreground leading-relaxed pr-4">
+              The ultimate free resource for coding interview preparation.
+              Master Data Structures & Algorithms with company-specific
+              questions from Google, Amazon, Microsoft, and more.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="mailto:hackmnc.mail@gmail.com"
+                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+              >
+                <SiGmail className="w-5 h-5" />
+                <span className="sr-only">Email</span>
               </Link>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Free DSA interview preparation platform with company-specific
-                LeetCode questions, coding patterns, and real interview
-                experiences from FAANG and top MNCs.
-              </p>
-              <div className="text-xs text-muted-foreground space-y-1">
-                <p>✓ 1000+ Coding Problems</p>
-                <p>✓ 20+ Company Question Banks</p>
-                <p>✓ 100% Free Forever</p>
+              <Link
+                href="https://linkedin.com/company/hackmnc"
+                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+              >
+                <FaLinkedin className="w-5 h-5" />
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link
+                href="https://github.com/hackmnc"
+                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+              >
+                <FaGithub className="w-5 h-5" />
+                <span className="sr-only">GitHub</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Links Grid */}
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            {companyGroups.map((group) => (
+              <div key={group.title}>
+                <h3 className="font-semibold text-foreground mb-4">
+                  {group.title}
+                </h3>
+                <ul className="space-y-2">
+                  {group.links.slice(0, 8).map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="mt-5 flex flex-col gap-2 text-xs text-muted-foreground">
-                <Link
-                  target="_blank"
-                  href="mailto:hackmnc.mail@gmail.com"
-                  className="hover:text-primary transition-colors flex gap-2 items-center justify-start"
-                >
-                  <SiGmail /> hackmnc.mail@gmail.com
-                </Link>
+            ))}
 
-                <Link
-                  href="https://www.linkedin.com/company/hackmnc"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-primary transition-colors flex items-center gap-2"
-                >
-                  <FaLinkedin /> @hackMnc
-                </Link>
-              </div>
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Resources</h3>
+              <ul className="space-y-2">
+                {learnResources.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Top Tech Companies */}
-            <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-foreground mb-4">
-                FAANG Interview Prep
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">
+                Latest Blogs
               </h3>
-              <nav aria-label="Top tech companies">
-                <ul className="space-y-2.5">
-                  {topCompanies.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-
-            {/* Service Companies */}
-            <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-foreground mb-4">
-                Service Companies
-              </h3>
-              <nav aria-label="IT service companies">
-                <ul className="space-y-2.5">
-                  {serviceCompanies.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-
-            {/* Tech & Hardware */}
-            <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-foreground mb-4">
-                Tech & Hardware
-              </h3>
-              <nav aria-label="Technology and hardware companies">
-                <ul className="space-y-2.5">
-                  {techCompanies.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-
-            {/* Other Companies & Resources */}
-            <div className="lg:col-span-3">
-              <h3 className="text-sm font-semibold text-foreground mb-4">
-                More Companies
-              </h3>
-              <nav aria-label="Additional companies">
-                <ul className="space-y-2.5 mb-6">
-                  {otherCompanies.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-
-              <h3 className="text-sm font-semibold text-foreground mb-4 mt-6">
-                Learning Resources
-              </h3>
-              <nav aria-label="Learning resources">
-                <ul className="space-y-2.5">
-                  {resources.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors block"
-                        title={link.description}
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <ul className="space-y-2">
+                {recentBlogs.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors line-clamp-1"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href="/blogs"
+                    className="text-sm font-medium text-primary hover:underline inline-flex items-center gap-1 mt-2"
+                  >
+                    View all blogs <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="sm:px-4 px-2">
-          <div className="py-6 border-t border-border">
-            <div className="prose prose-sm max-w-none">
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">HackMNC</strong> is a
-                comprehensive free platform for software engineering interview
-                preparation. Access curated LeetCode problems asked by top
-                companies including Google, Amazon, Microsoft, Meta, Apple,
-                Netflix, and 40+ other MNCs. Master data structures and
-                algorithms with topic-wise practice, study real interview
-                experiences, and track your preparation progress. Perfect for
-                freshers and experienced developers preparing for FAANG,
-                product-based companies, and top IT service firms.
-              </p>
-            </div>
-          </div>
+        {/* SEO Text */}
+        <div className="pt-8 border-t border-border/50 mb-8">
+          <p className="text-xs text-muted-foreground leading-relaxed text-justify">
+            <strong>HackMNC</strong> is your go-to platform for free company-wise interview patterns, and DSA
+            roadmaps. Prepare for technical interviews at top product-based
+            companies (Google, Microsoft, Amazon, Meta) and service-based firms
+            (TCS, Infosys, Wipro). Access curated problem lists, system design
+            guides, and real interview experiences to crack your dream job.
+          </p>
+        </div>
 
-          {/* Bottom Bar */}
-          <div className="pt-6 border-t border-border">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-xs text-muted-foreground">
-                © {currentYear} HackMNC. All rights reserved. | Free DSA
-                Interview Preparation Platform
-              </p>
-              <div className="flex items-center  gap-6 text-xs text-muted-foreground">
-                <Link
-                  href="/about-us"
-                  className="hover:text-primary transition-colors"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/privacy-policy"
-                  className="hover:text-primary transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-              </div>
-            </div>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <p>© {currentYear} HackMNC. Open source contributions welcome.</p>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/about-us"
+              className="hover:text-foreground transition-colors"
+            >
+              About Us
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </Link>           
           </div>
         </div>
-      </div>      
+      </div>
     </footer>
   );
 }

@@ -39,7 +39,7 @@ export default async function ProfileCard() {
   const hardPct = calcPct(statsData?.difficultyStats.HARD.solved, statsData?.difficultyStats.HARD.total);
 
   return (
-    <Card className="w-full bg-card border border-border">
+    <Card className="w-full bg-card border border-border ">
       <CardContent className="p-6">
         <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
           {/* Profile Section */}

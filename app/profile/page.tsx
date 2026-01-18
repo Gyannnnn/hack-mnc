@@ -9,7 +9,7 @@ export default async function page() {
   const sesssion = await auth()
   const id = sesssion?.user.id
   return (
-    <div className='cnt'>
+    <div className='cnt sm:px-10'>
       <Suspense fallback={<ProfileCardSkeleton />}>         
         <ProfileCard />
       </Suspense>

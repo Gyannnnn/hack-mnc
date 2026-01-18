@@ -100,7 +100,7 @@ export default function CompanyDetailsCard({
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 ">
         <Card className="md:col-span-1 h-40 p-4 flex items-center relative">
           <Skeleton className="absolute top-2 left-2 h-6 w-28 rounded-full" />
           <div className="flex items-center gap-4">
@@ -133,7 +133,7 @@ export default function CompanyDetailsCard({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 ">
       <Card className="md:col-span-1 h-40 p-6 flex flex-col justify-between relative overflow-hidden group hover:shadow-lg transition-all duration-300">
         <Badge className="absolute top-2 left-2">
           {companyData?.data.company.name}

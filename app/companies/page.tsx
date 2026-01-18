@@ -65,7 +65,7 @@ export default function Companies() {
   if (loading) return <Loading />;
 
   return (
-    <div className="cnt">
+    <div className="cnt px-10">
       <div className="">
         <div className="w-full flex items-center justify-start py-4">
           <div className="relative w-full max-w-xl">

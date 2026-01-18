@@ -59,7 +59,7 @@ export default async function Problems() {
 
   const session = await auth();
   return (
-    <main className="cnt gap-6">
+    <main className="cnt gap-6 px-10">
       <header className="space-y-3 rounded-2xl border bg-card/80 backdrop-blur-sm px-4 py-5 sm:px-6 shadow-sm">
         <div className="space-y-2 ">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
