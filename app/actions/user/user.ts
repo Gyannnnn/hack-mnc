@@ -1,20 +1,30 @@
 import { userOverallProgressResponse, userProgressResponse } from "@/types/type"
 import axios from "axios"
 
-export const getUserProgress = async ({ userId }: { userId: string }) => {
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.hackmnc.com";
+
+export const getUserProgress = async ({ userId, token }: { userId: string, token?: string }) => {
     try {
-        const res = await axios.post<userProgressResponse>("https://api.hackmnc.com/api/v1/user/progress", {
+        const headers: Record<string, string> = {};
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+        const res = await axios.post<userProgressResponse>(`${API_URL}/api/v1/user/progress`, {
             userId
-        })
+        }, { headers })
         return res.data
     } catch (error) {
         console.log(error)
     }
 }
 
-export const getUserOverallProgress = async ({ userId }: { userId: string }) => {
+export const getUserOverallProgress = async ({ userId, token }: { userId: string, token?: string }) => {
     try {
-        const res = await axios.get<userOverallProgressResponse>(`https://api.hackmnc.com/api/v1/user/progress/overall/${userId}`);
+        const headers: Record<string, string> = {};
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+        const res = await axios.get<userOverallProgressResponse>(`${API_URL}/api/v1/user/progress/overall/${userId}`, { headers });
         return res.data;
     } catch (error) {
         console.log(error)

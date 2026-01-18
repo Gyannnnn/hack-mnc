@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "@/auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { getUserProgress } from "@/app/actions/user/user";
 import Image from "next/image";
@@ -25,7 +26,9 @@ export default async function CompanyWiseProgressCard({
                   <LogIn className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <div className="font-semibold text-foreground">You&apos;re not signed in</div>
+                  <div className="font-semibold text-foreground">
+                    You&apos;re not signed in
+                  </div>
                   <p className="text-sm text-muted-foreground mt-1">
                     Please sign in to view your progress and personalized stats.
                   </p>
@@ -44,7 +47,9 @@ export default async function CompanyWiseProgressCard({
       );
     }
 
-    const res = await getUserProgress({ userId });
+    const session = await auth();
+    const token = session?.accessToken;
+    const res = await getUserProgress({ userId, token });
     const progressData = res?.data;
 
     if (!progressData?.progresses?.length) {
@@ -62,20 +67,24 @@ export default async function CompanyWiseProgressCard({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {progressData.progresses.map((data, index) => (
-          <Card key={index} className="bg-card border border-border rounded-lg hover:border-primary/40 transition-colors">
+          <Card
+            key={index}
+            className="bg-card border border-border rounded-lg hover:border-primary/40 transition-colors"
+          >
             <CardContent className="p-4">
               <div className="flex items-center gap-4">
-             
-                  <Image
-                    src={data.company.logo}
-                    height={64}
-                    width={64}
-                    alt={`${data.company.name} logo`}
-                  />
-              
+                <Image
+                  src={data.company.logo}
+                  height={64}
+                  width={64}
+                  alt={`${data.company.name} logo`}
+                />
+
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-foreground">{data.company.name}</h3>
+                    <h3 className="font-semibold text-foreground">
+                      {data.company.name}
+                    </h3>
                     <Badge variant="secondary" className="ml-2">
                       {data.percentageCompleted.toFixed(1)}%
                     </Badge>
@@ -86,7 +95,10 @@ export default async function CompanyWiseProgressCard({
                         {data.totalQuestionsSolved}
                       </span>
                     </div>
-                    <Progress value={data.percentageCompleted} className="h-2 flex-1" />
+                    <Progress
+                      value={data.percentageCompleted}
+                      className="h-2 flex-1"
+                    />
                   </div>
                 </div>
               </div>
@@ -96,7 +108,7 @@ export default async function CompanyWiseProgressCard({
       </div>
     );
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return (
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />

@@ -24,8 +24,12 @@ export default async function ProfileCard() {
   };
 
   if (!userId) return <h1>Sign in first</h1>;
-  const res = await getUserOverallProgress({ userId });
-  const statsData = res?.data
+  if (!userId) return <h1>Sign in first</h1>;
+  const res = await getUserOverallProgress({
+    userId,
+    token: session?.accessToken,
+  });
+  const statsData = res?.data;
 
   const calcPct = (solved?: number, total?: number) => {
     const s = Number(solved || 0);
@@ -34,9 +38,18 @@ export default async function ProfileCard() {
     return (s / t) * 100;
   };
 
-  const easyPct = calcPct(statsData?.difficultyStats.EASY.solved, statsData?.difficultyStats.EASY.total);
-  const mediumPct = calcPct(statsData?.difficultyStats.MEDIUM.solved, statsData?.difficultyStats.MEDIUM.total);
-  const hardPct = calcPct(statsData?.difficultyStats.HARD.solved, statsData?.difficultyStats.HARD.total);
+  const easyPct = calcPct(
+    statsData?.difficultyStats.EASY.solved,
+    statsData?.difficultyStats.EASY.total,
+  );
+  const mediumPct = calcPct(
+    statsData?.difficultyStats.MEDIUM.solved,
+    statsData?.difficultyStats.MEDIUM.total,
+  );
+  const hardPct = calcPct(
+    statsData?.difficultyStats.HARD.solved,
+    statsData?.difficultyStats.HARD.total,
+  );
 
   return (
     <Card className="w-full bg-card border border-border ">
@@ -79,10 +92,7 @@ export default async function ProfileCard() {
               <div className="flex flex-wrap gap-2 justify-center items-center">
                 <Badge variant="outline" className="flex items-center gap-1">
                   <TrendingUp className="h-3 w-3" />
-                  <span>
-                    {statsData?.userSolved}{" "}
-                    Solved
-                  </span>
+                  <span>{statsData?.userSolved} Solved</span>
                 </Badge>
               </div>
             </div>
@@ -91,10 +101,15 @@ export default async function ProfileCard() {
             <div className="h-40 w-40 rounded-full border-8 border-primary/20 flex items-center justify-center bg-card/50">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
-                  {statsData?.userSolved}/
-                  {statsData?.totalQuestions}
+                  {statsData?.userSolved}/{statsData?.totalQuestions}
                 </div>
-                <div className="text-sm text-muted-foreground">{calcPct(statsData?.userSolved, statsData?.totalQuestions).toFixed(1)}% Solved</div>
+                <div className="text-sm text-muted-foreground">
+                  {calcPct(
+                    statsData?.userSolved,
+                    statsData?.totalQuestions,
+                  ).toFixed(1)}
+                  % Solved
+                </div>
               </div>
             </div>
           </div>
@@ -108,7 +123,8 @@ export default async function ProfileCard() {
                     Easy
                   </span>
                   <span className="text-base md:text-lg text-muted-foreground">
-                    {statsData?.difficultyStats.EASY.solved}/{statsData?.difficultyStats.EASY.total}
+                    {statsData?.difficultyStats.EASY.solved}/
+                    {statsData?.difficultyStats.EASY.total}
                   </span>
                 </div>
                 <Progress value={easyPct} className="h-2" />
@@ -124,12 +140,13 @@ export default async function ProfileCard() {
                     Medium
                   </span>
                   <span className="text-base md:text-lg text-muted-foreground">
-                    {statsData?.difficultyStats.MEDIUM.solved}/{statsData?.difficultyStats.MEDIUM.total}
+                    {statsData?.difficultyStats.MEDIUM.solved}/
+                    {statsData?.difficultyStats.MEDIUM.total}
                   </span>
                 </div>
                 <Progress value={mediumPct} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                 {mediumPct.toFixed(1)}%
+                  {mediumPct.toFixed(1)}%
                 </div>
               </div>
 
@@ -140,12 +157,13 @@ export default async function ProfileCard() {
                     Hard
                   </span>
                   <span className="text-base md:text-lg text-muted-foreground">
-                    {statsData?.difficultyStats.HARD.solved}/{statsData?.difficultyStats.HARD.total}
+                    {statsData?.difficultyStats.HARD.solved}/
+                    {statsData?.difficultyStats.HARD.total}
                   </span>
                 </div>
                 <Progress value={hardPct} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">
-                 {hardPct.toFixed(1)}%
+                  {hardPct.toFixed(1)}%
                 </div>
               </div>
             </div>

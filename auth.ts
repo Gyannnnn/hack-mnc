@@ -9,7 +9,7 @@ import { signInResponse } from "./types/type";
 const AUTH_GOOGLE_ID = process.env.AUTH_GOOGLE_ID
 const AUTH_GOOGLE_SECRET = process.env.AUTH_GOOGLE_SECRET
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.hackmnc.com";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -118,9 +118,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               token.name = backendUser.name;
               token.email = backendUser.email;
               token.image = backendUser.image;
+            } else {
+              throw new Error("Backend authentication failed: Missing user or token");
             }
           } catch (error: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
             console.error("Error communicating with backend for Google auth:", error.response?.data || error.message);
+            throw error; // Rethrow to fail the sign-in
           }
         }
       }

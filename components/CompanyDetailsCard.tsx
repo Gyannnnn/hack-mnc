@@ -9,6 +9,8 @@ import { companyCardDetails } from "@/types/type";
 import { useUserProgressStore } from "@/app/store/store";
 import { Skeleton } from "./ui/skeleton";
 
+import { useSession } from "next-auth/react";
+
 export default function CompanyDetailsCard({
   userId,
   companyName,
@@ -16,8 +18,11 @@ export default function CompanyDetailsCard({
   userId: string;
   companyName: string;
 }) {
+  const { data: session } = useSession();
+  const token = session?.accessToken;
+
   const [companyData, setCompanyData] = useState<companyCardDetails | null>(
-    null
+    null,
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +31,7 @@ export default function CompanyDetailsCard({
   const { easyCompanySolved, mediumCompanySolved, hardCompanySolved } =
     useUserProgressStore();
   const initializeCompanyProgress = useUserProgressStore(
-    (state) => state.initializeCompanyProgress
+    (state) => state.initializeCompanyProgress,
   );
 
   // Memoize the fetch function
@@ -34,13 +39,13 @@ export default function CompanyDetailsCard({
     try {
       setLoading(true);
       setError(null);
-      const res = await getCompanyDetails({ companyName, userId });
+      const res = await getCompanyDetails({ companyName, userId, token });
       if (res?.data) {
         setCompanyData(res as companyCardDetails);
         initializeCompanyProgress(
           res.data.userProgressData.easySolved || 0,
           res.data.userProgressData.mediumSolved || 0,
-          res.data.userProgressData.hardSolved || 0
+          res.data.userProgressData.hardSolved || 0,
         );
       }
     } catch (error) {
@@ -49,7 +54,7 @@ export default function CompanyDetailsCard({
     } finally {
       setLoading(false);
     }
-  }, [companyName, userId, initializeCompanyProgress]);
+  }, [companyName, userId, initializeCompanyProgress, token]);
 
   useEffect(() => {
     if (companyName) {
@@ -62,14 +67,14 @@ export default function CompanyDetailsCard({
       try {
         setLoading(true);
         setError(null);
-        const res = await getCompanyDetails({ companyName, userId });
+        const res = await getCompanyDetails({ companyName, userId, token });
 
         if (res?.data) {
           setCompanyData(res as companyCardDetails);
           initializeCompanyProgress(
             res.data.userProgressData.easySolved || 0,
             res.data.userProgressData.mediumSolved || 0,
-            res.data.userProgressData.hardSolved || 0
+            res.data.userProgressData.hardSolved || 0,
           );
         }
       } catch (error) {
@@ -83,11 +88,7 @@ export default function CompanyDetailsCard({
     if (companyName && userId) {
       fetchData();
     }
-  }, [initializeCompanyProgress, companyName, userId]); // Remove initializeCompanyProgress
-
-  
-
- 
+  }, [initializeCompanyProgress, companyName, userId, token]); // Remove initializeCompanyProgress
 
   const easy = companyData?.data.easy as number;
   const medium = companyData?.data.medium as number;
