@@ -47,3 +47,15 @@ export interface Comment {
     isLikedByCurrentUser?: boolean; // If API returns this (controller didn't show it explicitly for getComments but good to have)
     parentId?: string | null;
 }
+
+
+
+export interface blogType {
+    title: string;
+    slug: string;
+    summary: string;
+    content?: string;
+    coverImage: string;
+    authorId: string;
+    relatedBlogs?: string[];
+}

@@ -31,12 +31,31 @@ export function getBlogPosts(): BlogPost[] {
         return [];
     }
 
-    const fileNames = fs.readdirSync(blogsDirectory);
-    const allBlogsData = fileNames.map((fileName) => {
-        const slug = fileName.replace(/\.mdx$/, '');
-        const fullPath = path.join(blogsDirectory, fileName);
+    const getAllFiles = (dir: string, fileList: string[] = []) => {
+        if (!fs.existsSync(dir)) return fileList;
+        const files = fs.readdirSync(dir);
+
+        files.forEach(file => {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+
+            if (stat.isDirectory()) {
+                getAllFiles(filePath, fileList);
+            } else if (file.endsWith('.mdx')) {
+                fileList.push(filePath);
+            }
+        });
+
+        return fileList;
+    };
+
+    const allMdxFiles = getAllFiles(blogsDirectory);
+
+    const allBlogsData = allMdxFiles.map((fullPath) => {
         const fileContents = fs.readFileSync(fullPath, 'utf8');
         const { data, content } = matter(fileContents);
+        const fileName = path.basename(fullPath);
+        const slug = fileName.replace(/\.mdx$/, '');
 
         return {
             slug,
@@ -63,10 +82,32 @@ export function getBlogPosts(): BlogPost[] {
 }
 
 export function getBlogPost(slug: string): BlogPost | undefined {
-    const fullPath = path.join(blogsDirectory, `${slug}.mdx`);
-    if (!fs.existsSync(fullPath)) {
+    // Recursive search for the slug
+    const findFile = (dir: string): string | undefined => {
+        if (!fs.existsSync(dir)) return undefined;
+        const files = fs.readdirSync(dir);
+
+        for (const file of files) {
+            const filePath = path.join(dir, file);
+            const stat = fs.statSync(filePath);
+
+            if (stat.isDirectory()) {
+                const found = findFile(filePath);
+                if (found) return found;
+            } else if (file === `${slug}.mdx`) {
+                return filePath;
+            }
+        }
+        return undefined;
+    };
+
+    const fullPath = findFile(blogsDirectory);
+
+    if (!fullPath) {
         return undefined;
     }
+
+
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);

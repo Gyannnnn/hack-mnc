@@ -24,8 +24,6 @@ import { toast } from "sonner";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 
-
-
 interface BlogHeaderMetaProps {
   slug: string;
   staticAuthorName: string;
@@ -52,8 +50,8 @@ export function BlogHeaderMeta({
         const data = await getBlogMetaData(slug, token);
         if (data) {
           setMeta(data);
-          setIsLiked(data.data.isLikedByCurrentUser || false);
-          setLikeCount(data.data._count.likes);
+          setIsLiked(data?.data?.isLikedByCurrentUser ?? false);
+          setLikeCount(data?.data?._count?.likes ?? 0);
         }
       } catch (error) {
         console.error("Failed to fetch blog meta:", error);
@@ -99,10 +97,10 @@ export function BlogHeaderMeta({
   }
 
   // Fallback to static data if API fails or returns null, but try to use dynamic if available
-  const authorName = meta?.data.author.name || staticAuthorName;
-  const authorImage = meta?.data.author.image;
+  const authorName = meta?.data?.author?.name || staticAuthorName;
+  const authorImage = meta?.data?.author?.image;
   // stats managed by local state now
-  const comments = meta?.data._count.comments || 0;
+  const comments = meta?.data?._count?.comments || 0;
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -130,11 +128,20 @@ export function BlogHeaderMeta({
             <span>{readingTime} min read</span>
             <span>·</span>
             <time dateTime={publishedAt}>
-              {new Date(publishedAt).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
+              {(() => {
+                try {
+                  const d = new Date(publishedAt);
+                  return isNaN(d.getTime())
+                    ? publishedAt
+                    : d.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      });
+                } catch (e) {
+                  return publishedAt;
+                }
+              })()}
             </time>
           </div>
         </div>
@@ -153,9 +160,7 @@ export function BlogHeaderMeta({
               animate={{ scale: isLiked ? [1, 1.2, 1] : 1 }}
               transition={{ duration: 0.3 }}
             >
-              <Heart
-                className={`w-6 h-6 transition-colors`}
-              />
+              <Heart className={`w-6 h-6 transition-colors`} />
             </motion.div>
             <span className={isLiked ? "text-foreground font-medium" : ""}>
               {likeCount}
@@ -196,7 +201,7 @@ export function BlogAuthorBio({ slug }: { slug: string }) {
     return <AuthorBioSkeleton />;
   }
 
-  if (!meta) return null;
+  if (!meta || !meta.data?.author) return null;
 
   const { author } = meta.data;
 
@@ -227,7 +232,11 @@ export function BlogAuthorBio({ slug }: { slug: string }) {
             {author.bio}
           </p>
           <div className="flex flex-wrap gap-4 mt-4 text-sm text-foreground/80 items-center">
-            {author.location && <p className="mr-2 flex items-center gap-2"><IoLocationOutline className="w-5 h-5" /> {author.location}</p>}
+            {author.location && (
+              <p className="mr-2 flex items-center gap-2">
+                <IoLocationOutline className="w-5 h-5" /> {author.location}
+              </p>
+            )}
 
             {author.linkedin && (
               <Link

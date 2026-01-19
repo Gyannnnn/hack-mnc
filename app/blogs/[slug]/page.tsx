@@ -137,25 +137,22 @@ export default async function BlogPostPage({
         <div className="lg:col-span-8 lg:col-start-3">
           {/* Breadcrumbs */}
           <Breadcrumb className="mb-6">
-  <BreadcrumbList className="flex flex-nowrap">
-    <BreadcrumbItem>
-      <BreadcrumbLink asChild>
-        <Link href="/blogs">Blogs</Link>
-      </BreadcrumbLink>
-    </BreadcrumbItem>
+            <BreadcrumbList className="flex flex-nowrap">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/blogs">Blogs</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
 
-    <BreadcrumbSeparator />
+              <BreadcrumbSeparator />
 
-    <BreadcrumbItem className="flex-1 min-w-0">
-      <BreadcrumbPage className="min-w-0">
-        <span className="block truncate">
-          {post.metadata.title}
-        </span>
-      </BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>
-
+              <BreadcrumbItem className="flex-1 min-w-0">
+                <BreadcrumbPage className="min-w-0">
+                  <span className="block truncate">{post.metadata.title}</span>
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
           {/* Medium Style Header */}
           <header className="mb-8 mx-auto flex flex-col gap-6">

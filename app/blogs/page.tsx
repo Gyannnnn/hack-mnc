@@ -13,23 +13,20 @@ export const metadata = {
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>; // Updated type for Next.js 15
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const posts = getBlogPosts();
   const categories = getAllCategories();
   const { category: selectedCategory } = await searchParams;
 
-  // Filter posts
   const filteredPosts = selectedCategory
     ? posts.filter((post) => post.metadata.category === selectedCategory)
     : posts;
 
-  // Select featured posts (taking first 4 for now, or use random logic)
+
   const featuredPosts = posts.slice(0, 5);
 
-  // Remove featured post from the main list if you don't want it duplicated,
-  // or keep it. Let's keep it in the list for now but maybe we can exclude it?
-  // const listPosts = filteredPosts.filter(p => p.slug !== featuredPost.slug);
+
   const listPosts = filteredPosts;
 
   return (

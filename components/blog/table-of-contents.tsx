@@ -12,7 +12,7 @@ interface TableOfContentsProps {
   }[];
 }
 
-export function TableOfContents({ headings }: TableOfContentsProps) {
+export function TableOfContents({ headings = [] }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
           }
         });
       },
-      { rootMargin: "0% 0% -80% 0%" }
+      { rootMargin: "0% 0% -80% 0%" },
     );
 
     headings.forEach((heading) => {
@@ -59,7 +59,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
               heading.level === 3 && "pl-4",
               activeId === heading.slug
                 ? "text-primary font-medium border-l-2 border-primary pl-3 -ml-4" // Visual indicator
-                : "text-muted-foreground"
+                : "text-muted-foreground",
             )}
             onClick={(e) => {
               e.preventDefault();

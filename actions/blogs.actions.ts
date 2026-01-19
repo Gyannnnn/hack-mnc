@@ -1,7 +1,7 @@
 "use server";
 
 import axios from "axios";
-import { BlogMetaData } from "@/types/blog.types";
+import { BlogMetaData, blogType } from "@/types/blog.types";
 
 export const getBlogMetaData = async (slug: string, token?: string) => {
     try {
@@ -73,7 +73,7 @@ export const createComment = async (token: string, blogId: string, content: stri
         );
 
         return response.data;
-    } catch (error: any) {
+    } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error("Error creating comment:", error.response?.data || error.message);
         } else {
@@ -117,6 +117,27 @@ export const likeComment = async (token: string, commentId: string) => {
         return response.data;
     } catch (error) {
         console.error("Error liking comment:", error);
+        return null;
+    }
+};
+
+
+
+export const createBlog = async (token: string, blogData: blogType) => {
+    try {
+        const response = await axios.post(
+            `https://api.hackmnc.com/api/v1/blog/create`,
+            blogData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error("Error creating blog:", error);
         return null;
     }
 };

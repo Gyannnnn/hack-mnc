@@ -155,7 +155,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
-     
+
     ];
   },
 
@@ -167,7 +167,7 @@ const nextConfig: NextConfig = {
         hostname: "veerpreps.s3.ap-south-1.amazonaws.com",
         pathname: "/**",
       },
-      
+
       {
         protocol: "https",
         hostname: "images.unsplash.com",
@@ -208,8 +208,13 @@ const nextConfig: NextConfig = {
         hostname: "logo.clearbit.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "scontent.cdninstagram.com",
+        pathname: "/**",
+      },
     ],
-   
+
   },
 
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],

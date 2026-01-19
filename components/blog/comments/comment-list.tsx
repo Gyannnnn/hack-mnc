@@ -19,10 +19,13 @@ export function CommentList({ blogId, token, userId }: CommentListProps) {
   const [loading, setLoading] = useState(true);
 
   const fetchComments = useCallback(async () => {
-    if (!blogId) return;
+    if (!blogId) {
+      setLoading(false);
+      return;
+    }
     try {
       const data = await getComments(blogId);
-      if (data && data.success) {
+      if (data && data.success && Array.isArray(data.data)) {
         setComments(data.data);
       }
     } catch (error) {
