@@ -3,6 +3,25 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import Faqs from "@/components/Faqs";
+import { CodeBlock } from "@/components/blog/code-block";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const mdxComponents: MDXComponents = {
   Faqs,
@@ -40,20 +59,33 @@ export const mdxComponents: MDXComponents = {
     );
   },
 
-  // Code blocks - simplified
-  code: ({ children, ...props }) => {
-    return (
-      <code
-        className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-red-600 dark:text-red-400"
-        {...props}
-      >
+  // Code blocks
+  pre: ({ children, ...props }) => (
+    <CodeBlock {...props}>
+      <pre {...props} className="p-0 bg-transparent my-0">
         {children}
-      </code>
-    );
-  },
+      </pre>
+    </CodeBlock>
+  ),
+  code: ({ children, ...props }) => <code {...props}>{children}</code>,
 
-  // Pre tag - simplified
-  pre: ({ children }) => <>{children}</>,
+  // Shadcn Components
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Badge,
+  Separator,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 
   // Lists
   ul: (props) => <ul className="list-disc ml-6 mb-4 space-y-2" {...props} />,
