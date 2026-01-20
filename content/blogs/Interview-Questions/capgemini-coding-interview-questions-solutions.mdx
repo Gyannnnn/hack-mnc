@@ -1,0 +1,741 @@
+---
+title: "Capgemini Coding Interview Questions 2024-2026: 10 Real Problems with Solutions"
+slug: "capgemini-coding-interview-questions-solutions"
+author: "Gyanaranjan Patra"
+authorSlug: "gyan"
+publishedAt: "2026-01-20"
+updatedAt: "2026-01-20"
+status: "published"
+category: "Interview Questions"
+tags:
+  - Interview Questions
+difficulty: "easy"
+readingTime: 11
+coverImage: "/blogs-image/capgemini-coding-interview-questions-solutions/capgemini.png"
+summary: "Prepare for Capgemini coding interviews with real questions asked in 2024-2026 technical rounds. Includes detailed solutions in C++, test cases, and explanations for arrays, strings, and logic-building problems."
+---
+
+
+# Capgemini Coding Interview Questions 2024-2026: Complete Guide with Solutions
+
+Preparing for a **Capgemini coding interview**? This comprehensive guide covers 10 real coding questions asked in Capgemini technical interviews during 2024-2026. Each problem includes detailed explanations, multiple test cases, and optimized C++ solutions.
+
+## What to Expect in Capgemini Coding Rounds
+
+Capgemini technical interviews typically focus on:
+
+- **Array manipulation** and basic data structures
+- **String processing** and pattern recognition
+- **Logic building** and mathematical problems
+- **Basic DSA concepts** like sorting and hashing
+- **Time complexity** optimization
+
+Most questions are easy to medium difficulty, testing your problem-solving fundamentals rather than advanced algorithms.
+
+## 1. Reverse ASCII Sum Problem
+
+**Difficulty:** Easy  
+**Topics:** String Manipulation, Mathematical Logic
+
+### Problem Statement
+
+Calculate the "Reverse ASCII Sum" of a lowercase string where each character gets a reverse alphabetical value ('a'=26, 'b'=25, ..., 'z'=1), multiplied by its position (1-indexed), then summed.
+
+### Input/Output
+
+**Input:** A lowercase English string  
+**Output:** Integer representing the Reverse ASCII Sum
+
+### Constraints
+
+- String contains only lowercase letters ('a'-'z')
+- Length: 1 to 1000 characters
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input: abc
+Output: 148
+```
+
+**Explanation:**
+
+- 'a' at position 1: reverse value = 26, contribution = 1×26 = 26
+- 'b' at position 2: reverse value = 25, contribution = 2×25 = 50
+- 'c' at position 3: reverse value = 24, contribution = 3×24 = 72
+- Total: 26 + 50 + 72 = 148
+
+**Test Case 2:**
+
+```
+Input: z
+Output: 1
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+
+    int sum = 0;
+    for (int i = 0; i < s.length(); i++) {
+        int reverseVal = 'z' - s[i] + 1;
+        sum += (i + 1) * reverseVal;
+    }
+
+    cout << sum << endl;
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(1)
+
+---
+
+## 2. Lexicographically Smallest String from Permutations
+
+**Difficulty:** Easy  
+**Topics:** Sorting, String Manipulation
+
+### Problem Statement
+
+Rearrange characters of a string to form the lexicographically smallest possible string.
+
+### Input/Output
+
+**Input:** String with lowercase English letters  
+**Output:** Alphabetically sorted string
+
+### Constraints
+
+- Only lowercase letters ('a'-'z')
+- Length: 1 to 1000 characters
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input: banana
+Output: aaabnn
+```
+
+**Test Case 2:**
+
+```
+Input: apple
+Output: aelpp
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+
+    sort(s.begin(), s.end());
+    cout << s << endl;
+
+    return 0;
+}
+```
+
+**Time Complexity:** O(n log n)  
+**Space Complexity:** O(1)
+
+---
+
+## 3. Segment Coverage Sum Problem
+
+**Difficulty:** Medium  
+**Topics:** Arrays, Range Queries
+
+### Problem Statement
+
+Given N segments [L, R] and a query range [X, Y], calculate the total coverage count for all points in the query range.
+
+### Input/Output
+
+**Input:**
+
+- N (number of segments)
+- N pairs of (L, R)
+- Query range [X, Y]
+
+**Output:** Total sum of segment coverages
+
+### Test Case
+
+```
+Input:
+N = 5
+Segments: [(2,5), (1,4), (2,8), (3,6), (5,7)]
+Query Range: X=1, Y=3
+
+Output: 8
+```
+
+**Explanation:**
+
+- Point 1: covered by 1 segment = 1
+- Point 2: covered by 3 segments = 3
+- Point 3: covered by 4 segments = 4
+- Total: 1 + 3 + 4 = 8
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int N, X, Y;
+    cin >> N;
+
+    vector<pair<int, int>> segments(N);
+    for (int i = 0; i < N; i++) {
+        cin >> segments[i].first >> segments[i].second;
+    }
+
+    cin >> X >> Y;
+
+    int total = 0;
+    for (int p = X; p <= Y; p++) {
+        for (auto seg : segments) {
+            if (p >= seg.first && p <= seg.second)
+                total++;
+        }
+    }
+
+    cout << total << endl;
+    return 0;
+}
+```
+
+**Time Complexity:** O((Y-X) × N)  
+**Space Complexity:** O(N)
+
+---
+
+## 4. Virus Detection in Mobile Strings
+
+**Difficulty:** Easy  
+**Topics:** String Patterns, Logic Building
+
+### Problem Statement
+
+Detect if a mobile contains a virus. A string is infected (special string) if all characters at alternative positions starting from index 0 are the same.
+
+### Input/Output
+
+**Input:**
+
+- N (number of strings)
+- N strings
+
+**Output:** 1 if infected, 0 otherwise (for each string)
+
+### Test Cases
+
+```
+Input:
+3
+ADAOAS
+MADAM
+LFLRL
+
+Output:
+1
+0
+1
+```
+
+**Explanation:**
+
+- ADAOAS: positions 0,2,4 → A,A,A (all same) → infected
+- MADAM: positions 0,2,4 → M,D,M (not all same) → not infected
+- LFLRL: positions 0,2,4 → L,L,L (all same) → infected
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int isSpecialString(string s) {
+    char expected = s[0];
+    for (int i = 0; i < s.length(); i += 2) {
+        if (s[i] != expected)
+            return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int N;
+    cin >> N;
+
+    while (N--) {
+        string s;
+        cin >> s;
+        cout << isSpecialString(s) << endl;
+    }
+
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(1)
+
+---
+
+## 5. Calculate Initial Velocity Using Motion Equation
+
+**Difficulty:** Easy  
+**Topics:** Mathematical Formula, Physics
+
+### Problem Statement
+
+Calculate initial velocity (u) using the equation: v = u + at
+
+### Input/Output
+
+**Input:** Three integers: v (final velocity), a (acceleration), t (time)  
+**Output:** Initial velocity u
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input: 1 1 1
+Output: 0
+Explanation: u = v - at = 1 - (1×1) = 0
+```
+
+**Test Case 2:**
+
+```
+Input: 10 2 3
+Output: 4
+Explanation: u = 10 - (2×3) = 4
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int v, a, t;
+    cin >> v >> a >> t;
+
+    int u = v - a * t;
+    cout << u << endl;
+
+    return 0;
+}
+```
+
+**Time Complexity:** O(1)  
+**Space Complexity:** O(1)
+
+---
+
+## 6. Sum of Digits in an Interval
+
+**Difficulty:** Medium  
+**Topics:** Mathematical Logic, Digit Manipulation
+
+### Problem Statement
+
+Find the sum of all digits of all integers in the interval [A, B].
+
+### Input/Output
+
+**Input:** Two integers A and B  
+**Output:** Sum of all digits in the range
+
+### Constraints
+
+- 0 ≤ A ≤ B ≤ 10^18
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input: 50 55
+Output: 45
+Explanation:
+50→5, 51→6, 52→7, 53→8, 54→9, 55→10
+Total: 5+6+7+8+9+10 = 45
+```
+
+**Test Case 2:**
+
+```
+Input: 28 31
+Output: 28
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int sumDigits(long long n) {
+    int sum = 0;
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    long long A, B;
+    cin >> A >> B;
+
+    long long total = 0;
+    for (long long i = A; i <= B; ++i) {
+        total += sumDigits(i);
+    }
+
+    cout << total << endl;
+    return 0;
+}
+```
+
+**Time Complexity:** O((B-A) × log(B))  
+**Space Complexity:** O(1)
+
+---
+
+## 7. Array Left Rotation
+
+**Difficulty:** Easy  
+**Topics:** Arrays, Rotation
+
+### Problem Statement
+
+Rotate an array to the left by d positions.
+
+### Input/Output
+
+**Input:**
+
+- n (array size)
+- n integers (array elements)
+- d (rotation count)
+
+**Output:** Rotated array
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input:
+5
+1 3 5 7 9
+2
+
+Output: 5 7 9 1 3
+```
+
+**Test Case 2:**
+
+```
+Input:
+4
+10 20 30 40
+0
+
+Output: 10 20 30 40
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void rotate(vector<int>& arr, int d, int n) {
+    d = d % n;
+    vector<int> rotated;
+
+    for (int i = d; i < n; ++i)
+        rotated.push_back(arr[i]);
+    for (int i = 0; i < d; ++i)
+        rotated.push_back(arr[i]);
+
+    for (int i = 0; i < n; ++i)
+        cout << rotated[i] << " ";
+    cout << endl;
+}
+
+int main() {
+    int n, d;
+    cin >> n;
+
+    vector<int> arr(n);
+    for (int i = 0; i < n; ++i)
+        cin >> arr[i];
+
+    cin >> d;
+    rotate(arr, d, n);
+
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+---
+
+## 8. Move All Hashes to Front
+
+**Difficulty:** Easy  
+**Topics:** String Manipulation
+
+### Problem Statement
+
+Move all '#' characters to the front of the string while maintaining the order of other characters.
+
+### Test Case
+
+```
+Input: Move#Hash#to#Front
+Output: ###MoveHashtoFront
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+string moveHashToFront(string s) {
+    int hashCount = 0;
+    string result = "";
+
+    for (char ch : s) {
+        if (ch == '#')
+            hashCount++;
+        else
+            result += ch;
+    }
+
+    return string(hashCount, '#') + result;
+}
+
+int main() {
+    string input;
+    getline(cin, input);
+
+    cout << moveHashToFront(input) << endl;
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+---
+
+## 9. String Compression with Character Count
+
+**Difficulty:** Easy  
+**Topics:** String Manipulation, Run-Length Encoding
+
+### Problem Statement
+
+Compress a string by replacing consecutive repeated characters with the character followed by its count.
+
+### Test Cases
+
+**Test Case 1:**
+
+```
+Input: aabbbbeeeeffggg
+Output: a2b4e4f2g3
+```
+
+**Test Case 2:**
+
+```
+Input: abbccccc
+Output: ab2c5
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+string compressString(string s) {
+    if (s.empty()) return "";
+
+    string result = "";
+    int count = 1;
+
+    for (size_t i = 1; i < s.length(); ++i) {
+        if (s[i] == s[i-1]) {
+            count++;
+        } else {
+            result += s[i-1];
+            if (count > 1)
+                result += to_string(count);
+            count = 1;
+        }
+    }
+
+    result += s.back();
+    if (count > 1)
+        result += to_string(count);
+
+    return result;
+}
+
+int main() {
+    string input;
+    cin >> input;
+
+    cout << compressString(input) << endl;
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+---
+
+## 10. Frequency Count of Array Elements
+
+**Difficulty:** Easy  
+**Topics:** Hashing, Frequency Analysis
+
+### Problem Statement
+
+Print the frequency of each integer in an array.
+
+### Test Case
+
+```
+Input:
+10
+1 2 3 3 4 1 4 5 1 2
+
+Output:
+1 occurs 3 times
+2 occurs 2 times
+3 occurs 2 times
+4 occurs 2 times
+5 occurs 1 times
+```
+
+### Solution in C++
+
+```cpp
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    int n, x;
+    cin >> n;
+
+    unordered_map<int, int> freq;
+
+    for (int i = 0; i < n; i++) {
+        cin >> x;
+        freq[x]++;
+    }
+
+    for (auto &p : freq)
+        cout << p.first << " occurs " << p.second << " times\n";
+
+    return 0;
+}
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+---
+
+## Key Takeaways for Capgemini Coding Interviews
+
+### Essential Topics to Master
+
+1. **Array Operations:** Rotation, searching, frequency counting
+2. **String Manipulation:** Pattern matching, compression, sorting
+3. **Basic Mathematics:** Formulas, digit operations
+4. **Hashing:** Frequency maps, quick lookups
+5. **Logic Building:** Problem decomposition, edge cases
+
+### Interview Preparation Tips
+
+- **Practice fundamentals:** Focus on basic DSA concepts rather than advanced algorithms
+- **Time management:** Most questions should be solvable in 15-20 minutes
+- **Test edge cases:** Always consider boundary conditions
+- **Code readability:** Write clean, well-commented code
+- **Complexity analysis:** Understand time and space complexity of your solutions
+
+### Common Patterns in Capgemini Questions
+
+- **Character manipulation** with mathematical operations
+- **Array transformations** and rearrangements
+- **Simple mathematical formulas** applied to programming
+- **Pattern recognition** in strings
+- **Frequency counting** and hashing
+
+## Conclusion
+
+These 10 Capgemini coding interview questions represent the actual problems asked in technical rounds during 2024-2026. The key to success is understanding fundamental concepts and practicing similar problems regularly.
+
+**Pro tip:** Don't just memorize solutions understand the logic behind each approach. Interviewers often ask follow-up questions or variations of these problems.
+
+Good luck with your Capgemini interview preparation!
+
+---
+
+**Related Articles:**
+
+- <a href="https://www.hackmnc.com/companies/capgemini/leetcode-interview-questions">
+    Solve 20+ questions in Capgemini Interview
+  </a>
+- <a href="https://www.hackmnc.com/companies/deloitte/leetcode-interview-questions">
+    Solve 50+ questions in Deloitte Interview
+  </a>
+- <a href="https://www.hackmnc.com/companies/wipro/leetcode-interview-questions">
+    Leetcode Questions asked in Wipro Interview
+  </a>
+
