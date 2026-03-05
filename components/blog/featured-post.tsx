@@ -7,12 +7,12 @@ interface FeaturedPostProps {
 
 export function FeaturedPost({ post }: FeaturedPostProps) {
   return (
-    <Link href={`/blogs/${post.slug}`} className="group block mb-4 last:mb-0">
-      <article className="py-3 border-b border-border/40 last:border-0 group-hover:bg-muted/30 -mx-3 px-3 rounded-md transition-colors">
-        <h3 className="font-bold text-foreground leading-snug group-hover:text-primary transition-colors mb-1.5">
+    <Link href={`/blogs/${post.slug}`} className="group block">
+      <article className="transition-all">
+        <h3 className="font-bold text-foreground leading-snug group-hover:text-primary transition-colors mb-2 line-clamp-2">
           {post.metadata.title}
         </h3>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
           <time dateTime={post.metadata.publishedAt}>
             {new Date(post.metadata.publishedAt).toLocaleDateString("en-US", {
               month: "short",
@@ -20,8 +20,8 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
               year: "numeric",
             })}
           </time>
-          <span>·</span>
-          <span className="text-[10px] uppercase font-semibold tracking-wider opacity-80">
+          <span className="w-1 h-1 rounded-full bg-border" />
+          <span className="uppercase font-semibold tracking-wider text-[10px]">
             {post.metadata.category}
           </span>
         </div>

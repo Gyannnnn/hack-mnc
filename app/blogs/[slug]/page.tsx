@@ -184,6 +184,7 @@ export default async function BlogPostPage({
                   fill
                   className="object-cover"
                   priority
+                  unoptimized
                 />
               </div>
               <div className="text-center text-sm text-muted-foreground mt-2 italic">
