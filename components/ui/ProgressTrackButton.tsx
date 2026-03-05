@@ -37,24 +37,6 @@ export default function ProgressTrackButton({
     decreaseCompanyHardSolved,
   } = useUserProgressStore();
 
-  const storeState = useUserProgressStore();
-
-  // useEffect(() => {
-  //   console.log("Store state updated:", storeState);
-  // }, [storeState]);
-
-  // useEffect(() => {
-  //   console.log("Company progress:", {
-  //     easy: storeState.easyCompanySolved,
-  //     medium: storeState.mediumCompanySolved,
-  //     hard: storeState.hardCompanySolved,
-  //   });
-  // }, [
-  //   storeState.easyCompanySolved,
-  //   storeState.mediumCompanySolved,
-  //   storeState.hardCompanySolved,
-  // ]);
-
   useEffect(() => {
     setSolved(isSolved);
   }, [isSolved]);
@@ -107,7 +89,7 @@ export default function ProgressTrackButton({
             headers: {
               Authorization: `Bearer ${session?.accessToken}`,
             },
-          }
+          },
         );
       },
       {
@@ -130,7 +112,7 @@ export default function ProgressTrackButton({
         finally: () => {
           setIsLoading(false);
         },
-      }
+      },
     );
   };
 
@@ -175,7 +157,7 @@ export default function ProgressTrackButton({
             headers: {
               Authorization: `Bearer ${session?.accessToken}`,
             },
-          }
+          },
         );
 
         // Invalidate cache to force fresh data on next load
@@ -210,7 +192,7 @@ export default function ProgressTrackButton({
         finally: () => {
           setIsLoading(false);
         },
-      }
+      },
     );
   };
 
@@ -228,7 +210,7 @@ export default function ProgressTrackButton({
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Failed to invalidate cache:", error);
@@ -241,13 +223,13 @@ export default function ProgressTrackButton({
       {solved ? (
         <ImCheckboxChecked
           size={20}
-          className={`text-green-500 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`text-green-500 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
           onClick={() => !isLoading && handleUnSolve(difficulty)}
         />
       ) : (
         <ImCheckboxUnchecked
           size={20}
-          className={`text-gray-400 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`text-gray-400 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
           onClick={() => !isLoading && handleSolved(difficulty)}
         />
       )}

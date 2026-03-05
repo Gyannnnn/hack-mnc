@@ -14,8 +14,6 @@ import Script from "next/script";
 import { decodeSlug } from "@/utils/slugify.utility";
 import Head from "next/head";
 import SocialShare from "@/components/SocialShare";
-import CompanyGroupNav from "@/components/CompanyGroupNav";
-import HorizontalScroll from "@/components/HorixontalScroll";
 
 interface seoDataRes {
   success: boolean;
@@ -43,10 +41,10 @@ export async function generateMetadata({
   let seoData;
   try {
     const res = await axios.get<seoDataRes>(
-      `https://api.hackmnc.com/api/v1/company/seo/${slug}`
+      `https://api.hackmnc.com/api/v1/company/seo/${slug}`,
     );
     seoData = res.data?.data;
-  } catch (error) {
+  } catch (_error) {
     seoData = null;
   }
 
@@ -120,9 +118,8 @@ export default async function page({
   const ids = (await params).id;
   const companyName = ids[0];
   const decodedCompanyName = decodeSlug(companyName);
-  const { content, frontmatter } = await getCompanyPostBySlug(
-    decodedCompanyName
-  );
+  const { content, frontmatter } =
+    await getCompanyPostBySlug(decodedCompanyName);
   const mdx = await compileMDX({
     source: content,
     components: mdxComponents,

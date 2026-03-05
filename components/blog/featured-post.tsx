@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BlogPost } from "@/lib/mdx";
-import { ArrowRight, CalendarIcon, Clock } from "lucide-react";
 
 interface FeaturedPostProps {
   post: BlogPost;

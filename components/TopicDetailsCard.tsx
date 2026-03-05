@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getTopicDetails, getTopicDetailsByName } from "@/app/actions/topics/topics";
+import { getTopicDetailsByName } from "@/app/actions/topics/topics";
 import { Card } from "./ui/card";
 import { Progress } from "./ui/progress";
 import { Badge } from "./ui/badge";
@@ -15,7 +15,7 @@ export default function TopicDetailsCard({
   userId,
 }: {
   // id: string;
-  name:string,
+  name: string;
   userId: string;
 }) {
   const [topicData, setTopicData] = useState<topicStats | null>(null);
@@ -30,7 +30,7 @@ export default function TopicDetailsCard({
       try {
         setLoading(true);
         // const res = await getTopicDetails({ id, userId });
-        const res = await getTopicDetailsByName({name,userId})
+        const res = await getTopicDetailsByName({ name, userId });
 
         if (res?.data) {
           setTopicData(res.data as topicStats);
@@ -38,7 +38,7 @@ export default function TopicDetailsCard({
           initializeProgress(
             res.data.easySolved || 0,
             res.data.mediumSolved || 0,
-            res.data.hardSolved || 0
+            res.data.hardSolved || 0,
           );
         }
       } catch (err) {

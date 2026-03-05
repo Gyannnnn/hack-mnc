@@ -10,9 +10,6 @@ import Providers from "./providers";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 
-import HorizontalScroll from "@/components/HorixontalScroll";
-import CompanyGroupNav from "@/components/CompanyGroupNav";
-import TopicGroupNav from "@/components/TopicGroupNav";
 import { GroupNav, GroupNavTopic } from "@/components/GroupNav";
 
 const geistSans = Geist({

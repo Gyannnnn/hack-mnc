@@ -2,7 +2,6 @@ import { getBlogPosts, getAllCategories } from "@/lib/mdx";
 import { BlogCard } from "@/components/blog/blog-card";
 import { FeaturedPost } from "@/components/blog/featured-post";
 import { CategoryFilter } from "@/components/blog/category-filter";
-import { SearchIcon } from "lucide-react";
 
 export const metadata = {
   title: "Blog | HackMNC",
@@ -23,9 +22,7 @@ export default async function BlogPage({
     ? posts.filter((post) => post.metadata.category === selectedCategory)
     : posts;
 
-
   const featuredPosts = posts.slice(0, 5);
-
 
   const listPosts = filteredPosts;
 

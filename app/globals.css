@@ -4,13 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-
-
 body {
   --sb-track-color: #201b25;
   --sb-thumb-color: #004ee6;
   --sb-size: 5px;
-
 }
 
 html {
@@ -36,7 +33,6 @@ html {
   scrollbar-width: thin;
   scrollbar-color: rgba(120, 120, 120, 0.6) transparent;
 }
-
 
 /* body::-webkit-scrollbar {
   width: var(--sb-size)
@@ -102,7 +98,8 @@ body::-webkit-scrollbar-thumb {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}:root {
+}
+:root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -171,8 +168,6 @@ body::-webkit-scrollbar-thumb {
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -180,15 +175,13 @@ body::-webkit-scrollbar-thumb {
   body {
     @apply bg-background text-foreground;
   }
-  .cnt{
-    @apply min-h-screen w-full flex flex-col gap-5 px-2 pt-20 pb-10
+  .cnt {
+    @apply min-h-screen w-full flex flex-col gap-5 px-2 pt-20 pb-10;
   }
-  .center{
-    @apply flex items-center justify-center
+  .center {
+    @apply flex items-center justify-center;
   }
 }
-
-
 
 @keyframes l3 {
   50% {
@@ -217,4 +210,50 @@ body::-webkit-scrollbar-thumb {
   border-radius: inherit;
   background: currentColor;
   animation: l3 1s infinite linear;
+}
+
+/* Code Block Styles */
+code {
+  counter-reset: line;
+}
+
+code::before,
+code::after {
+  content: none !important;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  @apply bg-transparent !p-0 !overflow-visible;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply grid min-w-full;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+}
+
+[data-line] {
+  @apply px-4 border-l-2 border-l-transparent whitespace-pre;
+}
+
+[data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  /* Style the line number */
+  display: inline-block;
+  width: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+  color: #4b5563; /* zinc-600 */
+  user-select: none;
+}
+
+[data-highlighted-line] {
+  @apply bg-white/5 border-l-sky-500/50;
+}
+
+[data-highlighted-chars] {
+  @apply bg-zinc-700/50 rounded;
 }

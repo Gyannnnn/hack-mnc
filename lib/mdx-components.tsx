@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import Faqs from "@/components/Faqs";
-import { CodeBlock } from "@/components/blog/code-block";
+import { CodeBlock } from "@/components/ui/code-block";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,14 +26,30 @@ import {
 export const mdxComponents: MDXComponents = {
   Faqs,
   // Headings
-  h1: (props) => <h1 className="text-4xl font-bold my-6 mt-8" {...props} />,
-  h2: (props) => (
-    <h2 className="text-3xl font-semibold my-4 mt-6 border-b pb-2" {...props} />
+  h1: (props) => (
+    <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
   ),
-  h3: (props) => <h3 className="text-2xl font-semibold my-3 mt-5" {...props} />,
-  h4: (props) => <h4 className="text-xl font-medium my-2 mt-4" {...props} />,
-  h5: (props) => <h5 className="text-lg font-medium my-2" {...props} />,
-  h6: (props) => <h6 className="text-base font-medium my-1" {...props} />,
+  h2: (props) => (
+    <h2
+      className="text-3xl font-semibold my-4 mt-6 border-b pb-2 text-foreground"
+      {...props}
+    />
+  ),
+  h3: (props) => (
+    <h3
+      className="text-2xl font-semibold my-3 mt-5 text-foreground"
+      {...props}
+    />
+  ),
+  h4: (props) => (
+    <h4 className="text-xl font-medium my-2 mt-4 text-foreground" {...props} />
+  ),
+  h5: (props) => (
+    <h5 className="text-lg font-medium my-2 text-foreground" {...props} />
+  ),
+  h6: (props) => (
+    <h6 className="text-base font-medium my-1 text-foreground" {...props} />
+  ),
 
   // Text - fixed to prevent nesting
   p: (props) => {
@@ -60,14 +76,113 @@ export const mdxComponents: MDXComponents = {
   },
 
   // Code blocks
-  pre: ({ children, ...props }) => (
-    <CodeBlock {...props}>
-      <pre {...props} className="p-0 bg-transparent my-0">
+  pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    const language =
+      ((props as Record<string, unknown>)["data-language"] as string) || "code";
+
+    // Recursive helper to get text content from React nodes
+    const getTextContent = (node: React.ReactNode): string => {
+      if (!node) return "";
+      if (typeof node === "string") return node;
+      if (Array.isArray(node)) return node.map(getTextContent).join("");
+      if (React.isValidElement(node)) {
+        const children = (node.props as { children?: React.ReactNode })
+          .children;
+        return getTextContent(children);
+      }
+      return "";
+    };
+
+    let rawCode = "";
+    React.Children.forEach(children, (child) => {
+      if (
+        React.isValidElement<{ children?: React.ReactNode }>(child) &&
+        child.type === "code"
+      ) {
+        rawCode = getTextContent(child).trim();
+      }
+    });
+
+    // Handle single line blocks that might be wrapped in backticks by some MDX parsers
+    if (rawCode.startsWith("`") && rawCode.endsWith("`")) {
+      rawCode = rawCode.slice(1, -1);
+    }
+    rawCode = rawCode.trim();
+
+    return (
+      <CodeBlock language={language} filename={language} code={rawCode}>
         {children}
-      </pre>
-    </CodeBlock>
-  ),
-  code: ({ children, ...props }) => <code {...props}>{children}</code>,
+      </CodeBlock>
+    );
+  },
+  code: ({ children, ...props }) => {
+    const isBlock =
+      (props as Record<string, unknown>)["data-language"] ||
+      (props as Record<string, unknown>)["data-line"] !== undefined;
+
+    // Helper to get all text content recursively
+    const getText = (node: React.ReactNode): string => {
+      if (!node) return "";
+      if (typeof node === "string") return node;
+      if (Array.isArray(node)) return node.map(getText).join("");
+      if (React.isValidElement(node))
+        return getText(
+          (node.props as { children?: React.ReactNode })?.children,
+        );
+      return "";
+    };
+
+    const text = getText(children);
+    const trimmedText = text.trim();
+
+    // If it's a block code (inside pre from rehype-pretty-code)
+    if (isBlock) {
+      const childrenArray = React.Children.toArray(children);
+      let filteredChildren = childrenArray;
+
+      // Recursive helper to check if a node is ONLY a backtick
+      const isOnlyBacktick = (node: React.ReactNode): boolean => {
+        const nodeText = getText(node).trim();
+        return nodeText === "`";
+      };
+
+      if (childrenArray.length > 0) {
+        const firstChild = childrenArray[0];
+        const lastChild = childrenArray[childrenArray.length - 1];
+
+        const hasLeading = isOnlyBacktick(firstChild);
+        const hasTrailing = isOnlyBacktick(lastChild);
+
+        if (hasLeading && hasTrailing) {
+          filteredChildren = childrenArray.slice(1, -1);
+        } else if (hasLeading) {
+          filteredChildren = childrenArray.slice(1);
+        } else if (hasTrailing) {
+          filteredChildren = childrenArray.slice(0, -1);
+        }
+      }
+
+      return <code {...props}>{filteredChildren}</code>;
+    }
+
+    // Handle inline code
+    if (trimmedText === "`" || trimmedText === "``") return null;
+
+    let content = children;
+    const rawText = getText(children);
+    if (rawText.startsWith("`") && rawText.endsWith("`")) {
+      content = rawText.slice(1, -1);
+    }
+
+    return (
+      <code
+        className="bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded text-[0.9em] font-mono text-pink-600 dark:text-pink-400 border border-zinc-200 dark:border-zinc-700/50 whitespace-nowrap"
+        {...props}
+      >
+        {content}
+      </code>
+    );
+  },
 
   // Shadcn Components
   Button,

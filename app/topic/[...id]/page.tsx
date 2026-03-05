@@ -6,7 +6,7 @@ import TopicDetailsCard from "@/components/TopicDetailsCard";
 import TopicQuestionsPage from "@/components/TopicQuestionsDetails";
 import { getTopicPostBySlug } from "@/lib/getPostBySlug/GetPostbySlug";
 import { mdxComponents } from "@/lib/mdx-components";
-import { decodeSlug, slugify } from "@/utils/slugify.utility";
+import { decodeSlug } from "@/utils/slugify.utility";
 import { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import Head from "next/head";
@@ -53,7 +53,7 @@ export async function generateMetadata({
       images: [
         {
           url: `https://hackmnc.com/api/og?topic=${encodeURIComponent(
-            decodedName
+            decodedName,
           )}`,
           width: 1200,
           height: 630,

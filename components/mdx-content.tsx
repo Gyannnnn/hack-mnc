@@ -1,15 +1,8 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
-import Link from "next/link";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import { mdxComponents } from "@/lib/mdx-components";
-
-const rehypePrettyCodeOptions = {
-  theme: "github-dark",
-  keepBackground: false,
-};
 
 export function MDXContent({ source }: { source: string }) {
   return (
@@ -22,12 +15,21 @@ export function MDXContent({ source }: { source: string }) {
             rehypePlugins: [
               rehypeSlug,
               [
-                rehypeAutolinkHeadings,
+                rehypePrettyCode,
                 {
-                  behavior: "wrap",
+                  theme: "github-dark",
+                  keepBackground: false,
+                  onVisitLine(node: {
+                    children: { type: string; value: string }[];
+                  }) {
+                    // Prevent lines from collapsing in `display: grid` mode, and allow empty
+                    // lines to be copy/pasted
+                    if (node.children.length === 0) {
+                      node.children = [{ type: "text", value: " " }];
+                    }
+                  },
                 },
               ],
-              [rehypePrettyCode, rehypePrettyCodeOptions],
             ],
           },
         }}

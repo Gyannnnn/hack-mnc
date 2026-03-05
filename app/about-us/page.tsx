@@ -3,16 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import {
-  Code2,
-  Users,
-  Target,
-  Rocket,
-  Heart,
-  Shield,
-  Lock,
-  Eye,
-} from "lucide-react";
+import { Code2, Users, Target, Rocket, Heart, Eye } from "lucide-react";
 
 export default function AboutUsPage() {
   return (

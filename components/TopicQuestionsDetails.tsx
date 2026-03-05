@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  getQuestionsByTopic,
-  getQuestionsByTopicName,
-} from "@/app/actions/questions/questions";
+import { getQuestionsByTopicName } from "@/app/actions/questions/questions";
 import QuestionCard from "@/components/ui/questionCard";
 import {
   Select,
@@ -14,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderCircleIcon } from "lucide-react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import QuestionCardLoader from "./QuestionCardLoader";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
@@ -79,13 +76,13 @@ const FilterControls = React.memo(
           value={topicFilter === "all" ? "" : topicFilter}
           onChange={(e) =>
             setTopicFilter(
-              e.target.value.trim() === "" ? "all" : e.target.value
+              e.target.value.trim() === "" ? "all" : e.target.value,
             )
           }
         />
       </div>
     </Card>
-  )
+  ),
 );
 
 FilterControls.displayName = "FilterControls";
@@ -132,7 +129,7 @@ const NoResultsState = ({
 
 const LoadingMoreState = () => (
   <div className="flex justify-center py-4">
-    <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />    
+    <LoaderCircleIcon className="h-10 w-10 animate-[spin_0.5s_linear_infinite] text-primary" />
   </div>
 );
 
@@ -238,19 +235,19 @@ export default function TopicQuestionsPage({
     if (topicFilter !== "all") {
       result = result.filter((q) =>
         q?.topics?.some((t) =>
-          t?.topic?.name?.toLowerCase().includes(topicFilter.toLowerCase())
-        )
+          t?.topic?.name?.toLowerCase().includes(topicFilter.toLowerCase()),
+        ),
       );
     }
 
     // Apply sorting with safe access
     if (sortOption === "acceptance-high") {
       result.sort(
-        (a, b) => (b?.acceptanceRate || 0) - (a?.acceptanceRate || 0)
+        (a, b) => (b?.acceptanceRate || 0) - (a?.acceptanceRate || 0),
       );
     } else if (sortOption === "acceptance-low") {
       result.sort(
-        (a, b) => (a?.acceptanceRate || 0) - (b?.acceptanceRate || 0)
+        (a, b) => (a?.acceptanceRate || 0) - (b?.acceptanceRate || 0),
       );
     } else if (sortOption === "frequency") {
       result.sort((a, b) => (b?.frequency || 0) - (a?.frequency || 0));
@@ -278,7 +275,7 @@ export default function TopicQuestionsPage({
       sortOption !== "default" ||
       difficultyFilter !== "all" ||
       topicFilter !== "all",
-    [sortOption, difficultyFilter, topicFilter]
+    [sortOption, difficultyFilter, topicFilter],
   );
 
   // Memoize question cards to prevent unnecessary re-renders with safe access
@@ -300,7 +297,7 @@ export default function TopicQuestionsPage({
           );
         })
         .filter(Boolean),
-    [filteredAndSortedQuestions, companyId]
+    [filteredAndSortedQuestions, companyId, type],
   );
 
   // --- RENDER LOGIC ---
@@ -341,11 +338,8 @@ export default function TopicQuestionsPage({
       )}
       {hasNextPage && !isFetchingNextPage && (
         <div className="flex justify-center pt-2">
-          <Button
-            onClick={() => fetchNextPage()}
-            className=""
-          >
-            Load more questions <LoaderCircleIcon className="animate-spin"/>
+          <Button onClick={() => fetchNextPage()} className="">
+            Load more questions <LoaderCircleIcon className="animate-spin" />
           </Button>
         </div>
       )}

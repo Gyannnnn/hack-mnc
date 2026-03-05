@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Card } from "./ui/card";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
@@ -16,16 +16,21 @@ export default function TopicSearch({ topics }: Props) {
   const [query, setQuery] = useState("");
   const [filtered, setFiltered] = useState<topic[]>(topics || []);
 
-  const runSearch = (value: string) => {
-    const v = value.trim().toLowerCase();
-    if (!v) {
-      setFiltered(topics || []);
-      return;
-    }
-    setFiltered((topics || []).filter((t) => t.name.toLowerCase().includes(v)));
-  };
+  const runSearch = useCallback(
+    (value: string) => {
+      const v = value.trim().toLowerCase();
+      if (!v) {
+        setFiltered(topics || []);
+        return;
+      }
+      setFiltered(
+        (topics || []).filter((t) => t.name.toLowerCase().includes(v)),
+      );
+    },
+    [topics],
+  );
 
-  const debouncedSearch = useMemo(() => debounce(runSearch, 400), [topics,runSearch]);
+  const debouncedSearch = useMemo(() => debounce(runSearch, 400), [runSearch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -63,7 +68,11 @@ export default function TopicSearch({ topics }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
           {filtered.length > 0 ? (
             filtered.map((topic) => (
-              <Link key={topic.id} href={`/topic/${slugify(topic.name)}/leetcode-interview-questions`} className="group block">
+              <Link
+                key={topic.id}
+                href={`/topic/${slugify(topic.name)}/leetcode-interview-questions`}
+                className="group block"
+              >
                 <div className="flex flex-col p-3 md:p-4 rounded-lg border border-border bg-card hover:bg-card/60 hover:border-primary/40 transition-colors duration-200 h-full">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-semibold text-foreground text-base md:text-lg line-clamp-2 group-hover:text-primary transition-colors">
@@ -71,27 +80,34 @@ export default function TopicSearch({ topics }: Props) {
                     </h3>
                   </div>
                   <div className="mt-auto flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground font-medium">Questions</span>
-                    <Badge variant="secondary" className="font-semibold px-2 py-1 text-[10px] md:text-xs">
+                    <span className="text-xs text-muted-foreground font-medium">
+                      Questions
+                    </span>
+                    <Badge
+                      variant="secondary"
+                      className="font-semibold px-2 py-1 text-[10px] md:text-xs"
+                    >
                       {topic._count.questions}
                     </Badge>
                   </div>
                   <div className="mt-2 w-full bg-muted rounded-full h-1">
                     <div
                       className="bg-primary h-1 rounded-full transition-all duration-300"
-                      style={{ width: `${Math.min((topic._count.questions / 50) * 100, 100)}%` }}
+                      style={{
+                        width: `${Math.min((topic._count.questions / 50) * 100, 100)}%`,
+                      }}
                     />
                   </div>
                 </div>
               </Link>
             ))
           ) : (
-            <div className="col-span-full text-sm text-muted-foreground">No topics found</div>
+            <div className="col-span-full text-sm text-muted-foreground">
+              No topics found
+            </div>
           )}
         </div>
       </Card>
     </div>
   );
 }
-
-

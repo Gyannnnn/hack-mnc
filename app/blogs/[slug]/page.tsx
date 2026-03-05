@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getBlogPost, getBlogPosts, getHeadings } from "@/lib/mdx"; // Ensure you're importing from your new MDX lib
+import { getBlogPost, getBlogPosts } from "@/lib/mdx";
 import { MDXContent } from "@/components/mdx-content";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { ReadingProgressBar } from "@/components/blog/reading-progress-bar";
-import { TableOfContents } from "@/components/blog/table-of-contents";
 import { BlogCard } from "@/components/blog/blog-card";
 
 import {
@@ -95,8 +94,6 @@ export default async function BlogPostPage({
     )
     .slice(0, 3);
 
-  const headings = getHeadings(post.content);
-
   // Structured Data (JSON-LD)
   const jsonLd = {
     "@context": "https://schema.org",
@@ -133,7 +130,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px]  mx-auto mb-10">
         <div className="lg:col-span-8 lg:col-start-3">
           {/* Breadcrumbs */}
           <Breadcrumb className="mb-6">
@@ -198,30 +195,10 @@ export default async function BlogPostPage({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto">
-        {/* Left Sidebar: Share */}
-        <div className="hidden lg:block lg:col-span-2 relative">
-          <div className="sticky top-32 flex flex-col gap-4 items-center">
-            <div className="p-2 border border-border/50 rounded-full bg-card/50 backdrop-blur-sm">
-              <ShareButtons
-                title={post.metadata.title}
-                slug={post.slug}
-                vertical
-              />
-            </div>
-          </div>
-        </div>
-
         {/* Main Content */}
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-8 lg:col-start-3">
           {/* Content */}
-          <div
-            className="bg-background prose prose-zinc dark:prose-invert max-w-none prose-lg 
-            prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground 
-            prose-a:text-primary hover:prose-a:text-primary/80 
-            prose-img:rounded-xl prose-pre:border prose-pre:bg-zinc-950
-            [&_:is(h1,h2,h3,h4,h5,h6)_a]:no-underline [&_:is(h1,h2,h3,h4,h5,h6)_a]:text-foreground
-            [&_p]:leading-loose [&_p]:text-lg [&_li]:text-lg"
-          >
+          <div className="bg-background max-w-none">
             <MDXContent source={post.content} />
           </div>
 
@@ -253,13 +230,6 @@ export default async function BlogPostPage({
             token={token}
             userId={session?.user?.id}
           />
-        </div>
-
-        {/* Right Sidebar: TOC */}
-        <div className="hidden lg:block lg:col-span-2 relative">
-          <div className="sticky top-32 pl-4 border-l border-border/40">
-            <TableOfContents headings={headings} />
-          </div>
         </div>
       </div>
 

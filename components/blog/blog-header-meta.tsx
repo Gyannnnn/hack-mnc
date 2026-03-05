@@ -11,14 +11,7 @@ import {
   AuthorBioSkeleton,
 } from "./skeletons";
 import { motion } from "framer-motion";
-import {
-  Heart,
-  MessageCircle,
-  Linkedin,
-  Instagram,
-  Github,
-  Globe,
-} from "lucide-react";
+import { Heart, MessageCircle, Instagram, Github, Globe } from "lucide-react";
 
 import { toast } from "sonner";
 import { FaLinkedin } from "react-icons/fa";
@@ -77,7 +70,7 @@ export function BlogHeaderMeta({
 
     try {
       await likeBlog(token, slug);
-    } catch (error) {
+    } catch (_error) {
       // Revert on error
       setIsLiked(previousLiked);
       setLikeCount(previousCount);
@@ -114,6 +107,7 @@ export function BlogHeaderMeta({
               width={100}
               height={100}
               className="w-full h-full object-cover"
+              unoptimized
             />
           ) : (
             <span>{authorName.charAt(0)}</span>
@@ -138,7 +132,7 @@ export function BlogHeaderMeta({
                         day: "numeric",
                         year: "numeric",
                       });
-                } catch (e) {
+                } catch (_e) {
                   return publishedAt;
                 }
               })()}
