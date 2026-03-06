@@ -152,7 +152,7 @@ export default async function BlogPostPage({
           </Breadcrumb>
 
           {/* Medium Style Header */}
-          <header className="mb-8 mx-auto flex flex-col gap-6">
+          <header className=" mx-auto flex flex-col gap-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight leading-[1.15] text-left">
               {post.metadata.title}
             </h1>
