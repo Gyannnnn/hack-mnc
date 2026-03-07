@@ -61,7 +61,8 @@ export default function EditorPageComonent() {
     "Computer Networks",
     "DBMS",
     "Hackathon",
-    "Interview Questions"
+    "Interview Questions",
+    "Oop"
   ]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");

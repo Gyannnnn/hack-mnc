@@ -1,0 +1,247 @@
+---
+title: "Access Specifiers in C++ Explained (Public vs Private vs Protected)"
+slug: "access-specifiers-in-cpp"
+author: "Gyanaranjan Patra"
+authorSlug: "gyan"
+publishedAt: "2026-03-07"
+updatedAt: "2026-03-07"
+status: "published"
+category: "Oop"
+tags:
+  - Oop
+difficulty: "easy"
+readingTime: 5
+coverImage: ""
+summary: "Learn access specifiers in C++ (public, private, protected) with simple explanations, syntax, examples, comparison tables, and interview questions for beginners"
+---
+
+
+## What are Access Specifiers in C++?
+
+Access specifiers in C++ control the accessibility of class members. They determine whether variables and member functions can be accessed from outside the class or only within the class. Access specifiers control whether variables or member functions can be accessed from outside the class or only within the class.
+
+## Types of Access Specifiers in C++
+
+C++ provides three different **access specifiers**:
+
+1. Public
+2. Private
+3. Protected
+
+Let's discuss these access specifiers one by one.
+
+## Default Access Specifier in C++
+
+In C++, the default access specifier depends on whether a class or struct is used.
+
+1. class → private by default
+2. struct → public by default
+
+## Syntax of Access Specifiers in C++
+
+```jsx
+class ClassName {
+private:
+    // private members
+
+protected:
+    // protected members
+
+public:
+    // public members
+};
+```
+
+## Public
+
+The **public access specifier** allows class members (variables and member functions) to be accessed both from inside and outside the class.
+
+```jsx
+#include <iostream>
+using namespace std;
+
+class Teacher{
+public:
+    string name;
+    string department;
+    string subject;
+
+};
+
+int main()
+{
+    Teacher t1; 
+    t1.name = "Gyan";
+    t1.department = "IT";
+    t1.subject = "Oop";
+    
+    cout << t1.name <<endl; // accessing outside of the class
+
+    return 0;
+}
+```
+
+## Private
+
+The **private access specifier** restricts the accessibility of class members (variables and functions). Variables and member functions can only be accessed **within the same class**.
+
+1. **Setter :** Used to set the value of private variables.
+2. **Getter :** Used to retrieve the value of private variables.
+
+```jsx
+#include <iostream>
+using namespace std;
+
+class Teacher
+{
+
+private:
+    double salary;
+
+public:
+    string name;
+    string department;
+    string subject;
+
+    // setter -> to set the values of private values
+    void setSalary(double newSalary)
+    {
+        salary = newSalary;
+    }
+
+    // getter -> to get the private values
+    void getSalary()
+    {
+        cout << "Salary is : " << salary << endl;
+    }
+};
+
+int main()
+{
+    Teacher t1;
+    t1.name = "Gyan";
+    t1.department = "IT";
+    t1.subject = "Oop";
+
+    cout << t1.name << " ";
+    t1.setSalary(28880);
+    t1.getSalary();
+
+    return 0;
+}
+```
+
+## Protected
+
+The **protected access specifier** allows class members to be accessed within the class and by derived classes (child classes), but not from outside the class.
+
+```jsx
+#include <iostream>
+using namespace std;
+
+class Parent {
+protected:
+    int value;
+};
+
+class Child : public Parent {
+public:
+    void setValue(int v) {
+        value = v;
+    }
+
+    void display() {
+        cout << "Value: " << value << endl;
+    }
+};
+
+int main() {
+    Child c;
+    c.setValue(10);
+    c.display();
+
+    return 0;
+}
+```
+
+## Difference Between Public, Private and Protected in C++
+
+<div class="overflow-x-auto">
+  <table class="min-w-full border pl-2">
+    <thead className=''>
+      <tr>
+        <th>Accessibility</th>
+        <th>Public</th>
+        <th>Private</th>
+        <th>Protected</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Inside Class</td>
+        <td>Yes</td>
+        <td>Yes</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Outside Class</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Derived Class</td>
+        <td>Yes</td>
+        <td>No</td>
+        <td>Yes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Real World Example of Access Specifiers
+
+### Bank System
+
+- Private : Account Balance
+- Public : Deposit() , Withdraw()
+- Protected : inherited banking system
+
+## Common Mistakes When Using Access Specifiers in C++
+
+- Forgetting default private in class
+- Accessing private variables directly
+- Misusing protected in inheritance
+
+## FAQ
+
+### What are access specifiers in C++?
+
+Access specifiers in C++ are keywords that control the accessibility of class members (variables and functions). They determine whether members can be accessed inside the class, outside the class, or by derived classes.
+
+### What is the difference between public and private?
+
+In public access specifier we can access the class members directly from inside and outside of the class , In the **private access specifier**, class members can only be accessed inside the class.
+
+### What is protected in C++?
+
+Protected is an access specifier in c++ , restricts the accessibility of class members, in protected access specifier we can access class members within class and its derived class only but not outside the class
+
+### What is default access specifier in C++?
+
+In C++, the default access specifier for a **class is private**, while for a **struct it is public**. everything inside the class is by default private we cannot access class members without declaring public. 
+
+## Key Takeaways
+
+- Access specifiers control how class members are accessed.
+- C++ has three access specifiers: public, private, protected.
+- Private improves data security using encapsulation.
+- Protected is mainly used in inheritance.
+
+## Conclusion
+
+Access specifiers in C++ help control how data is accessed in a program.
+They play a key role in encapsulation and data security.
+
+The three main types are public, private, and protected.
+Understanding them is essential for mastering object-oriented programming in C++.
