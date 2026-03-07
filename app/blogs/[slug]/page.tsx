@@ -130,7 +130,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px]  mx-auto mb-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto">
         <div className="lg:col-span-8 lg:col-start-3">
           {/* Breadcrumbs */}
           <Breadcrumb className="mb-6">
@@ -176,7 +176,7 @@ export default async function BlogPostPage({
 
           {/* Cover Image */}
           {post.metadata.coverImage && (
-            <div className="w-full">
+            <div className="w-full mt-10 mb-10">
               <div className="relative w-full aspect-[2/1] md:aspect-[16/9] overflow-hidden rounded-md">
                 <Image
                   src={post.metadata.coverImage}
@@ -192,14 +192,11 @@ export default async function BlogPostPage({
               </div>
             </div>
           )}
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto">
-        {/* Main Content */}
-        <div className="lg:col-span-8 lg:col-start-3">
-          {/* Content */}
-          <div className="bg-background max-w-none">
+          {/* Main Content */}
+          <div
+            className={`bg-background max-w-none ${!post.metadata.coverImage ? "mt-10" : ""}`}
+          >
             <MDXContent source={post.content} />
           </div>
 
