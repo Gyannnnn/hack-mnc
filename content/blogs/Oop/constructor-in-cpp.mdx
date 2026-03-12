@@ -1,0 +1,201 @@
+---
+title: "Constructor in C++ — A Complete Guide"
+slug: "constructor-in-cpp"
+author: "Gyanaranjan Patra"
+authorSlug: "gyan"
+publishedAt: "2026-03-12"
+updatedAt: "2026-03-12"
+status: "published"
+category: "Oop"
+tags:
+  - Oop
+difficulty: "easy"
+readingTime: 3
+coverImage: ""
+summary: "A constructor is a special method in Object-Oriented Programming (OOP) that is invoked
+automatically at the time of object creation."
+---
+
+
+## Characteristics of a Constructor in C++
+
+The various characteristics of constructors in C++ are:
+
+1. The constructor name and class name are the **same**
+2. A constructor does **not** have any return type
+3. A constructor is called **automatically** once, at the time of object creation
+4. Memory allocation happens when the constructor is called
+
+## Constructor Program in C++
+
+```cpp
+#include<iostream>
+using namespace std;
+
+class Student {
+    public: // constructor should always be public
+    Student(){
+        cout << "Constructor is being called" << endl;
+    }
+};
+
+int main(){
+    Student s; // constructor is called automatically
+    return 0;
+}
+```
+
+## Types of constructor in c++
+
+There are **three main types** of constructors in C++:
+
+### 1. Non-Parameterised Constructor
+
+In a non-parameterized constructor, no parameters are passed to the constructor.
+
+```cpp
+class Student {
+    public:
+    Student(){ // no parameter is passed
+        cout << "Constructor is being called" << endl;
+    }
+};
+```
+
+### 2. Parameterised Constructor
+
+In a parameterized constructor, values are passed to the constructor at the time of object creation.
+
+```cpp
+#include<iostream>
+using namespace std;
+
+class Student {
+    public:
+    string name;
+    int age;
+    Student(string name){
+        this->name = name;
+    }
+};
+
+int main(){
+    Student s("Gyan"); // constructor called with parameter
+    return 0;
+}
+```
+
+### 3. Copy Constructor
+
+A copy constructor is a special constructor in C++ used to create a new object
+by copying the values of an existing object.
+
+```cpp
+#include<iostream>
+using namespace std;
+
+class Student {
+    public:
+    string name;
+    int age;
+
+    Student(int age){
+        this->age = age;
+    }
+
+    // copy constructor
+    Student(const Student &s){
+        this->age = s.age;
+    }
+};
+
+int main(){
+    Student s(21);
+    Student s2 = s;
+    cout << s2.age; // Output: 21
+    return 0;
+}
+```
+
+## Constructor Overloading in C++
+
+Constructor overloading is a technique of defining **multiple constructors** in the same
+class with different parameters. Each constructor performs a different type of object
+initialization. It is a form of **compile-time polymorphism**.
+
+```cpp
+class Student {
+    public:
+    int age;
+    string name;
+
+    Student(){
+        age = 18; // default age
+    }
+
+    Student(int age){
+        this->age = age;
+    }
+
+    Student(string name){
+        this->name = name;
+        cout << "Name : " << name << endl;
+    }
+};
+
+```
+
+## Constructor and Normal function difference
+
+<div style={{ overflowX: "auto", margin: "16px 0" }}>
+  <table style={{ borderCollapse: "collapse", width: "100%", textAlign: "left" }}>
+    <thead>
+      <tr>
+        <th style={{ border: "1px solid #ddd", padding: "10px" }}>Feature</th>
+        <th style={{ border: "1px solid #ddd", padding: "10px" }}>Constructor</th>
+        <th style={{ border: "1px solid #ddd", padding: "10px" }}>Normal Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Name</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Same as class name</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Can be any name</td>
+      </tr>
+      <tr>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Return type</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>No return type</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Has a return type</td>
+      </tr>
+      <tr>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Call</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+          Automatically called at object creation
+        </td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+          Called manually
+        </td>
+      </tr>
+      <tr>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>Purpose</td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+          Object initialization
+        </td>
+        <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+          Performs an operation
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Key Takeaways
+
+- A constructor is automatically called when an object is created
+- Constructors have the same name as the class and no return type
+- There are three types: **Non-Parameterized**, **Parameterized**, and **Copy Constructor**
+- Constructor overloading allows multiple constructors with different parameters
+- Always use `this->` when parameter names match class member variable names
+- Constructor overloading is a form of **compile-time polymorphism**
+
+##
