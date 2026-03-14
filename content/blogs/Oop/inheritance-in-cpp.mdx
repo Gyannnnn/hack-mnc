@@ -1,0 +1,342 @@
+---
+title: "Inheritance in C++ Explained with Types, Syntax, and Examples"
+slug: "inheritance-in-cpp"
+author: "Gyanaranjan Patra"
+authorSlug: "gyan"
+publishedAt: "2026-03-14"
+updatedAt: "2026-03-14"
+status: "published"
+category: "Oop"
+tags:
+  - Oop
+difficulty: "easy"
+readingTime: 6
+coverImage: ""
+summary: "Inheritance in C++ is a core concept of Object-Oriented Programming (OOP) that allows a class to inherit the properties and functions of another class. It helps developers reuse code, reduce duplication, and build hierarchical relationships between classes. C++ supports different types and modes of inheritance that control how base class members are accessed in derived classes. This guide explains the syntax, types, and practical examples of inheritance in C++."
+---
+
+**Inheritance in C++** is one of the four fundamental principles of **Object-Oriented Programming (OOP)**. It allows a class (derived class) to acquire the **properties and behaviors of another class (base class)**.
+
+Using inheritance, developers can **reuse existing code**, build hierarchical relationships between classes, and make programs more **modular and maintainable**.
+
+In this guide, you will learn:
+
+- What inheritance in C++ is
+- Syntax of inheritance
+- Different **types of inheritance**
+- **Modes of inheritance**
+- Practical C++ examples
+
+## What Is Inheritance in C++
+
+Inheritance in C++ is one of the four pillars of Object-Oriented Programming (OOP). In inheritance, the **properties and member functions of a base class (parent class)** are inherited by the **derived class (child class)**.
+
+## Why Use Inheritance in C++
+
+Inheritance in C++ offers several advantages when designing object-oriented programs.
+
+1. **Code Reusability**
+    
+    Common functionality can be written once in the base class and reused in multiple derived classes.
+    
+2. **Improved Code Organization**
+    
+    Classes can be structured in a logical hierarchy.
+    
+3. **Easy Maintenance**
+    
+    Changes made in the base class automatically reflect in derived classes.
+    
+4. **Extensibility**
+    
+    New features can be added by creating new derived classes without modifying existing code.
+    
+
+## Syntax Of Inheritance In c++
+
+```cpp
+#include<iostream>
+#include<string>
+using namespace std;
+
+//base class
+class Student{
+    public:
+    string name;
+    int roll_number;
+};
+
+// derived class
+class Club_Member: public Student{ 
+    public:
+    string domain;
+    string role;
+};
+
+int main(){  
+    Club_Member cm;
+
+    cm.name  = "Gyan";        // inherited from Student class
+    cm.roll_number = 2302080019; 
+    cm.domain = "WebD";
+    cm.role = "Backend Lead";
+
+    return 0;
+}
+
+```
+
+## Mode Of Inheritance in C++
+
+<table 
+  border="1"
+  style={{ borderCollapse: "collapse", width: "100%", textAlign: "center" }}
+>
+  <thead>
+    <tr>
+      <th>Base Class Member</th>
+      <th>Private Inheritance</th>
+      <th>Protected Inheritance</th>
+      <th>Public Inheritance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Private</td>
+      <td>Not Accessible</td>
+      <td>Not Accessible</td>
+      <td>Not Accessible</td>
+    </tr>
+    <tr>
+      <td>Protected</td>
+      <td>Private</td>
+      <td>Protected</td>
+      <td>Protected</td>
+    </tr>
+    <tr>
+      <td>Public</td>
+      <td>Private</td>
+      <td>Protected</td>
+      <td>Public</td>
+    </tr>
+  </tbody>
+</table>
+
+The mode of inheritance determines how the members of the base class are accessible in the derived class.
+
+## Types Of Inheritance in C++
+
+C++ supports several types of inheritance in Object-Oriented Programming.
+
+### 1. Single Inheritance
+
+In single inheritance, one derived class inherits from a single base class.
+
+```cpp
+//base class
+class Student{
+    public:
+    string name;
+    int roll_number;
+};
+
+// derived class
+class Club_Member: public Student{ 
+    public:
+    string domain;
+    string role;
+};
+```
+
+### 2. Multi Level Inheritance
+
+In multilevel inheritance, a class is derived from another derived class, forming a chain of inheritance.
+
+```cpp
+// base class
+class Person{
+    public:
+    string name;
+    string gender;
+
+};
+
+// derived class 1
+class Student: public Person{
+    public:
+    string department;
+    int roll_number;
+};
+
+// derived class 2
+class Club_Member: public Student{ 
+    public:
+    string domain;
+    string role;
+};
+```
+
+### 3. Multiple Inheritance
+
+In multiple inheritance , one child class inherit properties and member functions from more than one parent class
+
+```cpp
+// base class 1
+class Person{
+    public:
+    string name;
+    string gender;
+
+};
+// base class 2
+class Student{
+    public:
+    string department;
+    int roll_number;
+};
+// derived class 
+class Club_Member: public Student , public Person{ 
+    public:
+    string domain;
+    string role;
+};
+```
+
+### 4. Hierarchical Inheritance
+
+In hierarchical inheritance multiple child class inherit from a single parent class
+
+```cpp
+// Parent class
+class Person{
+    public:
+    string name;
+    string gender;
+
+};
+// child class 1 / derived  class 1
+class Student: public Person{
+    public:
+    string department;
+    int roll_number;
+};
+// child class 2 / derived class 2 
+class Club_Member: public Person{ 
+    public:
+    string domain;
+    string role;
+};
+```
+
+### 5. Hybrid Inheritance
+
+In hybrid inheritance is a mixture of inheritance , there can be more than one inheritance 
+
+ 
+
+```cpp
+class Person{
+public:
+    string name;
+};
+
+class Student : public Person{
+public:
+    int roll;
+};
+
+class Sports{
+public:
+    string sport;
+};
+
+class Player : public Student, public Sports{
+public:
+    int ranking;
+};
+```
+
+## Real World Example Of Inheritance
+
+```cpp
+class Vehicle{
+public:
+    int speed;
+
+    void move(){
+        cout << "Vehicle is moving" << endl;
+    }
+};
+
+class Car : public Vehicle{
+public:
+    int gears;
+};
+```
+
+Here, `Car` inherits properties of `Vehicle`. This allows the car object to use the `move()` function and `speed` variable.
+
+## Advantages of Inheritance in C++
+
+- Reduces code duplication
+- Improves maintainability
+- Supports polymorphism
+- Helps build hierarchical class relationships
+
+## Disadvantages of Inheritance in C++
+
+- Tight coupling between classes
+- Changes in base class affect derived classes
+- Can increase complexity in large systems
+
+## Difference Between Inheritance and Polymorphism in C++
+
+| Feature | Inheritance | Polymorphism |
+| --- | --- | --- |
+| Purpose | Code reuse | Method behavior change |
+| Relationship | IS-A | Same interface different behavior |
+| Example | Car inherits Vehicle | Function overloading |
+
+## How Inheritance Works in C++
+
+In C++, inheritance allows a derived class to access the public and protected members of the base class. The derived class can also add new properties and methods or override existing ones.
+
+Inheritance creates an **"is-a" relationship** between classes. For example, a `Car` is a type of `Vehicle`.
+
+## Key Takeaways
+
+- Inheritance allows a class to reuse properties and methods from another class.
+- The parent class is called the **base class**, and the child class is called the **derived class**.
+- C++ supports five types of inheritance: **Single, Multilevel, Multiple, Hierarchical, and Hybrid**.
+- Inheritance improves **code reusability, maintainability, and modularity**.
+- The **mode of inheritance (public, private, protected)** determines how base class members are accessed in the derived class.
+
+## FAQs on Inheritance in C++
+
+### What is inheritance in C++?
+
+Inheritance in C++ is an OOP feature that allows a class to inherit properties and methods from another class.
+
+### What are the types of inheritance in C++?
+
+C++ supports five types of inheritance:
+Single, Multilevel, Multiple, Hierarchical, and Hybrid.
+
+### What is the difference between inheritance and composition?
+
+Inheritance represents an **"is-a" relationship**, while composition represents a **"has-a" relationship**.
+
+### What is the base class in C++?
+
+A base class is the class whose properties and functions are inherited by another class.
+
+### Can private members be inherited in C++?
+
+Private members are inherited but **cannot be directly accessed** in derived classes.
+
+## Also Read
+
+- [Constructors In C++](https://www.hackmnc.com/blogs/constructor-in-cpp)
+- [Destructor in C++](https://www.hackmnc.com/blogs/destructor-in-cpp)
+- [Access Specifiers In C++](https://www.hackmnc.com/blogs/access-specifiers-in-cpp)
+- [Encapsulation in C++](https://www.hackmnc.com/blogs/encapsulation-in-cpp-with-examples)
