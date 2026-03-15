@@ -14,7 +14,7 @@ export default function QuestionTable({
     else return "text-red-500";
   };
   return (
-    <div>
+    <div className="w-full overflow-x-scroll">
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
