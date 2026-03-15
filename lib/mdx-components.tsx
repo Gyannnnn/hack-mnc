@@ -2,6 +2,7 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import { Question } from "@/types/questionsTable";
 import Faqs from "@/components/Faqs";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Button } from "@/components/ui/button";
@@ -23,8 +24,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import QuestionTable from "@/components/ui/QuestionTable";
+import { topArrayQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_50_array";
+
+function ArrayQuestionsMicrosoft() {
+  return (
+    <QuestionTable
+      questions={
+        topArrayQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
+}
+
 export const mdxComponents: MDXComponents = {
   Faqs,
+  ArrayQuestionsMicrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
