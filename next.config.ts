@@ -154,6 +154,11 @@ const nextConfig: NextConfig = {
         destination: "/companies/flipkart/leetcode-interview-questions",
         permanent: true,
       },
+      {
+        source:"/blogs/microsoft-array-interview-questions",
+        destination:"/blogs/microsoft-array-leetcode-questions",
+        permanent:true
+      }
 
 
     ];
