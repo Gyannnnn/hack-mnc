@@ -27,7 +27,7 @@ import {
 import QuestionTable from "@/components/ui/QuestionTable";
 import { topArrayQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_50_array";
 import { topStringQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_50_string";
-
+import { topLinkedListQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_ll";
 function ArrayQuestionsMicrosoft() {
   return (
     <QuestionTable
@@ -44,10 +44,18 @@ function StringQuestionsMicrosoft(){
   )
 }
 
+function LinkedListQuestionsMicrosoft(){
+  return (
+    <QuestionTable questions={topLinkedListQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
+  )
+}
+
+
 export const mdxComponents: MDXComponents = {
   Faqs,
   ArrayQuestionsMicrosoft,
   StringQuestionsMicrosoft,
+  LinkedListQuestionsMicrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
