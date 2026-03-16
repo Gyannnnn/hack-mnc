@@ -30,6 +30,8 @@ import { topStringQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_50_s
 import { topLinkedListQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_ll";
 import { topBinarySearchQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.binary search";
 import { topTreeQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top.treequestions";
+import { topGraphQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.graphQuestions";
+
 
 function ArrayQuestionsMicrosoft() {
   return (
@@ -65,6 +67,12 @@ function TreeQuestionsMicrosoft(){
   )
 }
 
+function GraphQuestionsMicrosoft(){
+  return(
+    <QuestionTable questions={topGraphQuestionsAskedInMicrosoft.data as unknown as Question[]} />
+  )
+}
+
 
 
 export const mdxComponents: MDXComponents = {
@@ -74,6 +82,7 @@ export const mdxComponents: MDXComponents = {
   LinkedListQuestionsMicrosoft,
   BinarySearchQuestionsMicrosoft,
   TreeQuestionsMicrosoft,
+  GraphQuestionsMicrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
