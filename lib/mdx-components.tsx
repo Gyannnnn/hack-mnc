@@ -31,6 +31,7 @@ import { topLinkedListQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top_
 import { topBinarySearchQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.binary search";
 import { topTreeQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top.treequestions";
 import { topGraphQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.graphQuestions";
+import { topDPQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.dpQuestions";
 
 
 function ArrayQuestionsMicrosoft() {
@@ -73,6 +74,11 @@ function GraphQuestionsMicrosoft(){
   )
 }
 
+function DpQuestionsMIcrosoft(){
+  return(
+    <QuestionTable questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
+  )
+}
 
 
 export const mdxComponents: MDXComponents = {
@@ -83,6 +89,7 @@ export const mdxComponents: MDXComponents = {
   BinarySearchQuestionsMicrosoft,
   TreeQuestionsMicrosoft,
   GraphQuestionsMicrosoft,
+  DpQuestionsMIcrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
