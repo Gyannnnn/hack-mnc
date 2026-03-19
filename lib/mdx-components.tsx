@@ -87,6 +87,11 @@ function StackQuestionsMicrosoft(){
   )
 }
 
+function TwoPointersMicrosoft(){
+  return (
+    <QuestionTable questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
+  )
+}
 
 export const mdxComponents: MDXComponents = {
   Faqs,
@@ -98,6 +103,7 @@ export const mdxComponents: MDXComponents = {
   GraphQuestionsMicrosoft,
   DpQuestionsMIcrosoft,
   StackQuestionsMicrosoft,
+  TwoPointersMicrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
