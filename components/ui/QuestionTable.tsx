@@ -1,5 +1,4 @@
 import { Question } from "@/types/questionsTable";
-import { questionsByCompanyResponse } from "@/types/type";
 import Link from "next/link";
 import React from "react";
 
@@ -13,54 +12,52 @@ export default function QuestionTable({
     else if (level === "MEDIUM") return "text-yellow-500";
     else return "text-red-500";
   };
+
   return (
-    <div className="w-full max-sm:overflow-x-scroll">
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+    <div className="w-full overflow-x-auto">
+      <table className="min-w-[700px] border-collapse">
         <thead>
-          <tr>
-            <th style={{ border: "1px solid #ddd", padding: "10px" }}>
-              Sl.No
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "10px" }}>
-              Question
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "10px" }}>
+          <tr className=" text-left">
+            <th className="border p-3 whitespace-nowrap">Sl.No</th>
+            <th className="border p-3 whitespace-nowrap">Question</th>
+            <th className="border p-3 whitespace-nowrap text-center">
               Difficulty
             </th>
-            <th style={{ border: "1px solid #ddd", padding: "10px" }}>
-              Frequency
-            </th>
-            <th style={{ border: "1px solid #ddd", padding: "10px" }}>
-              Leetcode Link
+            <th className="border p-3 whitespace-nowrap">Frequency</th>
+            <th className="border p-3 whitespace-nowrap">
+              LeetCode Link
             </th>
           </tr>
         </thead>
 
         <tbody>
           {questions.map((q, i) => (
-            <tr key={i}>
-              <td style={{ border: "1px solid #ddd", padding: "10px" }}>{i+1}</td>
-              <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+            <tr key={i} className="">
+              <td className="border p-3 whitespace-nowrap">{i + 1}</td>
+
+              <td className="border p-3 whitespace-nowrap">
                 {q.name}
               </td>
+
               <td
-                style={{ border: "1px solid #ddd", padding: "10px" }}
-                className={`text-center  text-sm md:text-base ${levelColor(
-                  q.difficulty,
+                className={`border p-3 text-center whitespace-nowrap text-sm md:text-base ${levelColor(
+                  q.difficulty
                 )}`}
               >
                 {q.difficulty}
               </td>
-              <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+
+              <td className="border p-3 whitespace-nowrap">
                 {q.frequency}
               </td>
-              <td style={{ border: "1px solid #ddd", padding: "10px" }}>
+
+              <td className="border p-3 whitespace-nowrap">
                 <Link
                   target="_blank"
-                  className="text-blue-500"
+                  className="text-blue-500 hover:underline"
                   href={q.leetCodeLink}
                 >
-                  Solve On LeetCode
+                  Solve
                 </Link>
               </td>
             </tr>

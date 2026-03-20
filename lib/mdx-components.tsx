@@ -33,6 +33,8 @@ import { topTreeQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.top.treequ
 import { topGraphQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.graphQuestions";
 import { topDPQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.dpQuestions";
 import { topStackQuestionsAskedInMicrosoft } from "@/data/microsoft/ms.stackQuestions";
+import { GreedyMicrosoftQuestions } from "@/data/microsoft/ms.greedy";
+import { SortingMicrosoftQuestions } from "@/data/microsoft/ms.sortingQuestions";
 
 
 function ArrayQuestionsMicrosoft() {
@@ -92,6 +94,17 @@ function TwoPointersMicrosoft(){
     <QuestionTable questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
   )
 }
+function GreedyQuestionsMicrosoft(){
+  return (
+    <QuestionTable questions={GreedyMicrosoftQuestions.data as unknown as Question[]}/>
+  )
+}
+
+function SortingQuesationMicrosoft(){
+  return(
+    <QuestionTable questions={SortingMicrosoftQuestions.data as unknown as Question[]}/>
+  )
+}
 
 export const mdxComponents: MDXComponents = {
   Faqs,
@@ -103,7 +116,7 @@ export const mdxComponents: MDXComponents = {
   GraphQuestionsMicrosoft,
   DpQuestionsMIcrosoft,
   StackQuestionsMicrosoft,
-  TwoPointersMicrosoft,
+  TwoPointersMicrosoft,GreedyQuestionsMicrosoft,SortingQuesationMicrosoft,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
