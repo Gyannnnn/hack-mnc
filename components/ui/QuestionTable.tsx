@@ -48,7 +48,7 @@ export default function QuestionTable({
               </td>
 
               <td className="border p-3 whitespace-nowrap">
-                {q.frequency}
+                {q.frequency.toFixed(2)}%
               </td>
 
               <td className="border p-3 whitespace-nowrap">
