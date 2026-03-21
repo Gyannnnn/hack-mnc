@@ -1,6 +1,7 @@
 import React from "react";
 import { getTopics } from "@/app/actions/topics/topics";
 import Link from "next/link";
+import { slugify } from "@/utils/slugify.utility";
 
 export default async function Topics() {
   let topicData;
@@ -13,7 +14,7 @@ export default async function Topics() {
         {/* Desktop: all topics as compact pills */}
         <div className="hidden md:flex flex-row flex-wrap justify-start gap-2">
           {topicData?.map((topic, index) => (
-            <Link key={index} href={`/topic/${topic.id}`} className="group">
+            <Link key={index} href={`/topic/${slugify(topic.name)}`} className="group">
               <div className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 hover:bg-card transition-colors">
                 <span className="font-medium text-foreground text-sm group-hover:text-primary transition-colors">
                   {topic.name}
@@ -37,7 +38,7 @@ export default async function Topics() {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-row flex-wrap gap-2">
                   {first.map((topic, index) => (
-                    <Link key={index} href={`/topic/${topic.id}`} className="group">
+                    <Link key={index} href={`/topic/${slugify(topic.name)}`} className="group">
                       <div className="flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 hover:bg-card transition-colors">
                         <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                           {topic.name}
