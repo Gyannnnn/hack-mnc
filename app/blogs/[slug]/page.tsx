@@ -18,6 +18,8 @@ import {
   BlogHeaderMeta,
   BlogAuthorBio,
 } from "@/components/blog/blog-header-meta";
+import { BlogCTA } from "@/components/blog/blog-cta";
+import { RelatedArticles } from "@/components/blog/related-articles";
 import Image from "next/image";
 import { auth } from "@/auth";
 import { CommentList } from "@/components/blog/comments/comment-list";
@@ -130,8 +132,17 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto">
-        <div className="lg:col-span-8 lg:col-start-3">
+      <div className="flex flex-col lg:grid lg:grid-cols-[260px_minmax(0,820px)_230px] gap-x-10 xl:gap-x-12 max-w-[1420px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Left Sidebar - Related Articles */}
+        <aside className="hidden lg:block self-start sticky top-24">
+          <RelatedArticles
+            currentSlug={slug}
+            category={post.metadata.category}
+            tags={post.metadata.tags}
+          />
+        </aside>
+
+        <main className="flex flex-col min-w-0 max-w-[820px] mx-auto w-full">
           {/* Breadcrumbs */}
           <Breadcrumb className="mb-6 text-sm">
             <BreadcrumbList className="flex flex-nowrap">
@@ -152,7 +163,7 @@ export default async function BlogPostPage({
           </Breadcrumb>
 
           {/*Header */}
-          <header className=" mx-auto flex flex-col gap-2">
+          <header className="flex flex-col gap-2">
             <h1 className="text-xl sm:text-3xl font-extrabold text-foreground tracking-tight leading-[1.15] text-left">
               {post.metadata.title}
             </h1>
@@ -196,11 +207,10 @@ export default async function BlogPostPage({
 
           {/* Main Content */}
           <div
-            className={`bg-background max-w-none ${!post.metadata.coverImage ? "mt-10" : ""}`}
+            className={`bg-background w-full ${!post.metadata.coverImage ? "mt-10" : ""}`}
           >
             <MDXContent source={post.content} />
           </div>
-
 
           {/* <BlogAuthorBio slug={slug} /> */}
           <hr />
@@ -237,13 +247,34 @@ export default async function BlogPostPage({
             token={token}
             userId={session?.user?.id}
           />
+        </main>
+
+        {/* Right Sidebar - Author Info */}
+        <aside className="hidden lg:block self-start sticky top-24">
+          <div className="flex flex-col gap-6">
+            <BlogAuthorBio slug={slug} />
+            <BlogCTA />
+          </div>
+        </aside>
+      </div>
+
+      {/* Responsive Fallback / Mobile View Components */}
+      <div className="lg:hidden px-4 sm:px-6 mt-16 space-y-8">
+        <BlogAuthorBio slug={slug} />
+        <BlogCTA />
+        <div className="pt-8 border-t border-border">
+          <RelatedArticles
+            currentSlug={slug}
+            category={post.metadata.category}
+            tags={post.metadata.tags}
+          />
         </div>
       </div>
 
-      {/* Similar Blogs */}
+      {/* Similar Blogs (Desktop) */}
       {similarPosts.length > 0 && (
-        <section className="mt-24 py-16 bg-muted/20 border-t border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="mt-24 py-16 bg-muted/20 border-t border-border w-full">
+          <div className="max-w-[1420px] mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold mb-12 text-center">Read Next</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {similarPosts.map((post) => (

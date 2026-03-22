@@ -200,75 +200,75 @@ export function BlogAuthorBio({ slug }: { slug: string }) {
   const { author } = meta.data;
 
   return (
-    <div className="mt-5 pt-5 border-t border-border/40 flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold text-foreground">
-          Written by {author.name}
-        </h3>
-      </div>
-
-      <div className="flex items-start gap-4">
-        <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-xl font-bold text-foreground overflow-hidden uppercase shrink-0">
-          {author.image ? (
-            <Image
-              src={author.image}
-              alt={author.name}
-              width={100}
-              height={100}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span>{author.name.charAt(0)}</span>
-          )}
-        </div>
-        <div className="flex-1">
-          <p className="text-muted-foreground text-base leading-relaxed">
-            {author.bio}
-          </p>
-          <div className="flex flex-wrap gap-4 mt-4 text-sm text-foreground/80 items-center">
-            {author.location && (
-              <p className="mr-2 flex items-center gap-2">
-                <IoLocationOutline className="w-5 h-5" /> {author.location}
-              </p>
-            )}
-
-            {author.linkedin && (
-              <Link
-                href={author.linkedin}
-                target="_blank"
-                className="hover:text-primary transition-colors"
-              >
-                <FaLinkedin className="w-5 h-5" />
-              </Link>
-            )}
-            {author.instagram && (
-              <Link
-                href={author.instagram}
-                target="_blank"
-                className="hover:text-primary transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
-              </Link>
-            )}
-            {author.github && (
-              <Link
-                href={author.github}
-                target="_blank"
-                className="hover:text-primary transition-colors"
-              >
-                <Github className="w-5 h-5" />
-              </Link>
-            )}
-            {author.website && (
-              <Link
-                href={author.website}
-                target="_blank"
-                className="hover:text-primary transition-colors"
-              >
-                <Globe className="w-5 h-5" />
-              </Link>
+    <div className="rounded-xl border border-border/50 bg-card/30 backdrop-blur-sm p-5 shadow-sm">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-secondary flex flex-col items-center justify-center text-base font-bold text-foreground overflow-hidden uppercase shrink-0 ring-1 ring-border/50">
+            {author.image ? (
+              <Image
+                src={author.image}
+                alt={author.name}
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span>{author.name.charAt(0)}</span>
             )}
           </div>
+          <div className="min-w-0">
+            <h3 className="font-bold text-sm text-foreground leading-tight truncate">
+              {author.name}
+            </h3>
+            {author.location && (
+              <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5 truncate">
+                <IoLocationOutline className="w-2.5 h-2.5" /> {author.location}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <p className="text-muted-foreground text-[13px] leading-relaxed line-clamp-4">
+          {author.bio}
+        </p>
+
+        <div className="flex items-center gap-3 pt-3 border-t border-border/40">
+          {author.linkedin && (
+            <Link
+              href={author.linkedin}
+              target="_blank"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <FaLinkedin className="w-5 h-5" />
+            </Link>
+          )}
+          {author.github && (
+            <Link
+              href={author.github}
+              target="_blank"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="w-5 h-5" />
+            </Link>
+          )}
+          {author.instagram && (
+            <Link
+              href={author.instagram}
+              target="_blank"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+            </Link>
+          )}
+          {author.website && (
+            <Link
+              href={author.website}
+              target="_blank"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Globe className="w-5 h-5" />
+            </Link>
+          )}
         </div>
       </div>
     </div>
