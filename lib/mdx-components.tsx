@@ -130,7 +130,7 @@ export const mdxComponents: MDXComponents = {
   ),
   h2: (props) => (
     <h2
-      className="text-3xl font-semibold my-4 mt-6 border-b pb-2 text-foreground"
+      className="text-3xl font-semibold my-4 mt-3   text-foreground"
       {...props}
     />
   ),

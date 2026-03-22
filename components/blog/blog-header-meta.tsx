@@ -96,7 +96,7 @@ export function BlogHeaderMeta({
   const comments = meta?.data?._count?.comments || 0;
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex justify-between w-full pt-4">
       {/* Author / Meta Row */}
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-sm font-bold text-foreground overflow-hidden uppercase shrink-0">

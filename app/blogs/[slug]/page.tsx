@@ -123,7 +123,7 @@ export default async function BlogPostPage({
   const blogMeta = await getBlogMetaData(slug, token);
 
   return (
-    <article className="min-h-screen bg-background pt-24 pb-16 relative max-sm:px-2">
+    <article className="min-h-screen  bg-background pt-24 pb-16 relative max-sm:px-2">
       <ReadingProgressBar />
       <script
         type="application/ld+json"
@@ -133,7 +133,7 @@ export default async function BlogPostPage({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1400px] mx-auto">
         <div className="lg:col-span-8 lg:col-start-3">
           {/* Breadcrumbs */}
-          <Breadcrumb className="mb-6">
+          <Breadcrumb className="mb-6 text-sm">
             <BreadcrumbList className="flex flex-nowrap">
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
@@ -151,27 +151,28 @@ export default async function BlogPostPage({
             </BreadcrumbList>
           </Breadcrumb>
 
-          {/* Medium Style Header */}
-          <header className=" mx-auto flex flex-col gap-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight leading-[1.15] text-left">
+          {/*Header */}
+          <header className=" mx-auto flex flex-col gap-2">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-foreground tracking-tight leading-[1.15] text-left">
               {post.metadata.title}
             </h1>
 
             {/* Subtitle / Summary */}
             {post.metadata.summary && (
-              <p className="text-xl text-muted-foreground leading-relaxed text-left">
+              <p className="text-md  leading-relaxed text-left">
                 {post.metadata.summary}
               </p>
             )}
+            <hr />
 
             {/* Author / Meta Row */}
-            <BlogHeaderMeta
+            {/* <BlogHeaderMeta
               slug={slug}
               staticAuthorName={post.metadata.author}
               readingTime={post.metadata.readingTime || 5}
               publishedAt={post.metadata.publishedAt}
               token={token as string}
-            />
+            /> */}
           </header>
 
           {/* Cover Image */}
@@ -200,8 +201,19 @@ export default async function BlogPostPage({
             <MDXContent source={post.content} />
           </div>
 
+
+          {/* <BlogAuthorBio slug={slug} /> */}
+          <hr />
+          <BlogHeaderMeta
+            slug={slug}
+            staticAuthorName={post.metadata.author}
+            readingTime={post.metadata.readingTime || 5}
+            publishedAt={post.metadata.publishedAt}
+            token={token as string}
+          />
+
           {/* Post Footer */}
-          <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className=" pt-2 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="lg:hidden w-full flex justify-center">
               <ShareButtons title={post.metadata.title} slug={post.slug} />
             </div>
@@ -220,9 +232,6 @@ export default async function BlogPostPage({
               </div>
             )}
           </div>
-
-          <BlogAuthorBio slug={slug} />
-
           <CommentList
             blogId={blogMeta?.data?.id}
             token={token}

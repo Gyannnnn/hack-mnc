@@ -67,7 +67,7 @@ export function CommentList({ blogId, token, userId }: CommentListProps) {
   }
 
   return (
-    <section className="mt-5 pt-5 border-t border-border/40" id="comments">
+    <section className="mt-2 pt-5 border-t border-border/40" id="comments">
       <h3 className="text-2xl font-bold mb-8">
         Comments (
         {comments.reduce(
