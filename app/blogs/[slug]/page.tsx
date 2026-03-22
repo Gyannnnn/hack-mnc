@@ -132,7 +132,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="flex flex-col lg:grid lg:grid-cols-[260px_minmax(0,820px)_230px] gap-x-10 xl:gap-x-12 max-w-[1420px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:grid lg:grid-cols-[260px_minmax(0,820px)_230px] gap-x-10 xl:gap-x-12 max-w-[1420px] mx-auto px-1 sm:px-6 lg:px-8">
         {/* Left Sidebar - Related Articles */}
         <aside className="hidden lg:block self-start sticky top-24">
           <RelatedArticles
