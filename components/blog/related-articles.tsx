@@ -26,13 +26,13 @@ export function RelatedArticles({
 
       return sameCategory || overlappingTags;
     })
-    .slice(0, 6);
+    .slice(0, 8);
 
   if (related.length === 0) return null;
 
   return (
     <div className="space-y-6 opacity-80">
-      <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">
+      <h3 className="text-[11px] font-bold  uppercase tracking-[0.2em] mb-4">
         Related Articles
       </h3>
       <div className="flex flex-col gap-5">
