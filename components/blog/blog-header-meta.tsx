@@ -214,7 +214,7 @@ export function BlogAuthorBio({ slug }: { slug: string }) {
   const { author } = meta.data;
 
   return (
-    <div className="rounded-2xl border border-border/50 bg-card/40 backdrop-blur-md p-6 shadow-sm">
+    <div className="rounded-2xl border border-border/50 bg-card/40 backdrop-blur-md pl-3 pr-1 py-6 shadow-sm">
   <div className="flex flex-col gap-5">
     
     {/* Header */}
@@ -229,8 +229,8 @@ export function BlogAuthorBio({ slug }: { slug: string }) {
           <Image
             src={author.image}
             alt={author.name}
-            width={80}
-            height={80}
+            width={40}
+            height={40}
             className="w-full h-full object-cover"
           />
         ) : (
