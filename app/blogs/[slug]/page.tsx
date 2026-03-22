@@ -259,7 +259,7 @@ export default async function BlogPostPage({
       </div>
 
       {/* Responsive Fallback / Mobile View Components */}
-      <div className="lg:hidden px-4 sm:px-6 mt-16 space-y-8">
+      {/* <div className="lg:hidden px-4 sm:px-6 mt-16 space-y-8">
         <BlogAuthorBio slug={slug} />
         <BlogCTA />
         <div className="pt-8 border-t border-border">
@@ -269,7 +269,7 @@ export default async function BlogPostPage({
             tags={post.metadata.tags}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Similar Blogs (Desktop) */}
       {similarPosts.length > 0 && (
