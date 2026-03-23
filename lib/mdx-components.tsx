@@ -37,6 +37,7 @@ import { GreedyMicrosoftQuestions } from "@/data/microsoft/ms.greedy";
 import { SortingMicrosoftQuestions } from "@/data/microsoft/ms.sortingQuestions";
 import { hashTableMicrosoft } from "@/data/microsoft/ms.hashTable";
 import { TopArrayGoogle } from "@/data/Google/google.topArray";
+import { TopStringGoogle } from "@/data/Google/google.topString";
 
 
 function ArrayQuestionsMicrosoft() {
@@ -120,6 +121,12 @@ function TopArrayQuestionsGoogle(){
   )
 }
 
+function TopStringQuestionsGoogle(){
+  return(
+    <QuestionTable questions={TopStringGoogle.data as unknown as Question[]}/>
+  )
+}
+
 export const mdxComponents: MDXComponents = {
   Faqs,
   ArrayQuestionsMicrosoft,
@@ -131,6 +138,7 @@ export const mdxComponents: MDXComponents = {
   DpQuestionsMIcrosoft,
   StackQuestionsMicrosoft,
   TwoPointersMicrosoft,GreedyQuestionsMicrosoft,SortingQuesationMicrosoft,HashTableMicrosoftQuestions,TopArrayQuestionsGoogle,
+  TopStringQuestionsGoogle,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
