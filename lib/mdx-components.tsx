@@ -45,7 +45,6 @@ import { TopBinarySearchGoogle } from "@/data/Google/google.topBS";
 import { TopDpGoogle } from "@/data/Google/google.toDp";
 import { hashTableGoogle } from "@/data/Google/google.TopHashTable";
 
-
 function ArrayQuestionsMicrosoft() {
   return (
     <QuestionTable
@@ -56,117 +55,154 @@ function ArrayQuestionsMicrosoft() {
   );
 }
 
-function StringQuestionsMicrosoft(){
+function StringQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={topStringQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={
+        topStringQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
 }
 
-function LinkedListQuestionsMicrosoft(){
+function LinkedListQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={topLinkedListQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={
+        topLinkedListQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
 }
 
-function BinarySearchQuestionsMicrosoft(){
+function BinarySearchQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={topBinarySearchQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={
+        topBinarySearchQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
 }
 
-function TreeQuestionsMicrosoft(){
+function TreeQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={topTreeQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={topTreeQuestionsAskedInMicrosoft.data as unknown as Question[]}
+    />
+  );
 }
 
-function GraphQuestionsMicrosoft(){
-  return(
-    <QuestionTable questions={topGraphQuestionsAskedInMicrosoft.data as unknown as Question[]} />
-  )
-}
-
-function DpQuestionsMIcrosoft(){
-  return(
-    <QuestionTable questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
-}
-
-function StackQuestionsMicrosoft(){
-  return(
-    <QuestionTable questions={topStackQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
-}
-
-function TwoPointersMicrosoft(){
+function GraphQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={
+        topGraphQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
 }
-function GreedyQuestionsMicrosoft(){
+
+function DpQuestionsMIcrosoft() {
   return (
-    <QuestionTable questions={GreedyMicrosoftQuestions.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}
+    />
+  );
 }
 
-function SortingQuesationMicrosoft(){
-  return(
-    <QuestionTable questions={SortingMicrosoftQuestions.data as unknown as Question[]}/>
-  )
-}
-
-function HashTableMicrosoftQuestions(){
-  return(
-    <QuestionTable questions={hashTableMicrosoft.data as unknown as Question[]}/>
-  )
-}
-
-function TopArrayQuestionsGoogle(){
-  return(
-    <QuestionTable questions={TopArrayGoogle.data as unknown as Question[]}/>
-  )
-}
-
-function TopStringQuestionsGoogle(){
-  return(
-    <QuestionTable questions={TopStringGoogle.data as unknown as Question[]}/>
-  )
-}
-
-function TopLLQuestionsGoogle(){
-  return(
-    <QuestionTable questions={TopLLGoogle.data as unknown as Question[]}/>
-  )
-}
-
-function TopSlidingWindowQuestionsGoogle(){
+function StackQuestionsMicrosoft() {
   return (
-    <QuestionTable questions={TopSlidingWindowGoogle.data as unknown as Question[]}/>
-  )
-}
-function TopTwoPointersQuestionsGoogle(){
-  return (
-    <QuestionTable questions={Top2PointersGoogle.data as unknown as Question[]}/>
-  )
-}
-function TopBinarySearchQuestionsGoogle(){
-  return (
-    <QuestionTable questions={TopBinarySearchGoogle.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={
+        topStackQuestionsAskedInMicrosoft.data as unknown as Question[]
+      }
+    />
+  );
 }
 
-function TopDynamicProgrammingQuestionsGoogle(){
+function TwoPointersMicrosoft() {
   return (
-    <QuestionTable questions={TopDpGoogle.data as unknown as Question[]}/>
-  )
+    <QuestionTable
+      questions={topDPQuestionsAskedInMicrosoft.data as unknown as Question[]}
+    />
+  );
+}
+function GreedyQuestionsMicrosoft() {
+  return (
+    <QuestionTable
+      questions={GreedyMicrosoftQuestions.data as unknown as Question[]}
+    />
+  );
 }
 
-function TopHashTableQuestionsGoogle(){
-  return(
-    <QuestionTable questions={hashTableGoogle.data as unknown as Question[]}/>
-  )
+function SortingQuesationMicrosoft() {
+  return (
+    <QuestionTable
+      questions={SortingMicrosoftQuestions.data as unknown as Question[]}
+    />
+  );
 }
 
+function HashTableMicrosoftQuestions() {
+  return (
+    <QuestionTable
+      questions={hashTableMicrosoft.data as unknown as Question[]}
+    />
+  );
+}
+
+function TopArrayQuestionsGoogle() {
+  return (
+    <QuestionTable questions={TopArrayGoogle.data as unknown as Question[]} />
+  );
+}
+
+function TopStringQuestionsGoogle() {
+  return (
+    <QuestionTable questions={TopStringGoogle.data as unknown as Question[]} />
+  );
+}
+
+function TopLLQuestionsGoogle() {
+  return (
+    <QuestionTable questions={TopLLGoogle.data as unknown as Question[]} />
+  );
+}
+
+function TopSlidingWindowQuestionsGoogle() {
+  return (
+    <QuestionTable
+      questions={TopSlidingWindowGoogle.data as unknown as Question[]}
+    />
+  );
+}
+function TopTwoPointersQuestionsGoogle() {
+  return (
+    <QuestionTable
+      questions={Top2PointersGoogle.data as unknown as Question[]}
+    />
+  );
+}
+function TopBinarySearchQuestionsGoogle() {
+  return (
+    <QuestionTable
+      questions={TopBinarySearchGoogle.data as unknown as Question[]}
+    />
+  );
+}
+
+function TopDynamicProgrammingQuestionsGoogle() {
+  return (
+    <QuestionTable questions={TopDpGoogle.data as unknown as Question[]} />
+  );
+}
+
+function TopHashTableQuestionsGoogle() {
+  return (
+    <QuestionTable questions={hashTableGoogle.data as unknown as Question[]} />
+  );
+}
 
 export const mdxComponents: MDXComponents = {
   Faqs,
@@ -178,10 +214,17 @@ export const mdxComponents: MDXComponents = {
   GraphQuestionsMicrosoft,
   DpQuestionsMIcrosoft,
   StackQuestionsMicrosoft,
-  TwoPointersMicrosoft,GreedyQuestionsMicrosoft,SortingQuesationMicrosoft,HashTableMicrosoftQuestions,TopArrayQuestionsGoogle,
-  TopStringQuestionsGoogle,TopLLQuestionsGoogle,
+  TwoPointersMicrosoft,
+  GreedyQuestionsMicrosoft,
+  SortingQuesationMicrosoft,
+  HashTableMicrosoftQuestions,
+  TopArrayQuestionsGoogle,
+  TopStringQuestionsGoogle,
+  TopLLQuestionsGoogle,
   TopSlidingWindowQuestionsGoogle,
-  TopTwoPointersQuestionsGoogle,TopBinarySearchQuestionsGoogle,TopDynamicProgrammingQuestionsGoogle,
+  TopTwoPointersQuestionsGoogle,
+  TopBinarySearchQuestionsGoogle,
+  TopDynamicProgrammingQuestionsGoogle,
   TopHashTableQuestionsGoogle,
   // Headings
   h1: (props) => (
@@ -367,13 +410,12 @@ export const mdxComponents: MDXComponents = {
 
   // Links
   a: ({ href, children, ...props }) => {
+    const baseClass =
+      "text-blue-600 dark:text-blue-400 no-underline hover:underline font-medium";
+
     if (href?.startsWith("/")) {
       return (
-        <Link
-          href={href}
-          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-          {...props}
-        >
+        <Link href={href} className={baseClass} {...props}>
           {children}
         </Link>
       );
@@ -381,11 +423,7 @@ export const mdxComponents: MDXComponents = {
 
     if (href?.startsWith("#")) {
       return (
-        <a
-          href={href}
-          className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-          {...props}
-        >
+        <a href={href} className={baseClass} {...props}>
           {children}
         </a>
       );
@@ -396,7 +434,7 @@ export const mdxComponents: MDXComponents = {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+        className={baseClass}
         {...props}
       >
         {children}

@@ -164,7 +164,7 @@ export default async function BlogPostPage({
 
           {/*Header */}
           <header className="flex flex-col gap-2">
-            <h1 className="text-xl sm:text-3xl font-extrabold text-foreground tracking-tight leading-[1.15] text-left">
+            <h1 className="text-3xl font-semibold my-4 mt-3   text-foreground">
               {post.metadata.title}
             </h1>
 
