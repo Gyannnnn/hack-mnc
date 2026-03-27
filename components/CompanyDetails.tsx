@@ -324,7 +324,7 @@ export default function CompanyDetails({
       {hasNextPage && !isFetchingNextPage && (
         <div className="flex items-end justify-center pt-2">
           <Button className="max-sm:w-full" onClick={() => fetchNextPage()}>
-            Fetch more questions <LoaderCircleIcon className="animate-spin" />
+            Fetch more questions 
           </Button>
         </div>
       )}
