@@ -253,7 +253,7 @@ export default async function BlogPostPage({
         <aside className="hidden lg:block self-start sticky top-24">
           <div className="flex flex-col gap-6">
             <BlogCTA />
-            <BlogAuthorBio slug={slug} />
+            {/* <BlogAuthorBio slug={slug} /> */}
           </div>
         </aside>
       </div>

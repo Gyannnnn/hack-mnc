@@ -44,6 +44,7 @@ import { Top2PointersGoogle } from "@/data/Google/google.topTwoPointers";
 import { TopBinarySearchGoogle } from "@/data/Google/google.topBS";
 import { TopDpGoogle } from "@/data/Google/google.toDp";
 import { hashTableGoogle } from "@/data/Google/google.TopHashTable";
+import { TopGraphGoogle } from "@/data/Google/google.topGraph";
 
 function ArrayQuestionsMicrosoft() {
   return (
@@ -204,6 +205,13 @@ function TopHashTableQuestionsGoogle() {
   );
 }
 
+function TopGraphQuestionsGoogle(){
+  return(
+    <QuestionTable questions={TopGraphGoogle.data as unknown as Question[]}/>
+  )
+}
+
+
 export const mdxComponents: MDXComponents = {
   Faqs,
   ArrayQuestionsMicrosoft,
@@ -226,6 +234,7 @@ export const mdxComponents: MDXComponents = {
   TopBinarySearchQuestionsGoogle,
   TopDynamicProgrammingQuestionsGoogle,
   TopHashTableQuestionsGoogle,
+  TopGraphQuestionsGoogle,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
