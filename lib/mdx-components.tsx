@@ -45,6 +45,7 @@ import { TopBinarySearchGoogle } from "@/data/Google/google.topBS";
 import { TopDpGoogle } from "@/data/Google/google.toDp";
 import { hashTableGoogle } from "@/data/Google/google.TopHashTable";
 import { TopGraphGoogle } from "@/data/Google/google.topGraph";
+import { backtrackingGoogle } from "@/data/Google/google.topBacktracking";
 
 function ArrayQuestionsMicrosoft() {
   return (
@@ -211,6 +212,12 @@ function TopGraphQuestionsGoogle(){
   )
 }
 
+function TopBacktrackingGoogle(){
+  return(
+    <QuestionTable questions={backtrackingGoogle.data as unknown as Question[]}/>
+  )
+}
+
 
 export const mdxComponents: MDXComponents = {
   Faqs,
@@ -235,6 +242,7 @@ export const mdxComponents: MDXComponents = {
   TopDynamicProgrammingQuestionsGoogle,
   TopHashTableQuestionsGoogle,
   TopGraphQuestionsGoogle,
+  TopBacktrackingGoogle,
   // Headings
   h1: (props) => (
     <h1 className="text-4xl font-bold my-6 mt-8 text-foreground" {...props} />
